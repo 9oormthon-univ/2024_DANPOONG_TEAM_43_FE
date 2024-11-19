@@ -1,0 +1,46 @@
+@charset "UTF-8";
+
+/* Tailwind base, components, and utilities */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+// setting
+@import "setting/reset";
+@import "setting/font";
+
+//section
+@import "section/nav";
+
+.navbar_div {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    max-width: 440px;
+    min-width: 340px;
+    background-color: #f8f9fa;
+    padding: 10px 0;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+  
+    div {
+      text-align: center;
+    }
+  
+    .title,
+    .txt {
+      margin-top: 4px;
+    }
+  
+    .title {
+      color: black;
+    }
+  
+    .txt {
+      color: #6c757d;
+    }
+  }

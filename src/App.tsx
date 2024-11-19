@@ -1,26 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import Home from 'page/Home';
+import Map from 'page/Map';
+import Group from 'page/Group';
+import Chats from 'page/Chats';
+import MyPage from 'page/MyPage';
+import Nav from 'components/common/Nav';
+import Header from 'components/common/Header';
 
-function App() {
+const App: React.FC = () => {
+  const location = useLocation();
+
+  const showHeaderAndNav = !['/login', '/kakao-login', '/signup', '/chat-room','/chat-volunteer'].includes(location.pathname);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <>
+      {showHeaderAndNav && <Header/>}
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/map" element={<Map />} />
+        <Route path="/group" element={<Group />} />
+        <Route path="/chats" element={<Chats />} />
+        <Route path="/mypage" element={<MyPage />} />
+      </Routes>
+      {showHeaderAndNav && <Nav />}
+    </>
+  )
 }
 
-export default App;
+export default App
