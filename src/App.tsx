@@ -12,6 +12,7 @@ import Sign from 'page/Sign';
 import Header from 'components/common/Header';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import Nav from 'components/Nav';
+import ChatRoomMain from 'page/ChatRoomMain';
 
 const queryClient = new QueryClient();
 
@@ -48,6 +49,7 @@ const App: React.FC = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/kakao-login" element={<KakaoLoginRedirect />} />
         <Route path="/signup" element={<Sign />} />
+        <Route path="/chat-room" element={<ChatRoomMain />} />
       </Routes>
       {showHeaderAndNav && <Nav />}
       </QueryClientProvider>
