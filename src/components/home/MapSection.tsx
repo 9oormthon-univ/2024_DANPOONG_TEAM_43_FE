@@ -185,7 +185,7 @@ const MapSection: React.FC<MapSectionProps> = ({ userData }) => {
         );
   
         setAuthenticated(true);
-        initializeMap();
+        // initializeMap();
         setTimeout(() => {
           window.alert('위치 정보에 동의했습니다.');
           setShowAgreementModal(false); 
