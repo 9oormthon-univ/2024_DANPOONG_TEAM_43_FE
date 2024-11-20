@@ -1,14 +1,89 @@
 import React from 'react';
 import { useNeighborSuggestionsQuery } from 'service/userSuggestion';
-import { NeighborUser } from 'type/neighborSuggestions';
-import suggestionImage from '../../assets/img/home/suggestion.svg';
 import { useLocationStore } from 'stores/locationStore';
+import skeletonImage1 from '../../assets/img/home/user1.svg';
+import skeletonImage2 from '../../assets/img/home/user2.svg';
+import certificatedIcon from '../../assets/img/home/certificated-caregiver.svg';
+import timeIcon from '../../assets/img/map/time.svg';
 
 const NeighborSuggestions: React.FC = () => {
-  const { isAuthenticated } = useLocationStore(); 
+  const { isAuthenticated } = useLocationStore();
   const { data, isLoading, isError } = useNeighborSuggestionsQuery();
 
-  if (isLoading) return null;
+  const SkeletonCard = ({ idx }: { idx: number }) => (
+    <div className="w-[125px] h-[163px] relative bg-white rounded-lg flex-col justify-start items-start inline-flex shrink-0 blur-sm">
+      <div className="items-center w-full mx-auto text-center mt-[10px]">
+        <div className="items-center bg-[#ebfef4] rounded-full justify-center items-center inline-flex">
+          <img
+            src={idx % 2 === 0 ? skeletonImage1 : skeletonImage2}
+            alt={`skeletonImage${idx}`}
+            className="w-[65.62px] h-[65.62px] rounded-full object-cover"
+          />
+        </div>
+      </div>
+      <div className="mx-auto text-center">
+        <div className="text-[#2a2e37] text-base font-semibold font-['Pretendard'] leading-snug mb-[6px]">
+          {idx % 2 === 0 ? '이규민님' : '이상덕님'}
+        </div>
+        <div className="text-[#a6acba] text-xs font-medium font-['Pretendard'] leading-none">
+          {idx % 2 === 0 ? '3km' : '4km'}
+        </div>
+      </div>
+      <div className="mx-auto bg-[#ebfef4] rounded-lg flex-col justify-start items-start gap-2.5 inline-flex mt-[6px] px-2 py-1">
+        <div className="justify-start items-center gap-1 inline-flex">
+          <img
+            src={idx % 2 === 0 ? certificatedIcon : timeIcon}
+            alt={`icon${idx}`}
+            className="w-[14px] h-[14px]"
+          />
+          <div className="text-[#ff6b6b] text-xs font-semibold font-['Pretendard'] leading-[18px]">
+            {idx % 2 === 0 ? '인증 요양보호사' : '함께한 22시간'}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  const UserCard = ({ user }: { user: any }) => (
+    <div className="w-[125px] h-[163px] relative bg-white rounded-lg flex-col justify-start items-start inline-flex shrink-0 animate-fade-in">
+      <div className="items-center w-full mx-auto text-center mt-[10px]">
+        <div className="items-center bg-[#ebfef4] rounded-full justify-center items-center inline-flex">
+          <img
+            src={user.profileImage || skeletonImage1} 
+            alt="user"
+            className="w-[65.62px] h-[65.62px] rounded-full object-cover"
+          />
+        </div>
+      </div>
+      <div className="mx-auto text-center">
+        <div className="text-[#2a2e37] text-base font-semibold font-['Pretendard'] leading-snug mb-[6px]">
+          {user.username || '이름 없음'}
+        </div>
+        <div className="text-[#a6acba] text-xs font-medium font-['Pretendard'] leading-none">
+          {user.km ? `${user.km.toFixed(2)}km` : '거리 정보 없음'}
+        </div>
+      </div>
+      <div className="mx-auto bg-[#ebfef4] rounded-lg flex-col justify-start items-start gap-2.5 inline-flex mt-[6px] px-2 py-1">
+        <div className="justify-start items-center gap-1 inline-flex">
+          <img
+            src={timeIcon}
+            alt="timeIcon"
+            className="w-[14px] h-[14px]"
+          />
+          <div className="text-[#ff6b6b] text-xs font-semibold font-['Pretendard'] leading-[18px]">
+            {(() => {
+              const userTypeMap: { [key: string]: string } = {
+                CAREGIVER: '간병인',
+                VOLUNTEER: '자원봉사자',
+                CARE_WORKER: '예비요양보호사',
+              };
+              return userTypeMap[user.userType] || '유형 없음';
+            })()}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 
   return (
     <div className="w-full mt-6">
@@ -20,23 +95,17 @@ const NeighborSuggestions: React.FC = () => {
           더보기
         </div>
       </div>
-      <div className="flex space-x-2 overflow-x-auto">
-        {isAuthenticated ? (
-          isError ? (
-            <p>이웃 정보를 불러오는 데 실패했습니다.</p>
-          ) : (
-            data?.data?.map((item: NeighborUser) => (
-              <div key={item.userId} className="w-40 h-60 border rounded-md shadow-md p-2">
-                <p className="font-bold">{item.username || '이름 없음'}</p>
-                <p className="text-sm">{item.address || '주소 없음'}</p>
-                <p className="text-sm">{item.km ? `${item.km.toFixed(2)}km` : '거리 정보 없음'}</p>
-              </div>
-            ))
-          )
+      <div
+        className={`flex space-x-2 ${
+          isAuthenticated ? 'overflow-x-auto' : 'overflow-x-hidden'
+        }`}
+      >
+        {isLoading || isError ? (
+          [...Array(4)].map((_, idx) => <SkeletonCard key={idx} idx={idx} />)
+        ) : isAuthenticated ? (
+          data?.data?.map((user: any) => <UserCard key={user.userId} user={user} />)
         ) : (
-          <div className="w-full h-64 flex items-center justify-center">
-            <img src={suggestionImage} alt="기본 이미지" className="w-full" />
-          </div>
+          [...Array(4)].map((_, idx) => <SkeletonCard key={idx} idx={idx} />)
         )}
       </div>
     </div>

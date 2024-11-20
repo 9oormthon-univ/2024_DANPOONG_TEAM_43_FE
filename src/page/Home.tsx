@@ -30,12 +30,12 @@ const Home: React.FC = () => {
 
   return (
     <div className={`relative ${color} max-w-[440px] min-w-[340px] w-full mx-auto overflow-y-auto min-h-screen pb-8`}>
-      <img
+      {/* <img
         src={image}
         alt="UserType Background"
         className="absolute top-[3.8rem] right-[-140px] w-[100%] h-auto"
         style={{ objectFit: 'cover', objectPosition: 'left' }}
-      />
+      /> */}
       <div className="w-full mx-auto relative z-10">
         <div className='w-[90%] mx-auto'>
         <UserGreeting username={userData.username} userType={userData.userType} />
