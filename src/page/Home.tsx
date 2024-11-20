@@ -36,12 +36,20 @@ const Home: React.FC = () => {
         className="absolute top-[3.8rem] right-[-140px] w-[100%] h-auto"
         style={{ objectFit: 'cover', objectPosition: 'left' }}
       />
-      <div className="w-[90%] mx-auto relative z-10">
+      <div className="w-full mx-auto relative z-10">
+        <div className='w-[90%] mx-auto'>
         <UserGreeting username={userData.username} userType={userData.userType} />
+        </div>
+        <div className='w-[90%] mx-auto'>
         <UserInfoCard userType={userData.userType} city={userData.city} />
+        </div>
         <NeighborSuggestions />
+        <div className='w-[90%] mx-auto'>
         <MapSection userData={userData} />
+        </div>
+        <div className='w-[90%] mx-auto'>
         <Memories />
+        </div>
       </div>
     </div>
   );
