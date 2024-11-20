@@ -25,7 +25,8 @@
             height: 24px;
         }
     }
-    .chat{
+
+    .chat {
         width: 100%;
         display: flex;
         flex-direction: column;
@@ -123,6 +124,8 @@
         width: 100%;
         display: flex;
         position: fixed;
+        max-width: 440px;
+        min-width: 340px;
         bottom: 0;
         height: 68px;
         padding: 10px 16px;
