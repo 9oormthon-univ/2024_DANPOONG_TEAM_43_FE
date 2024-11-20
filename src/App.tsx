@@ -9,6 +9,7 @@ import Nav from 'components/common/Nav';
 import Header from 'components/common/Header';
 import Login from 'page/Login';
 import KakaoLoginRedirect from 'page/KakaoLoginRedirect';
+import Sign from 'page/Sign';
 
 const App: React.FC = () => {
   const location = useLocation();
@@ -26,6 +27,7 @@ const App: React.FC = () => {
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/kakao-login" element={<KakaoLoginRedirect />} />
+        <Route path="/signup" element={<Sign />} />
       </Routes>
       {showHeaderAndNav && <Nav />}
     </>
