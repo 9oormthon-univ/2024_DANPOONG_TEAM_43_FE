@@ -124,9 +124,7 @@ const MapList: React.FC<MapListProps> = ({ userList }) => {
                 </div>
               </div>
             </div>
-            <div className="flex items-center justify-center">
-              거리
-            </div>
+            <div className="text-right text-[#a6acba] items-center my-auto text-xs font-medium font-['Pretendard'] leading-none">{user.km.toFixed(2)} km</div>
           </div>
 
           <div className="flex space-x-0 mt-6">

@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { checkLocationAuthentication, verifyLocationAuthentication } from 'service/locationVerification';
 import { useLocationStore } from 'stores/locationStore';
+import { useNavigate } from 'react-router-dom';
 import { UserData } from 'type/user';
 import mapImage from '../../assets/img/map/map-image1.svg';
 import mapBlurImage from '../../assets/img/home/map-blur1.svg';
@@ -23,7 +24,13 @@ const MapSection: React.FC<MapSectionProps> = ({ userData }) => {
   const [showAgreementModal, setShowAgreementModal] = useState(false);
   const userInfo = useUserStore((state) => state.userInfo);
 
-  const { data: userList = [], isLoading: isQueryLoading } = useUserListQuery(userInfo.city);
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate('/map');
+  };
+  
+  const { data: userList = [] } = useUserListQuery(userInfo.city);
 
   console.log(userInfo);
 
@@ -36,7 +43,6 @@ const MapSection: React.FC<MapSectionProps> = ({ userData }) => {
 
   const initializeMap = useCallback(() => {
     if (isMapInitialized) {
-      console.log('Map already initialized. Skipping...');
       return;
     }
 
@@ -222,7 +228,7 @@ const MapSection: React.FC<MapSectionProps> = ({ userData }) => {
       </div>
       <div className="flex justify-between items-center mb-[16px]">
         <div className="text-[#2a2e36] text-xl font-semibold font-['Pretendard'] leading-7">내 주변 이웃 찾아보기</div>
-        <div className="text-[#575f70] text-sm font-medium font-['Pretendard'] leading-tight cursor-pointer">더보기</div>
+        <div className="text-[#575f70] text-sm font-medium font-['Pretendard'] leading-tight cursor-pointer" onClick={handleClick}>더보기</div>
       </div>
       <div className="w-full h-64 rounded-lg relative">
         {!isAuthenticated &&  (
