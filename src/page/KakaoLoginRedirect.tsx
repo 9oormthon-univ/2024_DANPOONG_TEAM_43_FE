@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import Cookies from 'js-cookie';
 import { useUserStore } from 'stores/useUserStore';
 import LoadingSpinner from 'components/signup/LoadingSpinner';
-import { KakaoLoginResponseData } from 'type/kakao';
-import { kakaoLogin } from 'service/kakaoLogin';
 
 const KakaoLoginRedirect: React.FC = () => {
   const [loading, setLoading] = useState(true);
@@ -18,10 +17,24 @@ const KakaoLoginRedirect: React.FC = () => {
     if (code) {
       setLoading(true);
 
-      kakaoLogin(code)
+      fetch(`http://54.180.171.247:8080/kakao-code?code=${code}`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+      })
+        .then((response) => {
+          const accessToken = response.headers.get('accesstoken')?.replace('Bearer ', '');
+          const refreshToken = response.headers.get('refreshtoken')?.replace('Bearer ', '');
+
+          if (accessToken && refreshToken) {
+            Cookies.set('accessToken', accessToken, { secure: true });
+            Cookies.set('refreshToken', refreshToken, { secure: true });
+          }
+          return response.json();
+        })
         .then((data) => {
           if (data.status === 200) {
-            setUserInfo(data.data as KakaoLoginResponseData);
+            setUserInfo(data.data);
 
             setTimeout(() => {
               setLoading(false);
@@ -37,7 +50,8 @@ const KakaoLoginRedirect: React.FC = () => {
             });
           }
         })
-        .catch(() => {
+        .catch((error) => {
+          console.error('로그인 처리 중 오류:', error);
           setLoading(false);
           navigate('/login');
         });
