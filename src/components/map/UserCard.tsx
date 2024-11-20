@@ -147,9 +147,7 @@ const UserCard: React.FC<UserCardProps> = ({ user }) => {
             </div>
           </div>
         </div>
-        <div>
-          거리
-        </div>
+        <div className="text-right text-[#a6acba] items-center my-auto text-xs font-medium font-['Pretendard'] leading-none">{user.km.toFixed(2)} km</div>
       </div>
 
       <div className="flex space-x-0 mt-6">

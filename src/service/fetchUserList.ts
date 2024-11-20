@@ -12,7 +12,7 @@ export const fetchUserList = async (
       params.userType = userType; 
     }
 
-    const response = await axiosInstance.get<UserListResponse>('/map/user-list', {
+    const response = await axiosInstance.get<UserListResponse>('/map/list', {
       params,
     });
 

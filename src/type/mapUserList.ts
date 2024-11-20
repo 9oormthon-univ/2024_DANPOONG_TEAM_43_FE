@@ -8,6 +8,7 @@ export interface mapUser {
   detailAddress: string;
   latitude: number; 
   longitude: number;
+  km: number;
 }
 
 export interface UserListResponse {
