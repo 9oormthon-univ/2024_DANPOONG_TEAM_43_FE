@@ -1,0 +1,271 @@
+.container {
+  width: 100%;
+  min-width: 340px;
+  max-width: 440px;
+  margin: 0 auto;
+  height: calc(100dvh - 82px); 
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; transform: scale(1.1); }
+  50% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(0.9); }
+}
+
+.fade-in {
+  animation: fadeIn 0.7s forwards;
+}
+
+.fade-out {
+  animation: fadeOut 1s forwards;
+}
+
+.fade-in-out {
+  animation: fadeInOut 2.5s forwards;
+}
+
+/* 로고 기본 스타일 */
+.initial-logo {
+  position: absolute;
+  width: 50%; 
+  max-width: 200px;
+  height: auto;
+}
+
+.initial-logo-1 {
+  position: absolute;
+  bottom: 0%;
+  right: 0%;
+  transform: translateY(-30%); 
+}
+
+.initial-logo-2 {
+  position: absolute;
+  left: 0%;
+}
+
+.initial-logo-3 {
+  position: absolute;
+  top: 0%; 
+  right: 0%;
+  transform: translateY(30%);
+}
+
+.final-logo, .text-logo {
+  opacity: 0;
+  animation: fadeIn 1s forwards;
+}
+
+.final-logo {
+  height: 320px;
+  animation-delay: 2.5s;
+  margin-bottom: 50px;
+}
+
+.text-logo {
+  width: 80%;
+  animation-delay: 2.5s;
+  margin-bottom: 100px;
+}
+
+.kakao-login-button {
+  opacity: 0;
+  animation: fadeIn 1s forwards;
+  animation-delay: 3.5s; 
+}
+
+.login-button {
+  position: absolute;
+  bottom: 50px; 
+  width: 300px;
+}
+
+.login-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin: 0 auto;
+  min-width: 340px;
+  max-width: 440px;
+  height: 100dvh;
+  background-color: #ff6b6b;
+  position: relative;
+  overflow: hidden;
+}
+
+
+.logo-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  max-width: 440px;
+  text-align: center;
+}
+
+.sign-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  height: 100%;
+  justify-content: space-between;
+
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    position: relative;
+    width: 100%;
+    margin-bottom: 20px;
+
+    .back-button {
+      position: absolute;
+      left: 0;
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+    }
+
+    .sign-title {
+      font-size: 1.2rem;
+      font-weight: semibold;
+      color: #333;
+      text-align: center;
+    }
+  }
+
+  .progress-bar {
+    width: 100%;
+    margin-bottom: 30px;
+  }
+
+  .title {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 30px;
+    width: 100%;
+  }
+
+  .role-selection {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+
+    .role-button {
+      display: flex;
+      align-items: center;
+      padding: 16px;
+      background-color: #ffffff;
+      border: 1px solid #e9ecef;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      font-size: 1rem;
+      color: #333;
+      cursor: pointer;
+      transition: background-color 0.2s, border-color 0.2s;
+
+      .role-icon {
+        width: 64px;
+        height: 64px;
+        margin-right: 16px;
+      }
+
+      &.selected-red {
+        background-color: #ffe5e5;
+        border-color: #ff6b6b;
+      }
+
+      &.selected-blue {
+        background-color: #eef7ff;
+        border-color: #067dfd;
+      }
+
+      &.selected-green {
+        background-color: #d8fbed;
+        border-color: #0cd380;
+      }
+    }
+  }
+  .navigation-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    margin-top: auto;
+
+    .skip-button {
+      background: none;
+      border: none;
+      color: #6c757d;
+      font-size: 1rem;
+      cursor: pointer;
+      text-align: center;
+      padding: 10px 0;
+    }
+
+    .next-button {
+      background-color: #ff6b6b;
+      color: #ffffff;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 1rem;
+      height: 52px;
+      cursor: pointer;
+      text-align: center;
+      transition: background-color 0.2s;
+
+      &:disabled {
+        background-color: #e9ecef;
+        cursor: not-allowed;
+      }
+    }
+  }
+}
+.loading-spinner {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-top: 4px solid #ff6b6b;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}

@@ -7,6 +7,8 @@ import Chats from 'page/Chats';
 import MyPage from 'page/MyPage';
 import Nav from 'components/common/Nav';
 import Header from 'components/common/Header';
+import Login from 'page/Login';
+import KakaoLoginRedirect from 'page/KakaoLoginRedirect';
 
 const App: React.FC = () => {
   const location = useLocation();
@@ -22,6 +24,8 @@ const App: React.FC = () => {
         <Route path="/group" element={<Group />} />
         <Route path="/chats" element={<Chats />} />
         <Route path="/mypage" element={<MyPage />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/kakao-login" element={<KakaoLoginRedirect />} />
       </Routes>
       {showHeaderAndNav && <Nav />}
     </>
