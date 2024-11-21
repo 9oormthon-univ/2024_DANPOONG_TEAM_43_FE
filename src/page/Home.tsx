@@ -5,9 +5,9 @@ import NeighborSuggestions from 'components/home/NeighborSuggestions';
 import MapSection from 'components/home/MapSection';
 import Memories from 'components/home/Memories';
 import { useUserDataQuery } from 'service/user';
-import caregiverBg from '../assets/img/home/main-caregiver.svg';
-import volunteerBg from '../assets/img/home/main-volunteer.svg';
-import careWorkerBg from '../assets/img/home/main-careworker.svg';
+import caregiverBg from '../assets/img/home/main_caregiver.svg';
+import volunteerBg from '../assets/img/home/main_volunteer.svg';
+import careWorkerBg from '../assets/img/home/main_careworker.svg';
 
 const Home: React.FC = () => {
   const { data: userData, isLoading } = useUserDataQuery();
@@ -30,28 +30,32 @@ const Home: React.FC = () => {
 
   return (
     <div className={`relative ${color} max-w-[440px] min-w-[340px] w-full mx-auto overflow-y-auto min-h-screen pb-8`}>
-      {/* <img
-        src={image}
-        alt="UserType Background"
-        className="absolute top-[3.8rem] right-[-140px] w-[100%] h-auto"
-        style={{ objectFit: 'cover', objectPosition: 'left' }}
-      /> */}
-      <div className="w-full mx-auto relative z-10">
-        <div className='w-[90%] mx-auto'>
+    <img
+      src={image}
+      alt="UserType Background"
+      className="absolute top-[3.8rem] right-0 h-auto"
+      style={{
+        width: 'auto',
+        objectFit: 'cover',
+        objectPosition: 'right', 
+      }}
+    />
+    <div className="w-full mx-auto relative z-10">
+      <div className="w-[90%] mx-auto">
         <UserGreeting username={userData.username} userType={userData.userType} />
-        </div>
-        <div className='w-[90%] mx-auto'>
+      </div>
+      <div className="w-[90%] mx-auto">
         <UserInfoCard userType={userData.userType} city={userData.city} />
-        </div>
-        <NeighborSuggestions />
-        <div className='w-[90%] mx-auto'>
+      </div>
+      <NeighborSuggestions />
+      <div className="w-[90%] mx-auto">
         <MapSection userData={userData} />
-        </div>
-        <div className='w-[90%] mx-auto'>
+      </div>
+      <div className="w-[90%] mx-auto">
         <Memories />
-        </div>
       </div>
     </div>
+  </div>
   );
 };
 
