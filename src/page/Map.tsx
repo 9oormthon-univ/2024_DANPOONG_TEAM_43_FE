@@ -61,6 +61,63 @@ const MapPage: React.FC = () => {
     const kakaoMap = new window.kakao.maps.Map(container, options);
     setMap(kakaoMap);
 
+    const geocoder = new window.kakao.maps.services.Geocoder();
+  
+    geocoder.addressSearch(
+      userInfo.address,
+      (result: Array<{ x: string; y: string }>, status: string) => {
+        if (status === window.kakao.maps.services.Status.OK) {
+          const centerLatLng = new window.kakao.maps.LatLng(result[0].y, result[0].x);
+  
+          // 지도 중심 설정
+          kakaoMap.setCenter(centerLatLng);
+  
+          // 외부 네모 (화면 전체를 덮는 큰 사각형)
+          const bounds = new window.kakao.maps.LatLngBounds(
+            new window.kakao.maps.LatLng(centerLatLng.getLat() - 10, centerLatLng.getLng() - 10), // 좌측 하단
+            new window.kakao.maps.LatLng(centerLatLng.getLat() + 10, centerLatLng.getLng() + 10) // 우측 상단
+          );
+  
+          const outerCoords = [
+            bounds.getSouthWest(), // 좌측 하단
+            new window.kakao.maps.LatLng(bounds.getSouthWest().getLat(), bounds.getNorthEast().getLng()), // 우측 하단
+            bounds.getNorthEast(), // 우측 상단
+            new window.kakao.maps.LatLng(bounds.getNorthEast().getLat(), bounds.getSouthWest().getLng()), // 좌측 상단
+            bounds.getSouthWest(), // 다시 좌측 하단으로 닫음
+          ];
+  
+          // 내부 원 (구멍 부분)
+          const holeCoords = [];
+          const circleRadius = 2000; // 반경 2km
+          const circleCenter = centerLatLng;
+  
+          const circlePoints = 360; // 원을 구성할 점의 개수
+          for (let i = 0; i < circlePoints; i++) {
+            const angle = (i * Math.PI) / 180; // 각도를 라디안 단위로 변환
+            const dx = circleRadius * Math.cos(angle); // x 좌표
+            const dy = circleRadius * Math.sin(angle); // y 좌표
+            const lat = circleCenter.getLat() + (dy / 111000); // 위도
+            const lng = circleCenter.getLng() + (dx / (111000 * Math.cos(circleCenter.getLat() * (Math.PI / 180)))); // 경도
+            holeCoords.push(new window.kakao.maps.LatLng(lat, lng));
+          }
+  
+          // 다각형 생성
+          const polygon = new window.kakao.maps.Polygon({
+            path: [outerCoords, holeCoords], // 외부 경로와 내부 구멍 경로를 추가
+            strokeWeight: 2,
+            strokeColor: "#000000",
+            strokeOpacity: 0.0,
+            fillColor: "#808080",
+            fillOpacity: 0.8,
+          });
+  
+          polygon.setMap(kakaoMap);
+        } else {
+          console.error("Failed to convert address to coordinates.");
+        }
+      }
+    )
+
     window.kakao.maps.event.addListener(kakaoMap, 'zoom_changed', () => {
       const newZoomLevel = kakaoMap.getLevel();
       setCurrentZoomLevel(newZoomLevel);
@@ -287,7 +344,7 @@ const MapPage: React.FC = () => {
             <img src={userIcon} alt="User List Icon" className="w-[24px] h-[24px]" />
           )}
         </button>
-        <div className="absolute top-[100px] left-0 w-full flex justify-around p-2 bg-white z-[99999]">
+        <div className="absolute top-[56px] left-0 w-full flex justify-around p-2 bg-white z-[99999]">
         {['ALL', 'CAREGIVER', 'VOLUNTEER', 'CARE_WORKER'].map((type) => (
           <button
             key={type}
