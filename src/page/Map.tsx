@@ -271,27 +271,78 @@ const MapPage: React.FC = () => {
     return () => document.removeEventListener('mousedown', handleOutsideClick);
   }, []);
 
+  const calculateDistance = (lat1: number, lng1: number, lat2: number, lng2: number): number => {
+    const R = 6371; // 지구 반지름 (km)
+    const dLat = ((lat2 - lat1) * Math.PI) / 180;
+    const dLng = ((lng2 - lng1) * Math.PI) / 180;
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos((lat1 * Math.PI) / 180) * Math.cos((lat2 * Math.PI) / 180) * Math.sin(dLng / 2) * Math.sin(dLng / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c; // 거리 반환 (km)
+  };
+
   const handleSearch = async (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter' && searchTerm.length >= 2) { 
+    if (e.key === 'Enter' && searchTerm.trim().length >= 2) {
       setLoading(true);
-      setTimeout(() => {
-        const searchResult = userList.find(
-          (user) =>
-            user.username.includes(searchTerm) || user.userType.includes(searchTerm)
-        );
   
-        if (searchResult) {
+      try {
+        // 검색어 정리 (대소문자 무시, 공백 제거)
+        const normalizedSearchTerm = searchTerm.trim().toLowerCase();
+  
+        // 현재 지도 중심 가져오기
+        const mapCenter = map?.getCenter();
+  
+        if (!mapCenter) {
+          console.error("Map center is not available");
+          setLoading(false);
+          return;
+        }
+  
+        // 검색 필터링
+        const filteredUsers = userList
+          .filter(
+            (user) =>
+              user.username.toLowerCase().includes(normalizedSearchTerm) ||
+              user.userType.toLowerCase().includes(normalizedSearchTerm)
+          )
+          .map((user) => ({
+            ...user,
+            distance: calculateDistance(
+              mapCenter.getLat(),
+              mapCenter.getLng(),
+              user.latitude,
+              user.longitude
+            ),
+          }))
+          .sort((a, b) => a.distance - b.distance); // 거리 기준으로 정렬
+  
+        if (filteredUsers.length === 0) {
+          console.log("No users found matching the search term");
+        } else {
+          // 가장 가까운 유저 선택
+          const nearestUser = filteredUsers[0];
+          console.log("Nearest User:", nearestUser);
+  
+          // 해당 유저의 마커 찾기
           const marker = markersRef.current.find(
-            (marker: any) => marker.getPosition().equals(new window.kakao.maps.LatLng(searchResult.latitude, searchResult.longitude))
+            (marker: any) =>
+              marker
+                .getPosition()
+                .equals(new window.kakao.maps.LatLng(nearestUser.latitude, nearestUser.longitude))
           );
   
+          // 지도 중심 이동 및 유저 선택
           if (marker) {
-            map?.panTo(marker.getPosition()); 
-            setSelectedUser(searchResult); 
+            map?.panTo(marker.getPosition());
           }
+          setSelectedUser(nearestUser);
         }
-        setLoading(false); 
-      }, 1000);
+      } catch (error) {
+        console.error("Error in search:", error);
+      } finally {
+        setLoading(false);
+      }
     }
   };
   
