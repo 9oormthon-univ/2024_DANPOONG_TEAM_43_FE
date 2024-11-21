@@ -10,6 +10,7 @@ import mapIcon from '../assets/img/map/map-ic.svg';
 import userIcon from '../assets/img/map/user-list.svg';
 import searchIcon from '../assets/img/map/search-ic.svg';
 import MapLoadingSpinner from 'components/map/MapLoadingSpinner';
+import resetAllIcon from '../assets/img/map/reset.svg';
 
 const MapPage: React.FC = () => {
   const [map, setMap] = useState<any>(null);
@@ -344,16 +345,52 @@ const MapPage: React.FC = () => {
             <img src={userIcon} alt="User List Icon" className="w-[24px] h-[24px]" />
           )}
         </button>
-        <div className="absolute top-[56px] left-0 w-full flex justify-around p-2 bg-white z-[99999]">
+        <div className="absolute top-[64px] left-0 w-full flex justify-around p-2  z-[99999]">
         {['ALL', 'CAREGIVER', 'VOLUNTEER', 'CARE_WORKER'].map((type) => (
           <button
             key={type}
             onClick={() => handleFilterChange(type)}
-            className={`px-3 py-1 rounded-lg text-white ${
-              selectedUserType === type ? 'bg-blue-500' : 'bg-gray-400'
-            }`}
+            className={
+              type === 'ALL'
+                ? 'h-8 flex items-center justify-center rounded-[30px]'
+                : type === 'CAREGIVER'
+                ? `h-8 px-3 py-[7px] ${
+                    selectedUserType === 'CAREGIVER' ? 'bg-[#ff6b6b]' : 'bg-[#ffe1e1]'
+                  } rounded-[30px] justify-start items-center gap-1 inline-flex`
+                : type === 'VOLUNTEER'
+                ? `h-8 px-3 py-[7px] ${
+                    selectedUserType === 'VOLUNTEER' ? 'bg-[#00aeff] border border-[#00aeff]' : 'bg-[#eff9ff]'
+                  } rounded-[30px] justify-start items-center gap-1 inline-flex`
+                : `h-8 px-3 py-[7px] ${
+                    selectedUserType === 'CARE_WORKER' ? 'bg-[#20ce86] border border-[#20ce86]' : 'bg-[#ebfef4]'
+                  } rounded-[30px] justify-start items-center gap-1 inline-flex`
+            }
           >
-            {type === 'ALL' ? '전체' : type === 'CAREGIVER' ? '간병인' : type === 'VOLUNTEER' ? '자원봉사자' : '요양보호사'}
+            {type === 'ALL' ? (
+              <img src={resetAllIcon} alt="Reset All" className="w-[32px] h-[32px]" />
+            ) : (
+              <div
+                className={
+                  type === 'CAREGIVER'
+                    ? `text-center ${
+                        selectedUserType === 'CAREGIVER' ? 'text-white' : 'text-[#ff6b6b]'
+                      } text-[13px] font-semibold font-['Pretendard'] leading-[18.20px]`
+                    : type === 'VOLUNTEER'
+                    ? `text-center ${
+                        selectedUserType === 'VOLUNTEER' ? 'text-white' : 'text-[#00aeff]'
+                      } text-[13px] font-semibold font-['Pretendard'] leading-[18.20px]`
+                    : `text-center ${
+                        selectedUserType === 'CARE_WORKER' ? 'text-white' : 'text-[#20ce86]'
+                      } text-[13px] font-semibold font-['Pretendard'] leading-[18.20px]`
+                }
+              >
+                {type === 'CAREGIVER'
+                  ? '간병인'
+                  : type === 'VOLUNTEER'
+                  ? '자원봉사자'
+                  : '요양보호사'}
+              </div>
+            )}
           </button>
         ))}
       </div>
