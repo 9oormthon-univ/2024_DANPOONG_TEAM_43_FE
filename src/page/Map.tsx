@@ -220,6 +220,25 @@ const MapPage: React.FC = () => {
       }, 1000);
     }
   };
+  
+  useEffect(() => {
+    const storedZoomLevel = sessionStorage.getItem('mapZoomLevel');
+    const storedCenter = sessionStorage.getItem('mapCenter');
+    if (map && storedZoomLevel && storedCenter) {
+      const center = JSON.parse(storedCenter);
+      map.setLevel(Number(storedZoomLevel));
+      map.setCenter(new window.kakao.maps.LatLng(center.lat, center.lng));
+    }
+  }, [map]);
+  
+  useEffect(() => {
+    if (map) {
+      const zoomLevel = map.getLevel();
+      const center = map.getCenter();
+      sessionStorage.setItem('mapZoomLevel', zoomLevel.toString());
+      sessionStorage.setItem('mapCenter', JSON.stringify({ lat: center.getLat(), lng: center.getLng() }));
+    }
+  }, [currentZoomLevel, map]);
 
   return (
     <div className="relative mx-auto max-w-[440px] min-w-[320px]">
