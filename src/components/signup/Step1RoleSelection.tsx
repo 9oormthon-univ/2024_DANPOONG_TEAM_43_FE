@@ -59,7 +59,7 @@ const Step1RoleSelection: React.FC<Step1Props> = ({ onSelectRole, onBackClick })
         <button
           onClick={() => selectedRole && onSelectRole(selectedRole)}
           disabled={!selectedRole}
-          className={`w-full h-14 rounded-lg ${selectedRole ? 'bg-[#ff6b6b]' : 'bg-gray-200'} text-white font-semibold text-lg`}
+          className={`w-full h-[52px] rounded-lg ${selectedRole ? 'bg-[#ff6b6b]' : 'bg-[#d4d7de]'} text-white font-semibold text-base font-['Pretendard'] leading-snug`}
         >
           다음
         </button>

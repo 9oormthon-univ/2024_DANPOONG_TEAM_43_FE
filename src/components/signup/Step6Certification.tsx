@@ -46,7 +46,7 @@ const Step6Certification: React.FC<Step6Props> = ({ formData, setFormData, onNex
       <div className="w-full">
         <h2 className="text-xl font-semibold text-[#333] mb-2">요양보호사 자격증 인증</h2>
         <p className="text-sm text-gray-500 mb-6">가지고 계신 요양보호사 자격증을 사진찍어 첨부해 주세요</p>
-        <label className="block w-full h-40 rounded-lg flex items-center justify-center cursor-pointer overflow-hidden">
+        <label className="block w-full h-[200px] rounded-lg flex items-center justify-center cursor-pointer overflow-hidden">
           <input
             type="file"
             accept="image/*"
@@ -54,9 +54,9 @@ const Step6Certification: React.FC<Step6Props> = ({ formData, setFormData, onNex
             className="hidden"
           />
           {preview ? (
-            <img src={preview as string} alt="Preview" className="w-full h-full object-cover" />
+            <img src={preview as string} alt="Preview" className="w-full h-[200px] object-cover" />
           ) : (
-            <img src={defaultImage} alt="Default" className="w-full h-full object-cover" />
+            <img src={defaultImage} alt="Default" className="w-full h-[200px] object-cover" />
           )}
         </label>
         <p className="text-[#575f70] text-xs font-semibold font-['Pretendard'] leading-[18px] mt-4">*유의사항</p>
@@ -70,7 +70,7 @@ const Step6Certification: React.FC<Step6Props> = ({ formData, setFormData, onNex
         <button
           onClick={onNext}
           disabled={!isNextEnabled}
-          className={`w-full h-14 rounded-lg ${isNextEnabled ? 'bg-[#ff6b6b]' : 'bg-gray-200'} text-white font-semibold text-lg`}
+          className={`w-full h-[52px] rounded-lg ${isNextEnabled ? 'bg-[#ff6b6b]' : 'bg-[#d4d7de]'} text-white font-semibold text-base font-['Pretendard'] leading-snug`}
         >
           인증하기
         </button>

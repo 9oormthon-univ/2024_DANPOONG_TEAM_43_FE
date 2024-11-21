@@ -69,7 +69,7 @@ const Login = () => {
       </div>
       {showLoginButton && (
         <div className="login-button" onClick={handleKakaoLogin}>
-          <img src={kakaoLoginBtn} alt="Kakao Login" className="kakao-login-button" />
+          <img src={kakaoLoginBtn} alt="Kakao Login" className="kakao-login-button cursor-pointer" />
         </div>
       )}
     </div>
