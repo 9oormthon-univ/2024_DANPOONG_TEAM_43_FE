@@ -32,7 +32,7 @@ const MyPage: React.FC = () => {
   const config = userTypeConfig[userType as UserType];
 
   return (
-    <div className="max-w-[440px] min-w-[340px] w-full mx-auto text-center min-h-[calc(100dvh-146px)]">
+    <div className="max-w-[440px] min-w-[340px] w-full mx-auto text-center min-h-[calc(100dvh-166px)]">
       <div className="flex items-center justify-center mb-[30px]">
         <div className="text-center text-[#2a2e37] text-base font-medium font-['Pretendard'] leading-snug">마이페이지</div>
       </div>

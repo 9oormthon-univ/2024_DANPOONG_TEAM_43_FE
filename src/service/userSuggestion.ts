@@ -20,9 +20,11 @@ export const fetchNeighborSuggestions = async (userType: string): Promise<Neighb
 
 export const useNeighborSuggestionsQuery = () => {
   const userType = useUserStore((state) => state.userInfo.userType);
+
   return useQuery({
     queryKey: ['neighborSuggestions', userType],
     queryFn: () => fetchNeighborSuggestions(userType),
     enabled: !!userType, 
+    staleTime: 5 * 60 * 1000,
   });
 };
