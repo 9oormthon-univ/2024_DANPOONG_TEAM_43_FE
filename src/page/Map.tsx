@@ -281,16 +281,12 @@ const MapPage: React.FC = () => {
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     return R * c; // 거리 반환 (km)
   };
-
   const handleSearch = async (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && searchTerm.trim().length >= 2) {
       setLoading(true);
   
       try {
-        // 검색어 정리 (대소문자 무시, 공백 제거)
         const normalizedSearchTerm = searchTerm.trim().toLowerCase();
-  
-        // 현재 지도 중심 가져오기
         const mapCenter = map?.getCenter();
   
         if (!mapCenter) {
@@ -299,7 +295,7 @@ const MapPage: React.FC = () => {
           return;
         }
   
-        // 검색 필터링
+        // 검색 필터링 및 거리 계산
         const filteredUsers = userList
           .filter(
             (user) =>
@@ -315,27 +311,41 @@ const MapPage: React.FC = () => {
               user.longitude
             ),
           }))
-          .sort((a, b) => a.distance - b.distance); // 거리 기준으로 정렬
+          .sort((a, b) => a.distance - b.distance);
   
         if (filteredUsers.length === 0) {
           console.log("No users found matching the search term");
         } else {
-          // 가장 가까운 유저 선택
           const nearestUser = filteredUsers[0];
           console.log("Nearest User:", nearestUser);
   
-          // 해당 유저의 마커 찾기
-          const marker = markersRef.current.find(
-            (marker: any) =>
-              marker
-                .getPosition()
-                .equals(new window.kakao.maps.LatLng(nearestUser.latitude, nearestUser.longitude))
+          const userPosition = new window.kakao.maps.LatLng(
+            nearestUser.latitude,
+            nearestUser.longitude
           );
   
-          // 지도 중심 이동 및 유저 선택
-          if (marker) {
-            map?.panTo(marker.getPosition());
+          // 중심 이동
+          map?.panTo(userPosition);
+  
+          // 줌 레벨을 단계적으로 변경
+          const smoothZoom = (startLevel: number, endLevel: number, duration: number) => {
+            const steps = Math.abs(startLevel - endLevel); // 줌 변경 단계 수
+            const stepDuration = duration / steps; // 단계별 지속 시간
+  
+            for (let i = 1; i <= steps; i++) {
+              setTimeout(() => {
+                const zoomLevel = startLevel > endLevel ? startLevel - i : startLevel + i;
+                map?.setLevel(zoomLevel, { animate: true }); // 부드러운 애니메이션
+              }, i * stepDuration);
+            }
+          };
+  
+          // 현재 줌 레벨에서 2단계까지 천천히 확대
+          if (currentZoomLevel >= 4) {
+            smoothZoom(currentZoomLevel, 3, 1000); // 1초 동안 줌 단계 변경
           }
+  
+          // 유저 선택 후 모달 표시
           setSelectedUser(nearestUser);
         }
       } catch (error) {
