@@ -72,7 +72,7 @@ const Step7LocationSharing: React.FC<Step7Props> = ({ formData, setFormData, onB
 
         <div className="w-full mb-4">
           <p className="text-sm text-gray-500 mb-2">예시 화면</p>
-          <img src={mapImage} alt="예시 지도 화면" className="w-full h-40 object-cover rounded-lg border border-gray-300" />
+          <img src={mapImage} alt="예시 지도 화면" className="w-full h-[240px] object-cover rounded-lg border border-gray-300" />
         </div>
         
         <p className="text-center text-sm text-gray-400 mb-6">나중에 바꿀 수 있어요!</p>

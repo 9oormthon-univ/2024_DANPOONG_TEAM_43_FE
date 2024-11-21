@@ -84,6 +84,7 @@ const Step6Certification: React.FC<Step6Props> = ({ formData, setFormData, onNex
             />
           </div>
           <p className="text-sm text-gray-500 mb-6">이제 프로필 뒤에 인증 마크가 표시되어요</p>
+          <p className="text-sm text-gray-500 mb-2">예시 화면</p>
           <div className="w-full p-4 bg-[#ebfef4] rounded-lg flex flex-col mb-8 relative">
             <img
               src={certificatedBackImage}
