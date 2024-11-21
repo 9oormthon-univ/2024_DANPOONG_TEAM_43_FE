@@ -22,7 +22,7 @@ const CompletionScreen = () => {
       <div className="w-[90%] mt-6 mb-6">
         <button
           onClick={() => window.location.href = '/login'} 
-          className="w-full h-[52px] bg-[#ff6b6b] text-white font-semibold text-base font-['Pretendard'] leading-snug"
+          className="w-full h-[52px] rounded-lg bg-[#ff6b6b] text-white font-semibold text-base font-['Pretendard'] leading-snug"
         >
           로그인 하러가기
         </button>

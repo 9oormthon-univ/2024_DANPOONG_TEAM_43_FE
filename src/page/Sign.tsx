@@ -10,7 +10,6 @@ import Step7LocationSharing from 'components/signup/Step7LocationSharing';
 import CompletionScreen from '../components/signup/CompletionScreen';
 import ExitConfirmationModal from 'components/signup/ExitConfirmationModal';
 
-
 const Sign = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -107,6 +106,7 @@ const Sign = () => {
       console.error("폼 전송 오류:", error);
     }
   };
+
   const renderStepContent = () => {
     if (isComplete) {
       return (
@@ -139,9 +139,13 @@ const Sign = () => {
         return null;
     }
   };
+
+  const containerClass = isComplete
+    ? "w-full mx-auto max-w-[440px] min-w-[320px]" 
+    : "mx-auto max-w-[440px] min-w-[320px] w-[90%]";
   
   return (
-    <div className="mx-auto max-w-[440px] min-w-[320px] w-[90%]">
+    <div className={containerClass}>
       {renderStepContent()}
       {showExitModal && (
         <ExitConfirmationModal
@@ -151,6 +155,6 @@ const Sign = () => {
       )}
     </div>
   );
-}
+};
 
 export default Sign;
