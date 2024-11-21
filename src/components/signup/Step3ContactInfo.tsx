@@ -113,11 +113,11 @@ const Step3ContactInfo: React.FC<Step3Props> = ({ formData, setFormData, onNext,
           />
         </div>
       </div>
-      <div className="w-full mt-auto mb-6 px-4">
+      <div className="w-full mt-auto mb-6 space-y-2">
         <button
           onClick={onNext}
           disabled={!isNextEnabled}
-          className={`w-full h-14 rounded-lg ${isNextEnabled ? 'bg-[#ff6b6b]' : 'bg-gray-200'} text-white font-semibold text-lg`}
+          className={`w-full h-[52px] rounded-lg ${isNextEnabled ? 'bg-[#ff6b6b]' : 'bg-[#d4d7de]'} text-white font-semibold text-base font-['Pretendard'] leading-snug`}
         >
           다음
         </button>

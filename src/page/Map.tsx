@@ -89,7 +89,7 @@ const MapPage: React.FC = () => {
   };
 
   const handleFilterChange = (type: string) => {
-    setSelectedUserType(type); // 선택된 userType으로 업데이트
+    setSelectedUserType(type);
   };
 
   const clearMarkersAndClusterers = () => {

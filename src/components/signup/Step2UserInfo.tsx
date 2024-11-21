@@ -72,7 +72,7 @@ const Step2BasicInfo: React.FC<Step2Props> = ({ formData, setFormData, onNext, o
         <button
           onClick={handleNext}
           disabled={!formData.username || !formData.age}
-          className={`w-full h-14 rounded-lg ${formData.username && formData.age ? 'bg-[#ff6b6b]' : 'bg-gray-200'} text-white font-semibold text-lg`}
+          className={`w-full h-[52px] rounded-lg ${formData.username && formData.age ? 'bg-[#ff6b6b]' : 'bg-[#d4d7de]'} text-white font-semibold text-base font-['Pretendard'] leading-snug`}
         >
           다음
         </button>

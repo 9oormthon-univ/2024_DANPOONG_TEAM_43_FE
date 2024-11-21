@@ -59,7 +59,7 @@ const Step5Story: React.FC<Step5Props> = ({ formData, setFormData, onNext, onBac
         <button
           onClick={onNext}
           disabled={!isNextEnabled}
-          className={`w-full h-14 rounded-lg ${isNextEnabled ? 'bg-[#ff6b6b]' : 'bg-gray-200'} text-white font-semibold text-lg`}
+          className={`w-full h-[52px] rounded-lg ${isNextEnabled ? 'bg-[#ff6b6b]' : 'bg-[#d4d7de]'} text-white font-semibold text-base font-['Pretendard'] leading-snug`}
         >
           다음
         </button>
