@@ -25,8 +25,9 @@ const MapPage: React.FC = () => {
   const clustererRefs = useRef<{ [key: string]: any }>({});
   const userInfo = useUserStore((state) => state.userInfo);
   const userCardRef = useRef<any>(null); 
+  const [selectedUserType, setSelectedUserType] = useState<string>('ALL'); 
 
-  const { data: userList = [], isLoading: isQueryLoading } = useUserListQuery(userInfo?.city || '', undefined);
+  const { data: userList = [], isLoading: isQueryLoading } = useUserListQuery(userInfo?.city || '', selectedUserType);
 
 
   useEffect(() => {
@@ -67,6 +68,17 @@ const MapPage: React.FC = () => {
     });
   }, [userInfo]);
 
+  useEffect(() => {
+    if (map && userList.length > 0) {
+      clearMarkersAndClusterers();
+      if (currentZoomLevel >= 4) {
+        showTypeClustering(map);
+      } else {
+        showIndividualMarkers(map);
+      }
+    }
+  }, [map, userList, currentZoomLevel]);
+
   const handleZoomChange = (mapInstance: any, zoomLevel: number) => {
     clearMarkersAndClusterers();
     if (zoomLevel >= 4) {
@@ -76,14 +88,18 @@ const MapPage: React.FC = () => {
     }
   };
 
+  const handleFilterChange = (type: string) => {
+    setSelectedUserType(type); // 선택된 userType으로 업데이트
+  };
+
   const clearMarkersAndClusterers = () => {
     markersRef.current.forEach((marker) => marker.setMap(null));
     markersRef.current = [];
 
     Object.values(clustererRefs.current).forEach((clusterer) => {
-      clusterer.clear(); 
+      clusterer.clear();
     });
-    clustererRefs.current = {}; 
+    clustererRefs.current = {};
   };
 
   const showTypeClustering = (mapInstance: any) => {
@@ -271,6 +287,19 @@ const MapPage: React.FC = () => {
             <img src={userIcon} alt="User List Icon" className="w-[24px] h-[24px]" />
           )}
         </button>
+        <div className="absolute top-[100px] left-0 w-full flex justify-around p-2 bg-white z-[99999]">
+        {['ALL', 'CAREGIVER', 'VOLUNTEER', 'CARE_WORKER'].map((type) => (
+          <button
+            key={type}
+            onClick={() => handleFilterChange(type)}
+            className={`px-3 py-1 rounded-lg text-white ${
+              selectedUserType === type ? 'bg-blue-500' : 'bg-gray-400'
+            }`}
+          >
+            {type === 'ALL' ? '전체' : type === 'CAREGIVER' ? '간병인' : type === 'VOLUNTEER' ? '자원봉사자' : '요양보호사'}
+          </button>
+        ))}
+      </div>
       </div>
       <div
         className="cursor-pointer absolute bottom-0 z-[9999] left-0 w-full p-4 bg-gray-200 text-gray-800 text-lg font-semibold transition-all duration-300 ease-in-out"
