@@ -49,6 +49,9 @@ import type3_7 from '../../assets/img/user/type3-7.svg';
 import type3_8 from '../../assets/img/user/type3-8.svg';
 import type3_9 from '../../assets/img/user/type3-9.svg';
 import type3_10 from '../../assets/img/user/type3-10.svg';
+import certificatedBackImage1 from '../../assets/img/mypage/certificatedBackImage1.svg';
+import certificatedBackImage2 from '../../assets/img/mypage/certificatedBackImage2.svg';
+import certificatedBackImage3 from '../../assets/img/sign/certificate-back.svg';
 
 const imageMapping: { [key: string]: string[] } = {
   CAREGIVER: [
@@ -184,6 +187,20 @@ const MapList: React.FC<MapListProps> = ({ userList }) => {
     return talkIcon1; 
   };
 
+  const getCertificatedBackImage = (userType: string) => {
+    switch (userType) {
+      case 'CAREGIVER':
+        return certificatedBackImage1;
+      case 'VOLUNTEER':
+        return certificatedBackImage2;
+      case 'CARE_WORKER':
+        return certificatedBackImage3;
+      default:
+        return certificatedBackImage1;
+    }
+  };
+
+
   return (
   <>
     <div className="absolute bottom-0 left-0 w-full bg-white p-4 shadow-lg z-[99999] overflow-y-auto max-h-[93%]">
@@ -191,8 +208,18 @@ const MapList: React.FC<MapListProps> = ({ userList }) => {
         <div
           key={user.userId}
           onClick={() => handleUserClick(user)}
-          className={`flex flex-col justify-between border-b p-4 ${getBackgroundColor(user.userType)} rounded-lg mb-4 cursor-pointer`}
+          className={`relative flex flex-col justify-between border-b p-4 ${getBackgroundColor(user.userType)} rounded-lg mb-4 cursor-pointer`}
         >
+            <img
+          src={getCertificatedBackImage(user.userType)}
+          alt="backImage"
+          className="absolute bottom-0 right-0 h-auto z-[50]"
+          style={{
+            width: 'auto',
+            objectFit: 'cover',
+            objectPosition: 'right',
+          }}
+        />
           <div className="flex justify-between">
             <div className='flex flex-row'>
                 <div
@@ -218,7 +245,7 @@ const MapList: React.FC<MapListProps> = ({ userList }) => {
             <div className="text-right text-[#a6acba] items-center my-auto text-xs font-medium font-['Pretendard'] leading-none">{user.km.toFixed(2)} km</div>
           </div>
 
-          <div className="flex space-x-0 mt-6">
+          <div className="flex space-x-0 mt-6 z-[100]">
             <div className="flex flex-col items-center w-1/5 justify-center">
               <img src={getIconPath(user.userType, 'walk')} alt="Walk" className="w-[52px] h-[52px]" />
               <div className="text-center text-[#2a2e37] text-xs font-normal font-['Pretendard'] leading-none mt-2">{user.walk}</div>

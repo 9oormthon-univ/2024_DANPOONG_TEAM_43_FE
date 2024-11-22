@@ -49,6 +49,9 @@ import type3_7 from '../../assets/img/user/type3-7.svg';
 import type3_8 from '../../assets/img/user/type3-8.svg';
 import type3_9 from '../../assets/img/user/type3-9.svg';
 import type3_10 from '../../assets/img/user/type3-10.svg';
+import certificatedBackImage1 from '../../assets/img/mypage/certificatedBackImage1.svg';
+import certificatedBackImage2 from '../../assets/img/mypage/certificatedBackImage2.svg';
+import certificatedBackImage3 from '../../assets/img/sign/certificate-back.svg';
 
 const imageMapping: { [key: string]: string[] } = {
   CAREGIVER: [
@@ -189,6 +192,19 @@ const UserCard: React.FC<UserCardProps> = ({ user }) => {
     }
   };
 
+  const getCertificatedBackImage = (userType: string) => {
+    switch (userType) {
+      case 'CAREGIVER':
+        return certificatedBackImage1;
+      case 'VOLUNTEER':
+        return certificatedBackImage2;
+      case 'CARE_WORKER':
+        return certificatedBackImage3;
+      default:
+        return certificatedBackImage1;
+    }
+  };
+
     const getUserTypeText = (userType: string) => {
       switch (userType) {
         case 'CAREGIVER':
@@ -220,8 +236,18 @@ const UserCard: React.FC<UserCardProps> = ({ user }) => {
     <div className="absolute bottom-0 left-0 w-full bg-white p-4 shadow-md z-[99999] rounded-t-lg overflow-y-auto cursor-pointer" onClick={handleCardClick} >
         <div
           key={user.userId}
-          className={`flex flex-col justify-between border-b p-4 ${getBackgroundColor(user.userType)} rounded-lg`}
+          className={`relative flex flex-col justify-between border-b p-4 ${getBackgroundColor(user.userType)} rounded-lg z-[100]`}
         >
+        <img
+          src={getCertificatedBackImage(user.userType)}
+          alt="backImage"
+          className="absolute bottom-0 right-0 h-auto z-[50]"
+          style={{
+            width: 'auto',
+            objectFit: 'cover',
+            objectPosition: 'right',
+          }}
+        />
       <div className="flex justify-between mb-4">
         <div className="flex flex-row">
         <div
@@ -247,7 +273,7 @@ const UserCard: React.FC<UserCardProps> = ({ user }) => {
         <div className="text-right text-[#a6acba] items-center my-auto text-xs font-medium font-['Pretendard'] leading-none">{user.km.toFixed(2)} km</div>
       </div>
 
-      <div className="flex space-x-0 mt-6">
+      <div className="flex space-x-0 mt-6 z-[100]">
         <div className="flex flex-col items-center w-1/5 justify-center">
           <img src={getIconPath('talk')} alt="Talk" className="w-[52px] h-[52px]" />
           <div className="text-center text-[#2a2e37] text-xs font-normal leading-none mt-2">{user.talk}</div>
