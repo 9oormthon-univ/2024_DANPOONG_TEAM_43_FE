@@ -36,13 +36,16 @@ const fetchGuestbookByTab = async (tab: string): Promise<GuestbookEntry[]> => {
       throw new Error('Failed to fetch guestbook data');
     }
   
-    return response.data.data; // 데이터 반환
+    return response.data.data;
   };
   
-  // React Query Hook
   export const useGuestbookByTabQuery = (tab: string) =>
     useQuery({
-      queryKey: ['guestbook', tab], // 쿼리 키
-      queryFn: () => fetchGuestbookByTab(tab), // API 호출 함수
-      staleTime: 5 * 60 * 1000, // 5분 동안 캐시 유지
+      queryKey: ['guestbookByTab', tab], 
+      queryFn: () => fetchGuestbookByTab(tab), 
+      staleTime: 5 * 60 * 1000, 
     });
+
+    export const postGuestbookEntry = async (id: number, content: string): Promise<void> => {
+    await axiosInstance.post(`/guestbook/${id}`, { content });
+    }

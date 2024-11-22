@@ -7,4 +7,5 @@ export interface GuestbookEntry {
     durationHours: number; // 활동 시간
     careDate: string; // 케어 날짜
     content: string; // 방명록 내용
+    userId: number;
   }

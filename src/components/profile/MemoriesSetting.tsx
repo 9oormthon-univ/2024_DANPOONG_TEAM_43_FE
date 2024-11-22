@@ -10,7 +10,7 @@ const MemoriesSetting: React.FC = () => {
   };
 
   return (
-    <div onClick={handleNavigation}>
+    <div className='cursor-pointer' onClick={handleNavigation}>
       <MenuItem label="함께 한 추억" />
     </div>
   );

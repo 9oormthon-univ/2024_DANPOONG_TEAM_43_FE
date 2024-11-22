@@ -43,7 +43,6 @@ const imageMapping: { [key: string]: string[] } = {
 const Memories: React.FC = () => {
   const { data, isLoading, isError } = useGuestbookQuery();
 
-  // content가 null이 아닌 항목 필터링
   const validEntries = data?.filter((entry) => entry.content !== null).slice(0, 2);
 
   const getUserTypeText = (userType: string) => {
@@ -116,7 +115,7 @@ const Memories: React.FC = () => {
         ) : (
           validEntries.map((entry) => (
             <div
-              key={entry.sectionId}
+              key={entry.userId || entry.sectionId}
               className={`relative flex p-4 rounded-lg shadow-md ${getBackgroundColor(entry.userType)}`}
             >
                <img
@@ -129,33 +128,28 @@ const Memories: React.FC = () => {
                   objectPosition: 'right',
                 }}
               />
-              <div
-                className="items-center rounded-full justify-center items-center inline-flex mr-3"
-                style={{
-                  border: `2px solid ${getBorderColor(entry.userType)}`,
-                }}
-              >
-                <img
-                  src={imageMapping[entry.userType][entry.sectionId % 10]}
-                  alt="user"
-                  className="w-[60px] h-[60px] rounded-full object-cover"
-                />
-              </div>
-
-              {/* 텍스트 내용 */}
-              <div className="flex flex-col">
+            <div
+              className="items-center rounded-full justify-center inline-flex mr-3 flex-shrink-0"
+              style={{
+                border: `2px solid ${getBorderColor(entry.userType)}`,
+                width: '60px',
+                height: '60px',
+              }}
+            >
+              <img
+                src={imageMapping[entry.userType][entry.userId % 10 || entry.sectionId]}
+                alt="user"
+                className="w-full h-full rounded-full object-cover"
+              />
+            </div>
+              <div className="flex flex-col space-y-2 text-left ml-3">
                 <div
-                  className="text-lg font-semibold text-[#2a2e37] line-clamp-2 overflow-hidden"
-                  style={{
-                    display: '-webkit-box',
-                    WebkitBoxOrient: 'vertical',
-                    WebkitLineClamp: 2,
-                  }}
+                  className="text-[#575f70] text-base font-semibold font-['Pretendard'] leading-snug"
                 >
                   {getUserTypeText(entry.userType)} {entry.profileName}님
                 </div>
                 <div
-                  className="text-sm text-[#575f70] mt-1 line-clamp-2 overflow-hidden"
+                  className="text-[#575f70] text-xs font-normal font-['Pretendard'] leading-none line-clamp-2 overflow-hidden  z-[100]"
                   style={{
                     display: '-webkit-box',
                     WebkitBoxOrient: 'vertical',
