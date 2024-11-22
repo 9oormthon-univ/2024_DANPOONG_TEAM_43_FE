@@ -12,6 +12,9 @@ import Sign from 'page/Sign';
 import Header from 'components/common/Header';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import Nav from 'components/Nav';
+import ChatRoomMain from 'page/ChatRoomMain';
+import ChatVolunteer from 'page/ChatVolunteer';
+import ChatCareWorker from 'page/ChatCareWorker';
 
 const queryClient = new QueryClient();
 
@@ -33,7 +36,7 @@ const App: React.FC = () => {
     }
   }, [location, navigate]);
 
-  const showHeaderAndNav = !['/login', '/kakao-login', '/signup', '/chat-room','/chat-volunteer'].includes(location.pathname);
+  const showHeaderAndNav = !['/login', '/kakao-login', '/signup', '/chat-room','/chat-volunteer','/chat-volunteer','/chat-worker'].includes(location.pathname);
 
   return (
     <>
@@ -48,6 +51,9 @@ const App: React.FC = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/kakao-login" element={<KakaoLoginRedirect />} />
         <Route path="/signup" element={<Sign />} />
+        <Route path="/chat-room" element={<ChatRoomMain />} />
+        <Route path="/chat-volunteer" element={<ChatVolunteer />} />
+        <Route path="/chat-worker" element={<ChatCareWorker />} />
       </Routes>
       {showHeaderAndNav && <Nav />}
       </QueryClientProvider>
