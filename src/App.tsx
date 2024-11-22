@@ -17,6 +17,8 @@ import ChatVolunteer from 'page/ChatVolunteer';
 import ChatCareWorker from 'page/ChatCareWorker';
 import RequestSure from 'page/RequestSure';
 import RequestDetail from 'page/RequestDetail';
+import RequestPay from 'page/RequestPay';
+import PayDone from 'page/PayDone';
 
 const queryClient = new QueryClient();
 
@@ -38,7 +40,7 @@ const App: React.FC = () => {
     }
   }, [location, navigate]);
 
-  const showHeaderAndNav = !['/login', '/kakao-login', '/signup', '/chat-room','/chat-volunteer','/chat-volunteer','/chat-worker','/request-detail','/request-sure'].includes(location.pathname);
+  const showHeaderAndNav = !['/login', '/kakao-login', '/signup', '/chat-room','/chat-volunteer','/chat-volunteer','/chat-worker','/request-detail','/request-sure','/request-pay','/pay-done'].includes(location.pathname);
 
   return (
     <>
@@ -58,6 +60,8 @@ const App: React.FC = () => {
         <Route path="/chat-worker" element={<ChatCareWorker />} />
         <Route path="/request-sure" element={<RequestSure />} />
         <Route path="/request-detail" element={<RequestDetail />} />
+        <Route path="/request-pay" element={<RequestPay />} />
+        <Route path="/pay-done" element={<PayDone />} />
       </Routes>
       {showHeaderAndNav && <Nav />}
       </QueryClientProvider>
