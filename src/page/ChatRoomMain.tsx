@@ -256,20 +256,27 @@ const ChatRoomMain: React.FC = () => {
             <div className="top" style={{ background: config.bgColor, '--Chat_Main': config.color } as React.CSSProperties} >
                 <img src={back} alt="" className="back" onClick={handleBackClick} />
                 <p
-                    className={`title ${!hasReservation || receiverUserType === 'VOLUNTEER' || receiverUserType === 'CARE_WORKER' || userType === 'CAREGIVER' ? 'no-icon' : ''}`}
+                    className={`title ${!(
+                            (userType !== 'CAREGIVER' && receiverUserType === 'CAREGIVER') ||
+                            (hasReservation && (receiverUserType !== 'CAREGIVER' || userType === 'CAREGIVER'))
+                        )
+                            ? 'no-icon'
+                            : ''
+                        }`}
                 >
                     {receiverName}
                 </p>
+
                 {
-                    hasReservation &&
-                    !(receiverUserType === 'VOLUNTEER' || receiverUserType === 'CARE_WORKER' || userType === 'CAREGIVER') && (
+                    (userType !== 'CAREGIVER' && receiverUserType === 'CAREGIVER') ||
+                        (hasReservation && (receiverUserType !== 'CAREGIVER' || userType === 'CAREGIVER')) ? (
                         <img
                             src={hasReservation ? config.chalendar_fill : calendar_check} // 요청이 있으면 채운 아이콘 사용
                             alt=""
                             className="booking"
                             onClick={handleCalendarClick}
                         />
-                    )
+                    ) : null
                 }
             </div>
             <div className="chat">

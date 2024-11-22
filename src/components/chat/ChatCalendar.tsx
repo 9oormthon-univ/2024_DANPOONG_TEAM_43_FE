@@ -34,6 +34,7 @@ const ChatCalendar: React.FC<CalendarPopupProps> = ({ onClose, onSelectDate }) =
       alert('날짜를 선택해주세요.');
     }
   };
+  
 
   return (
     <div className="calendar-popup-overlay" onClick={onClose}>
