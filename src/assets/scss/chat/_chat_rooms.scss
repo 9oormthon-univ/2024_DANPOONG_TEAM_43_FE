@@ -1,0 +1,256 @@
+#chat_room {
+    position: relative;
+    height: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 0;
+
+    .background_img {
+        position: fixed;
+        bottom: 0;
+        display: flex;
+        z-index: -1;
+        padding-left: 66px;
+        max-width: 440px;
+        min-width: 340px;
+    }
+
+    .top {
+        max-width: 440px;
+        min-width: 340px;
+        position: fixed;
+        width: 100%;
+        height: 44px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-left: 20px;
+        padding-right: 20px;
+
+        .back {
+            width: 24px;
+            height: 24px;
+        }
+        .title{
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+        .title.no-icon {
+            padding-right: 24px; /* 조건에 따라 추가되는 스타일 */
+        }
+
+        .booking {
+            width: 24px;
+            height: 24px;
+        }
+    }
+
+    .chat {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-bottom: 70px;
+        padding-top: 44px;
+    }
+
+    .contents {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: normal;
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .when {
+        display: inline-flex;
+        padding: 4px 8px 4px 8px;
+        align-items: center;
+        border-radius: 100px;
+        background: var(--bw-black-65, rgba(0, 0, 0, 0.65));
+        color: var(--BW-Whtie, #FFF);
+        font-size: 11px;
+        font-weight: 400;
+        line-height: 145%;
+        margin-top: 12px;
+        margin-bottom: 23px;
+    }
+
+    .me {
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-end;
+        gap: 6px;
+        margin-bottom: 20px;
+
+        .time {
+            color: var(--gray-600-txts, #575F70);
+            font-size: 11px;
+            font-weight: 400;
+            line-height: 145%;
+        }
+
+        .text {
+            border-radius: 24px;
+            background: var(--Chat_Main);
+            display: flex;
+            padding: 12px 16px;
+            gap: 10px;
+            color: var(--BW-Whtie, #FFF);
+            font-size: 15px;
+            font-weight: 400;
+            line-height: 145%;
+        }
+        .request_div {
+            max-width: 252px;
+            border-radius: 24px;
+            background: var(--Chat_Main);
+            display: flex;
+            flex-direction: column;
+            padding: 12px 16px;
+            color: var(--BW-Whtie, #FFF);
+
+            .request_title {
+                font-size: 15px;
+                font-weight: 600;
+                line-height: 145%;
+                margin-bottom: 20px;
+            }
+
+            .request_text {
+                font-size: 15px;
+                font-weight: 400;
+                line-height: 145%;
+            }
+
+            .more {
+                margin-top: 12px;
+                width: 100%;
+                padding: 8px 14px;
+                text-align: center;
+                border-radius: 12px;
+                border: 1px solid var(--Chat_Main);
+                background: #FFF7F3;
+                color: var(--Chat_Main);
+            }
+        }
+    }
+
+    .you {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 20px;
+
+        img {
+            width: 38px;
+            height: 38px;
+        }
+
+        .txt {
+            display: flex;
+            gap: 6px;
+            align-items: flex-end;
+
+            .text {
+                display: flex;
+                padding: 12px 16px;
+                gap: 10px;
+                border-radius: 24px;
+                background: var(--White, #FFF);
+                color: var(--txt_primary, #2A2E37);
+                font-size: 15px;
+                font-weight: 400;
+                line-height: 145%;
+            }
+
+            .time {
+                color: var(--gray-600-txts, #575F70);
+                font-size: 11px;
+                font-weight: 400;
+                line-height: 145%;
+            }
+            .request_div {
+            max-width: 252px;
+            border-radius: 24px;
+            background: var(--BW-Whtie, #FFF);
+            display: flex;
+            flex-direction: column;
+            padding: 12px 16px;
+            color: var(--txt_primary, #2A2E37);
+
+            .request_title {
+                font-size: 15px;
+                font-weight: 600;
+                line-height: 145%;
+                margin-bottom: 20px;
+            }
+
+            .request_text {
+                font-size: 15px;
+                font-weight: 400;
+                line-height: 145%;
+            }
+
+            .more {
+                margin-top: 12px;
+                width: 100%;
+                padding: 8px 14px;
+                text-align: center;
+                border-radius: 12px;
+                background: var(--Chat_Sub);
+                color: var(--Chat_Main);
+            }
+        }
+        }
+
+    }
+
+    .send_section {
+        width: 100%;
+        display: flex;
+        position: fixed;
+        max-width: 440px;
+        min-width: 340px;
+        bottom: 0;
+        height: 68px;
+        padding: 10px 16px;
+        justify-content: center;
+        align-items: center;
+        background: var(--White, #FFF);
+
+        .send_box {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            height: 48px;
+            padding: 10px 14px;
+            align-items: center;
+            gap: 10px;
+            border-radius: 10px;
+            background: var(--surface50, #EEEFF2);
+
+            img {
+                width: 24px;
+                height: 24px;
+            }
+
+            input {
+                width: 100%;
+                background: none;
+                outline: none;
+                color: var(--txt_primary, #2A2E37);
+            }
+
+            ::placeholder {
+                color: var(--Gray-400, #8992A4);
+                font-size: 15px;
+                font-weight: 400;
+                line-height: 145%;
+            }
+        }
+    }
+}
