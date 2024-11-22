@@ -14,8 +14,6 @@
 .custom-calendar {
     border: none;
 
-
-
     .react-calendar__navigation {
         display: flex;
         justify-content: space-between;
@@ -90,9 +88,9 @@
         }
 
     }
-    .react-calendar__month-view__days__day--neighboringMonth{
-        visibility: hidden; /* 요소 숨기기 */
 
+    .react-calendar__month-view__days__day--neighboringMonth {
+        visibility: hidden;
     }
 }
 

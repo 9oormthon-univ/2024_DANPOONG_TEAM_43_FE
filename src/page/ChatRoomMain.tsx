@@ -204,6 +204,9 @@ const ChatRoomMain: React.FC = () => {
             senderId: senderId, // 요청 보낸 사람의 ID 추가
             bgColor: config.bgColor, // 배경 색상 추가
             mainColor: config.color, // 메인 색상 추가
+            receiverUserType,
+            receiverName,
+            receiverId
         };
 
         if (isApproved) {
@@ -232,6 +235,9 @@ const ChatRoomMain: React.FC = () => {
                     senderId: reservationMessage.senderId,
                     bgColor: config.bgColor,
                     mainColor: config.color,
+                    receiverUserType,
+                    receiverName,
+                    receiverId
                 };
 
                 if (reservationMessage.isApproved) {
@@ -257,11 +263,11 @@ const ChatRoomMain: React.FC = () => {
                 <img src={back} alt="" className="back" onClick={handleBackClick} />
                 <p
                     className={`title ${!(
-                            (userType !== 'CAREGIVER' && receiverUserType === 'CAREGIVER') ||
-                            (hasReservation && (receiverUserType !== 'CAREGIVER' || userType === 'CAREGIVER'))
-                        )
-                            ? 'no-icon'
-                            : ''
+                        (userType !== 'CAREGIVER' && receiverUserType === 'CAREGIVER') ||
+                        (hasReservation && (receiverUserType !== 'CAREGIVER' || userType === 'CAREGIVER'))
+                    )
+                        ? 'no-icon'
+                        : ''
                         }`}
                 >
                     {receiverName}
@@ -343,12 +349,13 @@ const ChatRoomMain: React.FC = () => {
                                                 <p className="time">
                                                     {new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                                                 </p>
-                                                <div className="request_div">
+                                                <div className="request_div" style={{background:'#fff',color:'#2A2E37'}}>
                                                     <p className="request_title">약속을 수락했어요!</p>
                                                     <p className="request_text">간병인의 상세 정보를 확인하세요</p>
                                                     <div
                                                         className="more"
                                                         onClick={handleCalendarClick}
+                                                        style={{background:'var(--Chat_Sub)', color:'var(--Chat_Main)'}}
                                                     >
                                                         자세히 보기
                                                     </div>
@@ -370,7 +377,7 @@ const ChatRoomMain: React.FC = () => {
                                         <div className="you">
                                             <img src={config.profileImg} alt="" className="profile" />
                                             <div className="txt">
-                                                <div className="request_div">
+                                                <div className="request_div" style={{background:'#fff', color:'#2A2E37'}}>
                                                     <p className="request_title">약속 요청을 받았어요!</p>
                                                     <p className="request_text">장소 : {parsedMessage.location}</p>
                                                     <p className="request_text">
@@ -386,6 +393,9 @@ const ChatRoomMain: React.FC = () => {
                                                         })}
                                                     </p>
                                                     <div
+                                                    style={{
+                                                        background: msg.isApproved ? 'var(--Chat_Main)' : 'var(--Chat_Sub)',
+                                                    }}
                                                         className="more"
                                                         onClick={() =>
                                                             handleDetailsClick(parsedMessage.isApproved, parsedMessage.id, msg.id, msg.senderId)
