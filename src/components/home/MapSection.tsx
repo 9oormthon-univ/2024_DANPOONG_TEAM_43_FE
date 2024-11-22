@@ -27,10 +27,21 @@ const MapSection: React.FC<MapSectionProps> = ({ userData }) => {
   const userInfo = useUserStore((state) => state.userInfo);
   const [selectedUser, setSelectedUser] = useState<any | null>(null);
 
-  
   const handleModalClose = () => {
-    setSelectedUser(null); 
+    setSelectedUser(null);
   };
+
+  useEffect(() => {
+    if (selectedUser) {
+      document.body.style.overflow = 'hidden'; 
+    } else {
+      document.body.style.overflow = ''; 
+    }
+
+    return () => {
+      document.body.style.overflow = ''; 
+    };
+  }, [selectedUser]);
 
   const navigate = useNavigate();
 
