@@ -43,7 +43,8 @@ const imageMapping: { [key: string]: string[] } = {
 const Memories: React.FC = () => {
   const { data, isLoading, isError } = useGuestbookQuery();
 
-  const topTwoEntries = data?.slice(0, 2);
+  // content가 null이 아닌 항목 필터링
+  const validEntries = data?.filter((entry) => entry.content !== null).slice(0, 2);
 
   const getUserTypeText = (userType: string) => {
     switch (userType) {
@@ -110,10 +111,10 @@ const Memories: React.FC = () => {
       <div className="space-y-4">
         {isLoading ? (
           <div></div>
-        ) : isError || !topTwoEntries ? (
+        ) : isError || !validEntries || validEntries.length === 0 ? (
           <div>방명록 데이터를 불러오는 중 오류가 발생했습니다.</div>
         ) : (
-          topTwoEntries.map((entry) => (
+          validEntries.map((entry) => (
             <div
               key={entry.sectionId}
               className={`relative flex p-4 rounded-lg shadow-md ${getBackgroundColor(entry.userType)}`}
