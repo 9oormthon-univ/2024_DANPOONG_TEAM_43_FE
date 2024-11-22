@@ -17,6 +17,12 @@
 //chat
 @import "chat/chat_main";
 @import "chat/chat_rooms";
+@import "chat/chat_volunteer";
+
+//components
+@import "chat/chat_calendar";
+@import "chat/chat_time_popup";
+@import "chat/chat_request_popup";
 
 .navbar_div {
     position: fixed;

@@ -1,0 +1,188 @@
+#chat_volunteer {
+    display: flex;
+    height: 100%;
+    min-height: 100vh;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .top {
+        display: flex;
+        height: 44px;
+        padding: 10px 20px 10px 20px;
+
+        img {
+            width: 24px;
+            height: 24px;
+        }
+
+        .top_title {
+            width: 100%;
+            text-align: center;
+            padding-right: 24px;
+        }
+    }
+
+    .volunteer_title {
+        margin-top: 16px;
+        margin-left: 20px;
+        margin-bottom: 20px;
+        color: var(--Light_Gray-800, #2A2E37);
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 140%;
+    }
+
+    .info {
+        padding-bottom: 20px;
+
+        .contents {
+            display: flex;
+            gap: 32px;
+            margin-left: 20px;
+            margin-bottom: 16px;
+
+            .type {
+                width: 56px;
+                color: var(--Light_Gray-400, #8992A4);
+                font-size: 16px;
+                font-weight: 500;
+                line-height: 140%;
+            }
+
+            .text {
+                color: var(--Light_Gray-800, #2A2E37);
+                font-size: 16px;
+                font-weight: 500;
+                line-height: 140%;
+            }
+        }
+    }
+
+    .work_div {
+        margin-left: 20px;
+        margin-right: 20px;
+        margin-bottom: 32px;
+
+        .title {
+            margin: 0;
+            color: var(--Gray-500, #6D778D);
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 140%;
+            margin-bottom: 3px;
+        }
+
+        .drop_down {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 2px solid var(--Gray-100, #D4D7DE);
+
+            .text {
+                color: var(--Gray-300, #A6ACBA);
+                font-size: 18px;
+                font-weight: 400;
+                line-height: 145%;
+                margin-bottom: 6px;
+                margin-top: 1px;
+            }
+
+            img {
+                width: 18px;
+                height: 18px;
+            }
+
+            input {
+                color: var(--gray-800-txtp, #2A2E37);
+                width: 100%;
+                outline: none;
+                background: none;
+                font-size: 18px;
+                font-weight: 400;
+                line-height: 145%;
+                margin-bottom: 6px;
+                margin-top: 1px;
+            }
+
+            ::placeholder {
+                color: var(--Gray-300, #A6ACBA);
+            }
+        }
+    }
+
+    .volunteer_button {
+        display: flex;
+        padding: 15px 24px;
+        justify-content: center;
+        align-items: center;
+        border-radius: 8px;
+        background: var(--Gray-100, #D4D7DE);
+        color: var(--White, #FFF);
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 140%;
+
+    }
+
+    .bottom {
+        width: 100%;
+        padding: 10px 20px;
+        max-width: 440px;
+        min-width: 340px;
+
+        .volunteer_button {
+            width: 100%;
+        }
+    }
+
+    .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.5); // 검은색 반투명
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        z-index: 1000; // 다른 요소 위에 표시되도록 설정
+    }
+
+    .modal-content {
+        width: 100%;
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-bottom: 10px;
+        overflow: auto;
+
+        p {
+            margin: 0;
+        }
+    }
+
+    .chat_modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.5); // 검은색 반투명
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        z-index: 1000; // 다른 요소 위에 표시되도록 설정
+    }
+    #sure{
+        align-items: center;
+    }
+    .chat_modal-content {
+        width: 100%;
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-bottom: 10px;
+        overflow: auto;
+    
+        p {
+            margin: 0;
+        }
+    }
+}
