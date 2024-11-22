@@ -36,6 +36,7 @@ import type3_7 from '../../assets/img/user/type3-7.svg';
 import type3_8 from '../../assets/img/user/type3-8.svg';
 import type3_9 from '../../assets/img/user/type3-9.svg';
 import type3_10 from '../../assets/img/user/type3-10.svg';
+import { useNavigate } from 'react-router-dom';
 
 const imageMapping: { [key: string]: string[] } = {
   CAREGIVER: [
@@ -79,6 +80,8 @@ const imageMapping: { [key: string]: string[] } = {
 const NeighborSuggestions: React.FC = () => {
   const [selectedUser, setSelectedUser] = useState<any | null>(null);
   const [hasAnimated, setHasAnimated] = useState(false); 
+
+  const navigate = useNavigate(); 
 
   const handleModalClose = () => {
     setSelectedUser(null);
@@ -229,7 +232,7 @@ const NeighborSuggestions: React.FC = () => {
           <div className="text-[#2a2e36] text-xl font-semibold font-['Pretendard'] leading-7">
             나랑 잘 맞는 이웃
           </div>
-          <div className="text-[#575f70] text-sm font-medium font-['Pretendard'] leading-tight cursor-pointer">
+          <div className="text-[#575f70] text-sm font-medium font-['Pretendard'] leading-tight cursor-pointer" onClick={() => navigate('/Map')}>
             더보기
           </div>
         </div>

@@ -33,6 +33,7 @@ import type3_10 from '../../assets/img/user/type3-10.svg';
 import certificatedBackImage1 from '../../assets/img/mypage/certificatedBackImage1.svg';
 import certificatedBackImage2 from '../../assets/img/mypage/certificatedBackImage2.svg';
 import certificatedBackImage3 from '../../assets/img/sign/certificate-back.svg';
+import { useNavigate } from 'react-router-dom';
 
 const imageMapping: { [key: string]: string[] } = {
   CAREGIVER: [type1_1, type1_2, type1_3, type1_4, type1_5, type1_6, type1_7, type1_8, type1_9, type1_10],
@@ -42,6 +43,8 @@ const imageMapping: { [key: string]: string[] } = {
 
 const Memories: React.FC = () => {
   const { data, isLoading, isError } = useGuestbookQuery();
+
+  const navigate = useNavigate(); 
 
   const validEntries = data?.filter((entry) => entry.content !== null).slice(0, 2);
 
@@ -103,7 +106,7 @@ const Memories: React.FC = () => {
         <div className="text-[#2a2e36] text-xl font-semibold font-['Pretendard'] leading-7">
           함께 한 추억
         </div>
-        <div className="text-[#575f70] text-sm font-medium font-['Pretendard'] leading-tight cursor-pointer">
+        <div className="text-[#575f70] text-sm font-medium font-['Pretendard'] leading-tight cursor-pointer" onClick={() => navigate('/Memory')}>
           더보기
         </div>
       </div>

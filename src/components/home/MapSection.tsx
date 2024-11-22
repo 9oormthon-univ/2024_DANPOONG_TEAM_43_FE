@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { checkLocationAuthentication, verifyLocationAuthentication } from 'service/locationVerification';
 import { useLocationStore } from 'stores/locationStore';
 import { useNavigate } from 'react-router-dom';
@@ -10,6 +10,12 @@ import { useUserListQuery } from 'service/fetchUserList';
 import caregiverProfile from '../../assets/img/map/marker1.svg';
 import volunteerProfile from '../../assets/img/map/marker2.svg';
 import careWorkerProfile from '../../assets/img/map/marker3.svg';
+import marker1Default from '../../assets/img/map/marker1-1.svg';
+import marker2Default from '../../assets/img/map/marker2-1.svg';
+import marker3Default from '../../assets/img/map/marker3-1.svg';
+import marker1Active from '../../assets/img/map/marker1.svg';
+import marker2Active from '../../assets/img/map/marker2.svg';
+import marker3Active from '../../assets/img/map/marker3.svg';
 import UserCard from 'components/map/UserCard';
 import UserCardHome from './UserCardHome';
 
@@ -26,6 +32,8 @@ const MapSection: React.FC<MapSectionProps> = ({ userData }) => {
   const [showAgreementModal, setShowAgreementModal] = useState(false);
   const userInfo = useUserStore((state) => state.userInfo);
   const [selectedUser, setSelectedUser] = useState<any | null>(null);
+  const [activeMarkerId, setActiveMarkerId] = useState<number | null>(null);
+  const markersRef = useRef<any[]>([]);
 
   const handleModalClose = () => {
     setSelectedUser(null);
@@ -51,8 +59,6 @@ const MapSection: React.FC<MapSectionProps> = ({ userData }) => {
   
   const { data: userList = [] } = useUserListQuery(userInfo.city);
 
-  console.log(userInfo);
-
   const handleAgreementModalOpen = () => {
     setShowAgreementModal(true);
   };
@@ -71,9 +77,6 @@ const MapSection: React.FC<MapSectionProps> = ({ userData }) => {
     const userLatitude = userInfo.latitude || 37.5665; 
     const userLongitude = userInfo.longitude || 126.978;
 
-    console.log('유저 위도:', userLatitude);
-    console.log('유저 경도:', userLongitude);
-
     const options = {
       center: new window.kakao.maps.LatLng(userLatitude, userLongitude),
       level: 3,
@@ -90,20 +93,30 @@ const MapSection: React.FC<MapSectionProps> = ({ userData }) => {
   const addMarkersToMap = useCallback(() => {
     if (!map) return;
 
+    // 기존 마커 초기화
+    markersRef.current.forEach((marker) => marker.setMap(null));
+    markersRef.current = [];
+
     userList.forEach((user: any) => {
-      const markerImage = getMarkerImage(user.userType); 
+      const isActive = user.userId === activeMarkerId; // 현재 마커 활성화 여부
+      const markerImage = getMarkerImage(user.userType, isActive);
+
       const marker = new window.kakao.maps.Marker({
         position: new window.kakao.maps.LatLng(user.latitude, user.longitude),
         image: markerImage,
       });
+
+      // 마커 클릭 이벤트
       window.kakao.maps.event.addListener(marker, 'click', () => {
-        setSelectedUser(user); 
-        map.panTo(marker.getPosition());
+        setSelectedUser(user); // 선택된 유저 설정
+        setActiveMarkerId(user.userId); // 클릭된 마커 ID 설정
+        map.panTo(marker.getPosition()); // 지도 중심 이동
       });
 
-      marker.setMap(map);
+      marker.setMap(map); // 지도에 마커 표시
+      markersRef.current.push(marker); // 마커 참조 저장
     });
-  }, [map, userList]);
+  }, [map, userList, activeMarkerId]);
 
   useEffect(() => {
     if (map) {
@@ -116,6 +129,23 @@ const MapSection: React.FC<MapSectionProps> = ({ userData }) => {
       initializeMap();
     }
   }, [isMapInitialized, initializeMap]);
+
+  useEffect(() => {
+    if (!map) return;
+
+    const handleMapClick = () => {
+      setActiveMarkerId(null); // 활성화된 마커 ID 초기화
+      setSelectedUser(null);   // 선택된 유저 정보 초기화
+    };
+    // 지도 클릭 이벤트 등록
+    window.kakao.maps.event.addListener(map, 'click', handleMapClick);
+    return () => {
+      // 컴포넌트 언마운트 시 이벤트 제거
+      window.kakao.maps.event.removeListener(map, 'click', handleMapClick);
+    };
+  }, [map]);
+
+  
 
   useEffect(() => {
     if (openModal || showAgreementModal || loading) {
@@ -225,16 +255,32 @@ const MapSection: React.FC<MapSectionProps> = ({ userData }) => {
     }
   };
 
-  const getMarkerImage = (userType: string) => {
+  const getMarkerImage = (userType: string, isActive: boolean = false) => {
+    const size = isActive
+      ? new window.kakao.maps.Size(50, 50) 
+      : new window.kakao.maps.Size(40, 40); 
+  
     switch (userType) {
       case 'CAREGIVER':
-        return new window.kakao.maps.MarkerImage(caregiverProfile, new window.kakao.maps.Size(40, 40));
+        return new window.kakao.maps.MarkerImage(
+          isActive ? marker1Active : marker1Default,
+          size
+        );
       case 'VOLUNTEER':
-        return new window.kakao.maps.MarkerImage(volunteerProfile, new window.kakao.maps.Size(40, 40));
+        return new window.kakao.maps.MarkerImage(
+          isActive ? marker2Active : marker2Default,
+          size
+        );
       case 'CARE_WORKER':
-        return new window.kakao.maps.MarkerImage(careWorkerProfile, new window.kakao.maps.Size(40, 40));
+        return new window.kakao.maps.MarkerImage(
+          isActive ? marker3Active : marker3Default,
+          size
+        );
       default:
-        return new window.kakao.maps.MarkerImage(caregiverProfile, new window.kakao.maps.Size(40, 40));
+        return new window.kakao.maps.MarkerImage(
+          isActive ? marker1Active : marker1Default,
+          size
+        );
     }
   };
 

@@ -27,8 +27,8 @@ const fetchGuestbookByTab = async (tab: string): Promise<GuestbookEntry[]> => {
       tab === '전체'
         ? '/guestbook/all'
         : tab === '내 집'
-        ? '/guestbook/my-house'
-        : '/guestbook/neighbor-house';
+        ? '/guestbook/myHome'
+        : '/guestbook/caregiverHome';
   
     const response = await axiosInstance.get<{ status: number; data: GuestbookEntry[] }>(apiUrl);
   
