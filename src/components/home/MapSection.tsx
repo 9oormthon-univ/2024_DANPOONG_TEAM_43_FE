@@ -10,6 +10,8 @@ import { useUserListQuery } from 'service/fetchUserList';
 import caregiverProfile from '../../assets/img/map/marker1.svg';
 import volunteerProfile from '../../assets/img/map/marker2.svg';
 import careWorkerProfile from '../../assets/img/map/marker3.svg';
+import UserCard from 'components/map/UserCard';
+import UserCardHome from './UserCardHome';
 
 interface MapSectionProps {
   userData: UserData;
@@ -23,6 +25,12 @@ const MapSection: React.FC<MapSectionProps> = ({ userData }) => {
   const [isMapInitialized, setIsMapInitialized] = useState(false);
   const [showAgreementModal, setShowAgreementModal] = useState(false);
   const userInfo = useUserStore((state) => state.userInfo);
+  const [selectedUser, setSelectedUser] = useState<any | null>(null);
+
+  
+  const handleModalClose = () => {
+    setSelectedUser(null); 
+  };
 
   const navigate = useNavigate();
 
@@ -58,6 +66,7 @@ const MapSection: React.FC<MapSectionProps> = ({ userData }) => {
     const options = {
       center: new window.kakao.maps.LatLng(userLatitude, userLongitude),
       level: 3,
+      maxLevel: 4,
     };
 
     const kakaoMap = new window.kakao.maps.Map(container, options);
@@ -77,7 +86,7 @@ const MapSection: React.FC<MapSectionProps> = ({ userData }) => {
         image: markerImage,
       });
       window.kakao.maps.event.addListener(marker, 'click', () => {
-        alert(`유저 이름: ${user.username}`);
+        setSelectedUser(user); 
         map.panTo(marker.getPosition());
       });
 
@@ -217,6 +226,7 @@ const MapSection: React.FC<MapSectionProps> = ({ userData }) => {
         return new window.kakao.maps.MarkerImage(caregiverProfile, new window.kakao.maps.Size(40, 40));
     }
   };
+
   return (
     <div className="mt-6 relative">
       <div className='z-[99999]'>
@@ -302,6 +312,9 @@ const MapSection: React.FC<MapSectionProps> = ({ userData }) => {
           </div>
         </div>
       }
+       {selectedUser && (
+        <UserCardHome user={selectedUser} onClose={handleModalClose} />
+      )}
     </div>
   );
 };
