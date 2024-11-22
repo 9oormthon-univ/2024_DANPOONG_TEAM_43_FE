@@ -50,7 +50,7 @@ const Memory: React.FC = () => {
 
   return (
     <div className="max-w-[440px] min-w-[340px] w-full mx-auto text-center min-h-[calc(100dvh-140px)] h-screen flex flex-col bg-[#f7f8f9]">
-      <div className="flex flex-col h-full">
+      <div className="flex flex-col h-full overflow-y-auto ">
       <div className="relative w-[90%] mx-auto flex items-center justify-center my-6">
         <img
           src={leftButtonIcon}
@@ -78,7 +78,7 @@ const Memory: React.FC = () => {
       </div>
   
         {/* 데이터 영역 */}
-        <div className="flex-1 overflow-y-auto space-y-4 w-full mx-auto mb-[82px]">
+        <div className="flex-1 space-y-4 w-full mx-auto ">
           {isLoading ? (
             <div></div>
           ) : isError ? (
