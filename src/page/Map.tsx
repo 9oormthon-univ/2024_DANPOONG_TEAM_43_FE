@@ -1,9 +1,12 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useUserStore } from 'stores/useUserStore';
 import { useUserListQuery } from 'service/fetchUserList';
-import caregiverProfile from '../assets/img/map/marker1.svg';
-import volunteerProfile from '../assets/img/map/marker2.svg';
-import careWorkerProfile from '../assets/img/map/marker3.svg';
+import marker1Default from '../assets/img/map/marker1-1.svg';
+import marker2Default from '../assets/img/map/marker2-1.svg';
+import marker3Default from '../assets/img/map/marker3-1.svg';
+import marker1Active from '../assets/img/map/marker1.svg';
+import marker2Active from '../assets/img/map/marker2.svg';
+import marker3Active from '../assets/img/map/marker3.svg';
 import MapList from 'components/map/MapList';
 import UserCard from 'components/map/UserCard';
 import mapIcon from '../assets/img/map/map-ic.svg';
@@ -235,36 +238,50 @@ const MapPage: React.FC = () => {
   
       const marker = new window.kakao.maps.Marker({
         position: new window.kakao.maps.LatLng(user.latitude, user.longitude),
-        image: markerImage, 
+        image: markerImage, // 이미지 적용
       });
   
+      // 클릭 이벤트 리스너
       window.kakao.maps.event.addListener(marker, 'click', () => {
-        setActiveMarkerId(user.userId); 
-        setSelectedUser(user); 
-        mapInstance.panTo(marker.getPosition());
+        setActiveMarkerId(user.userId); // 클릭된 마커 ID 저장
+        setSelectedUser(user); // 클릭된 유저 정보 저장
+        mapInstance.panTo(marker.getPosition()); // 지도 중심 이동
       });
   
-      marker.setMap(mapInstance);
+      marker.setMap(mapInstance); // 마커를 지도에 표시
       return marker;
     });
   
-    markersRef.current = markers;
+    markersRef.current = markers; // 마커 참조 저장
   };
 
   const getMarkerImage = (userType: string, isActive: boolean = false) => {
     const size = isActive
-      ? new window.kakao.maps.Size(50, 50) 
-      : new window.kakao.maps.Size(40, 40); 
+      ? new window.kakao.maps.Size(50, 50) // 활성화된 마커 크기
+      : new window.kakao.maps.Size(40, 40); // 기본 마커 크기
   
+    // 유저 타입에 따라 마커 이미지 반환
     switch (userType) {
       case 'CAREGIVER':
-        return new window.kakao.maps.MarkerImage(caregiverProfile, size);
+        return new window.kakao.maps.MarkerImage(
+          isActive ? marker1Active : marker1Default,
+          size
+        );
       case 'VOLUNTEER':
-        return new window.kakao.maps.MarkerImage(volunteerProfile, size);
+        return new window.kakao.maps.MarkerImage(
+          isActive ? marker2Active : marker2Default,
+          size
+        );
       case 'CARE_WORKER':
-        return new window.kakao.maps.MarkerImage(careWorkerProfile, size);
+        return new window.kakao.maps.MarkerImage(
+          isActive ? marker3Active : marker3Default,
+          size
+        );
       default:
-        return new window.kakao.maps.MarkerImage(caregiverProfile, size);
+        return new window.kakao.maps.MarkerImage(
+          isActive ? marker1Active : marker1Default,
+          size
+        );
     }
   };
 

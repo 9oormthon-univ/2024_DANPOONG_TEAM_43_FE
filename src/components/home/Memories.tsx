@@ -97,7 +97,6 @@ const Memories: React.FC = () => {
       }
     };
     
-    
     return (
       <div className="mt-6">
         <div className="flex justify-between items-center mb-[16px]">
