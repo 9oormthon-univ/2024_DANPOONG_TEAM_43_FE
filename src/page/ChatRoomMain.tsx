@@ -250,12 +250,16 @@ const ChatRoomMain: React.FC = () => {
 
     return (
         <div className='container' id='chat_room'
-            style={{ background: config.bgColor, '--Chat_Main': config.color, '--Chat_Sub':config.bgColor } as React.CSSProperties}
+            style={{ background: config.bgColor, '--Chat_Main': config.color, '--Chat_Sub': config.bgColor } as React.CSSProperties}
         >
             <img src={config.bgImg} alt="" className='background_img' />
             <div className="top" style={{ background: config.bgColor, '--Chat_Main': config.color } as React.CSSProperties} >
                 <img src={back} alt="" className="back" onClick={handleBackClick} />
-                <p className="title">{receiverName}</p>
+                <p
+                    className={`title ${!hasReservation || receiverUserType === 'VOLUNTEER' || receiverUserType === 'CARE_WORKER' || userType === 'CAREGIVER' ? 'no-icon' : ''}`}
+                >
+                    {receiverName}
+                </p>
                 {
                     hasReservation &&
                     !(receiverUserType === 'VOLUNTEER' || receiverUserType === 'CARE_WORKER' || userType === 'CAREGIVER') && (

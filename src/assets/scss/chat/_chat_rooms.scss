@@ -33,6 +33,14 @@
             width: 24px;
             height: 24px;
         }
+        .title{
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+        .title.no-icon {
+            padding-right: 24px; /* 조건에 따라 추가되는 스타일 */
+        }
 
         .booking {
             width: 24px;
