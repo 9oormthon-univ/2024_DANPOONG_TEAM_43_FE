@@ -157,20 +157,21 @@ const MapPage: React.FC = () => {
   }, [activeMarkerId, map]);
 
   useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      // 지도 외부를 클릭했을 때 activeMarkerId를 초기화
-      if (!e.target || !(e.target as HTMLElement).closest('#map-container')) {
-        setActiveMarkerId(null); // 마커 초기화
-        setSelectedUser(null);   // 선택된 유저 정보 초기화
-      }
+    if (!map) return;
+  
+    const handleMapClick = () => {
+      setActiveMarkerId(null); // 마커 초기화
+      setSelectedUser(null);   // 선택된 유저 정보 초기화
     };
   
-    document.addEventListener('mousedown', handleClickOutside);
+    // 지도 클릭 이벤트 등록
+    window.kakao.maps.event.addListener(map, 'click', handleMapClick);
   
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside); // 이벤트 정리
+      // 컴포넌트가 언마운트될 때 이벤트 제거
+      window.kakao.maps.event.removeListener(map, 'click', handleMapClick);
     };
-  }, []);
+  }, [map]);
 
   const handleFilterChange = (type: string) => {
     setSelectedUserType(type);
