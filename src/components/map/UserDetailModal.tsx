@@ -22,6 +22,42 @@ import leftButtonIcon from '../../assets/img/sign/sign-left-btn.svg';
 import friendIcon from '../../assets/img/map/friend.svg';
 import basketIcon from '../../assets/img/map/basket.svg';
 import { useUserDetailQuery } from 'service/user';
+import type1_1 from '../../assets/img/user/type1_1.svg';
+import type1_2 from '../../assets/img/user/type1_2.svg';
+import type1_3 from '../../assets/img/user/type1_3.svg';
+import type1_4 from '../../assets/img/user/type1_4.svg';
+import type1_5 from '../../assets/img/user/type1_5.svg';
+import type1_6 from '../../assets/img/user/type1_6.svg';
+import type1_7 from '../../assets/img/user/type1_7.svg';
+import type1_8 from '../../assets/img/user/type1_8.svg';
+import type1_9 from '../../assets/img/user/type1_9.svg';
+import type1_10 from '../../assets/img/user/type1_10.svg';
+import type2_1 from '../../assets/img/user/type2_1.svg';
+import type2_2 from '../../assets/img/user/type2_2.svg';
+import type2_3 from '../../assets/img/user/type2_3.svg';
+import type2_4 from '../../assets/img/user/type2_4.svg';
+import type2_5 from '../../assets/img/user/type2_5.svg';
+import type2_6 from '../../assets/img/user/type2_6.svg';
+import type2_7 from '../../assets/img/user/type2_7.svg';
+import type2_8 from '../../assets/img/user/type2_8.svg';
+import type2_9 from '../../assets/img/user/type2_9.svg';
+import type2_10 from '../../assets/img/user/type2_10.svg';
+import type3_1 from '../../assets/img/user/type3_1.svg';
+import type3_2 from '../../assets/img/user/type3_2.svg';
+import type3_3 from '../../assets/img/user/type3_3.svg';
+import type3_4 from '../../assets/img/user/type3_4.svg';
+import type3_5 from '../../assets/img/user/type3_5.svg';
+import type3_6 from '../../assets/img/user/type3_6.svg';
+import type3_7 from '../../assets/img/user/type3_7.svg';
+import type3_8 from '../../assets/img/user/type3_8.svg';
+import type3_9 from '../../assets/img/user/type3_9.svg';
+import type3_10 from '../../assets/img/user/type3_10.svg';
+
+const imageMapping: { [key: string]: string[] } = {
+  CAREGIVER: [type1_1, type1_2, type1_3, type1_4, type1_5, type1_6, type1_7, type1_8, type1_9, type1_10],
+  CARE_WORKER: [type2_1, type2_2, type2_3, type2_4, type2_5, type2_6, type2_7, type2_8, type2_9, type2_10],
+  VOLUNTEER: [type3_1, type3_2, type3_3, type3_4, type3_5, type3_6, type3_7, type3_8, type3_9, type3_10],
+};
 
 interface UserDetailModalProps {
   userId: number;
@@ -34,6 +70,14 @@ const UserDetailModal: React.FC<UserDetailModalProps> = ({ userId, onClose }) =>
   const [isExpanded, setIsExpanded] = useState(false);
   const [isClamped, setIsClamped] = useState(false); 
   const storyRef = useRef<HTMLParagraphElement>(null); 
+
+  const getUserImage = (userId: number, userType: string): string => {
+    const images = imageMapping[userType];
+    if (!images) return ''; 
+
+    const index = userId % 10;
+    return images[index];
+};
 
   const toggleExpanded = () => setIsExpanded((prev) => !prev);
 
@@ -152,7 +196,7 @@ const UserDetailModal: React.FC<UserDetailModalProps> = ({ userId, onClose }) =>
         <div className='mx-auto max-w-[440px] min-w-[320px] w-[90%]'>
         <div className="flex items-center py-6">
           <img
-            src={getUserProfileImage()}
+            src={getUserImage(user.userId, user.userType)}
             alt="User Profile"
             className="w-[124px] h-[124px] mr-4"
           />

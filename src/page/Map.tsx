@@ -1,9 +1,12 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useUserStore } from 'stores/useUserStore';
 import { useUserListQuery } from 'service/fetchUserList';
-import caregiverProfile from '../assets/img/map/marker1.svg';
-import volunteerProfile from '../assets/img/map/marker2.svg';
-import careWorkerProfile from '../assets/img/map/marker3.svg';
+import marker1Default from '../assets/img/map/marker1-1.svg';
+import marker2Default from '../assets/img/map/marker2-1.svg';
+import marker3Default from '../assets/img/map/marker3-1.svg';
+import marker1Active from '../assets/img/map/marker1.svg';
+import marker2Active from '../assets/img/map/marker2.svg';
+import marker3Active from '../assets/img/map/marker3.svg';
 import MapList from 'components/map/MapList';
 import UserCard from 'components/map/UserCard';
 import mapIcon from '../assets/img/map/map-ic.svg';
@@ -27,6 +30,7 @@ const MapPage: React.FC = () => {
   const userInfo = useUserStore((state) => state.userInfo);
   const userCardRef = useRef<any>(null); 
   const [selectedUserType, setSelectedUserType] = useState<string>('ALL'); 
+  const [activeMarkerId, setActiveMarkerId] = useState<number | null>(null);
 
   const { data: userList = [], isLoading: isQueryLoading } = useUserListQuery(userInfo?.city || '', selectedUserType);
 
@@ -138,6 +142,7 @@ const MapPage: React.FC = () => {
   }, [map, userList, currentZoomLevel]);
 
   const handleZoomChange = (mapInstance: any, zoomLevel: number) => {
+    setActiveMarkerId(null);
     clearMarkersAndClusterers();
     if (zoomLevel >= 4) {
       showTypeClustering(mapInstance);
@@ -145,6 +150,31 @@ const MapPage: React.FC = () => {
       showIndividualMarkers(mapInstance);
     }
   };
+
+  // 선택 마커 크기 키우기
+  useEffect(() => {
+    if (map) {
+      clearMarkersAndClusterers();
+      showIndividualMarkers(map);
+    }
+  }, [activeMarkerId, map]);
+
+  useEffect(() => {
+    if (!map) return;
+  
+    const handleMapClick = () => {
+      setActiveMarkerId(null); // 마커 초기화
+      setSelectedUser(null);   // 선택된 유저 정보 초기화
+    };
+  
+    // 지도 클릭 이벤트 등록
+    window.kakao.maps.event.addListener(map, 'click', handleMapClick);
+  
+    return () => {
+      // 컴포넌트가 언마운트될 때 이벤트 제거
+      window.kakao.maps.event.removeListener(map, 'click', handleMapClick);
+    };
+  }, [map]);
 
   const handleFilterChange = (type: string) => {
     setSelectedUserType(type);
@@ -204,36 +234,54 @@ const MapPage: React.FC = () => {
 
   const showIndividualMarkers = (mapInstance: any) => {
     const markers = userList.map((user) => {
-      const markerImage = getMarkerImage(user.userType);
-
+      const markerImage = getMarkerImage(user.userType, user.userId === activeMarkerId);
+  
       const marker = new window.kakao.maps.Marker({
         position: new window.kakao.maps.LatLng(user.latitude, user.longitude),
-        image: markerImage, 
+        image: markerImage, // 이미지 적용
       });
-
+  
+      // 클릭 이벤트 리스너
       window.kakao.maps.event.addListener(marker, 'click', () => {
-        setSelectedUser(user); 
-        mapInstance.panTo(marker.getPosition());
-        setMarkerSize(new window.kakao.maps.Size(60, 60));
+        setActiveMarkerId(user.userId); // 클릭된 마커 ID 저장
+        setSelectedUser(user); // 클릭된 유저 정보 저장
+        mapInstance.panTo(marker.getPosition()); // 지도 중심 이동
       });
-
-      marker.setMap(mapInstance);
+  
+      marker.setMap(mapInstance); // 마커를 지도에 표시
       return marker;
     });
-
-    markersRef.current = markers;
+  
+    markersRef.current = markers; // 마커 참조 저장
   };
 
-  const getMarkerImage = (userType: string) => {
+  const getMarkerImage = (userType: string, isActive: boolean = false) => {
+    const size = isActive
+      ? new window.kakao.maps.Size(50, 50) // 활성화된 마커 크기
+      : new window.kakao.maps.Size(40, 40); // 기본 마커 크기
+  
+    // 유저 타입에 따라 마커 이미지 반환
     switch (userType) {
       case 'CAREGIVER':
-        return new window.kakao.maps.MarkerImage(caregiverProfile, markerSize);
+        return new window.kakao.maps.MarkerImage(
+          isActive ? marker1Active : marker1Default,
+          size
+        );
       case 'VOLUNTEER':
-        return new window.kakao.maps.MarkerImage(volunteerProfile, markerSize);
+        return new window.kakao.maps.MarkerImage(
+          isActive ? marker2Active : marker2Default,
+          size
+        );
       case 'CARE_WORKER':
-        return new window.kakao.maps.MarkerImage(careWorkerProfile, markerSize);
+        return new window.kakao.maps.MarkerImage(
+          isActive ? marker3Active : marker3Default,
+          size
+        );
       default:
-        return new window.kakao.maps.MarkerImage(caregiverProfile, markerSize);
+        return new window.kakao.maps.MarkerImage(
+          isActive ? marker1Active : marker1Default,
+          size
+        );
     }
   };
 
@@ -271,27 +319,88 @@ const MapPage: React.FC = () => {
     return () => document.removeEventListener('mousedown', handleOutsideClick);
   }, []);
 
+  const calculateDistance = (lat1: number, lng1: number, lat2: number, lng2: number): number => {
+    const R = 6371; // 지구 반지름 (km)
+    const dLat = ((lat2 - lat1) * Math.PI) / 180;
+    const dLng = ((lng2 - lng1) * Math.PI) / 180;
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos((lat1 * Math.PI) / 180) * Math.cos((lat2 * Math.PI) / 180) * Math.sin(dLng / 2) * Math.sin(dLng / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c; // 거리 반환 (km)
+  };
   const handleSearch = async (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter' && searchTerm.length >= 2) { 
+    if (e.key === 'Enter' && searchTerm.trim().length >= 2) {
       setLoading(true);
-      setTimeout(() => {
-        const searchResult = userList.find(
-          (user) =>
-            user.username.includes(searchTerm) || user.userType.includes(searchTerm)
-        );
   
-        if (searchResult) {
-          const marker = markersRef.current.find(
-            (marker: any) => marker.getPosition().equals(new window.kakao.maps.LatLng(searchResult.latitude, searchResult.longitude))
+      try {
+        const normalizedSearchTerm = searchTerm.trim().toLowerCase();
+        const mapCenter = map?.getCenter();
+  
+        if (!mapCenter) {
+          console.error("Map center is not available");
+          setLoading(false);
+          return;
+        }
+  
+        // 검색 필터링 및 거리 계산
+        const filteredUsers = userList
+          .filter(
+            (user) =>
+              user.username.toLowerCase().includes(normalizedSearchTerm) ||
+              user.userType.toLowerCase().includes(normalizedSearchTerm)
+          )
+          .map((user) => ({
+            ...user,
+            distance: calculateDistance(
+              mapCenter.getLat(),
+              mapCenter.getLng(),
+              user.latitude,
+              user.longitude
+            ),
+          }))
+          .sort((a, b) => a.distance - b.distance);
+  
+        if (filteredUsers.length === 0) {
+          console.log("No users found matching the search term");
+        } else {
+          const nearestUser = filteredUsers[0];
+          console.log("Nearest User:", nearestUser);
+  
+          const userPosition = new window.kakao.maps.LatLng(
+            nearestUser.latitude,
+            nearestUser.longitude
           );
   
-          if (marker) {
-            map?.panTo(marker.getPosition()); 
-            setSelectedUser(searchResult); 
+          // 중심 이동
+          map?.panTo(userPosition);
+  
+          // 줌 레벨을 단계적으로 변경
+          const smoothZoom = (startLevel: number, endLevel: number, duration: number) => {
+            const steps = Math.abs(startLevel - endLevel); // 줌 변경 단계 수
+            const stepDuration = duration / steps; // 단계별 지속 시간
+  
+            for (let i = 1; i <= steps; i++) {
+              setTimeout(() => {
+                const zoomLevel = startLevel > endLevel ? startLevel - i : startLevel + i;
+                map?.setLevel(zoomLevel, { animate: true }); // 부드러운 애니메이션
+              }, i * stepDuration);
+            }
+          };
+  
+          // 현재 줌 레벨에서 2단계까지 천천히 확대
+          if (currentZoomLevel >= 4) {
+            smoothZoom(currentZoomLevel, 3, 1000); // 1초 동안 줌 단계 변경
           }
+  
+          // 유저 선택 후 모달 표시
+          setSelectedUser(nearestUser);
         }
-        setLoading(false); 
-      }, 1000);
+      } catch (error) {
+        console.error("Error in search:", error);
+      } finally {
+        setLoading(false);
+      }
     }
   };
   
@@ -345,7 +454,7 @@ const MapPage: React.FC = () => {
             <img src={userIcon} alt="User List Icon" className="w-[24px] h-[24px]" />
           )}
         </button>
-        <div className="absolute top-[64px] left-0 w-full flex justify-around p-2  z-[99999]">
+        <div className="absolute top-[64px] left-0 w-full flex space-x-4 p-2 pl-4 z-[99999]">
         {['ALL', 'CAREGIVER', 'VOLUNTEER', 'CARE_WORKER'].map((type) => (
           <button
             key={type}
@@ -401,7 +510,7 @@ const MapPage: React.FC = () => {
       >
         {userInfo.city}
       </div>
-      <div id="map-container" className="w-full h-[calc(100vh-140px)] z-[999]"></div>
+      <div id="map-container" className="w-full h-[calc(100vh-120px)] z-[999]"></div>
       {isListExpanded && (
         <div
           className={`transition-all duration-300 ease-in-out overflow-hidden ${
