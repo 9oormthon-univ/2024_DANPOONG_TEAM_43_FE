@@ -18,13 +18,18 @@
 @import "chat/chat_main";
 @import "chat/chat_rooms";
 @import "chat/chat_volunteer";
+@import "chat/request_done";
+@import "chat/chat_request_detail";
+
+//group
+@import "group/group_main";
 
 //components
 @import "chat/chat_calendar";
 @import "chat/chat_time_popup";
 @import "chat/chat_request_popup";
-@import "chat/chat_request_detail";
-@import "chat/request_done";
+
+
 
 
 .navbar_div {

@@ -1,0 +1,84 @@
+#group {
+    .page_title {
+        color: var(--gray-800-txtp, #2A2E37);
+        text-align: center;
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 140%;
+    }
+
+    .contents {
+        display: flex;
+        padding-bottom: 82px;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-image: url('../../img/group/group_background.png');
+
+        .popup {
+            width: 100%;
+            min-width: 270px;
+            height: 200px;
+            border-radius: 14px;
+            background: var(--White, #FFF);
+            box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+            margin-left: 40px;
+            margin-right: 40px;
+            display: flex;
+            padding: 20px;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+
+            img {
+                width: 63px;
+                height: 63px;
+            }
+
+            .title {
+                margin-top: 16px;
+                color: var(--gray-800-txtp, #2A2E37);
+                text-align: center;
+                font-size: 16px;
+                font-weight: 700;
+                line-height: 145%;
+            }
+
+            .text {
+                color: var(--gray-600-txts, #575F70);
+                text-align: center;
+                font-size: 14px;
+                font-weight: 500;
+                line-height: 150%;
+            }
+        }
+    }
+
+
+    .bottom {
+        position: fixed;
+        bottom: 82px;
+        padding: 20px;
+        width: 100%;
+        max-width: 440px;
+        min-width: 340px;
+
+        .button {
+            width: 100%;
+            display: flex;
+            padding: 15px 24px;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            border-radius: 8px;
+            background: var(--Main-400-Primary, #FF6B6B);
+            color: var(--White, #FFF);
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 140%;
+        }
+    }
+}
