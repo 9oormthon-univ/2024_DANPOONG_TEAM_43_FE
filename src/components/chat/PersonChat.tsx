@@ -13,9 +13,10 @@ interface PersonChatProps {
   lastMessage: string;
   lastUpdated: string;
   receiverUserType: string;
+  receiverId:number;
 }
 
-const PersonChat: React.FC<PersonChatProps> = ({ roomId, receiverName, lastMessage, lastUpdated, receiverUserType }) => {
+const PersonChat: React.FC<PersonChatProps> = ({ roomId, receiverName, lastMessage, lastUpdated, receiverUserType,receiverId }) => {
   const navigate = useNavigate();
 
   const openChatRoomMutation = useMutation({
@@ -30,6 +31,7 @@ const PersonChat: React.FC<PersonChatProps> = ({ roomId, receiverName, lastMessa
           roomId,
           receiverUserType,
           receiverName,
+          receiverId
         },
       });
     },

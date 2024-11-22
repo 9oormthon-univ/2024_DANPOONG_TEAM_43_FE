@@ -35,6 +35,7 @@ const Chats: React.FC = () => {
             lastMessage={room.lastMessage}
             lastUpdated={room.lastUpdated}
             receiverUserType={room.receiverUserType}
+            receiverId={room.receiverId}
           />
         ))}
       </div>
