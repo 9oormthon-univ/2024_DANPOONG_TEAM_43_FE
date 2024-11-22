@@ -29,7 +29,7 @@ const Home: React.FC = () => {
   const { color, image } = backgroundSettings[userData.userType] || backgroundSettings['CAREGIVER'];
 
   return (
-    <div className={`relative ${color} max-w-[440px] min-w-[340px] w-full mx-auto overflow-y-auto min-h-screen pb-8`}>
+    <div className={`relative ${color} max-w-[440px] min-w-[340px] w-full mx-auto pb-[100px] pb-8 overflow-y-auto`}>
     <img
       src={image}
       alt="UserType Background"
@@ -40,7 +40,7 @@ const Home: React.FC = () => {
         objectPosition: 'right', 
       }}
     />
-    <div className="w-full mx-auto relative z-10">
+    <div className="w-full mx-auto relative z-10 overflow-y-auto">
       <div className="w-[90%] mx-auto">
         <UserGreeting username={userData.username} userType={userData.userType} />
       </div>

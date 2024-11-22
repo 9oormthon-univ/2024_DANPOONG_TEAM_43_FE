@@ -53,43 +53,11 @@ import certificatedBackImage2 from '../../assets/img/mypage/certificatedBackImag
 import certificatedBackImage3 from '../../assets/img/sign/certificate-back.svg';
 
 const imageMapping: { [key: string]: string[] } = {
-  CAREGIVER: [
-    type1_1,
-    type1_2,
-    type1_3,
-    type1_4,
-    type1_5,
-    type1_6,
-    type1_7,
-    type1_8,
-    type1_9,
-    type1_10,
-  ],
-  CARE_WORKER: [
-    type2_1,
-    type2_2,
-    type2_3,
-    type2_4,
-    type2_5,
-    type2_6,
-    type2_7,
-    type2_8,
-    type2_9,
-    type2_10,
-  ],
-  VOLUNTEER: [
-    type3_1,
-    type3_2,
-    type3_3,
-    type3_4,
-    type3_5,
-    type3_6,
-    type3_7,
-    type3_8,
-    type3_9,
-    type3_10,
-  ],
-};
+    CAREGIVER: [type1_1, type1_2, type1_3, type1_4, type1_5, type1_6, type1_7, type1_8, type1_9, type1_10],
+    CARE_WORKER: [type2_1, type2_2, type2_3, type2_4, type2_5, type2_6, type2_7, type2_8, type2_9, type2_10],
+    VOLUNTEER: [type3_1, type3_2, type3_3, type3_4, type3_5, type3_6, type3_7, type3_8, type3_9, type3_10],
+  };
+  
 interface UserCardProps {
     user: any;
     onClose: () => void;
