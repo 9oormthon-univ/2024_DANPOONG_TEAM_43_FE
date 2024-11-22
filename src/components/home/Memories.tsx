@@ -45,6 +45,19 @@ const Memories: React.FC = () => {
 
   const topTwoEntries = data?.slice(0, 2);
 
+  const getUserTypeText = (userType: string) => {
+    switch (userType) {
+      case 'CAREGIVER':
+        return '간병인';
+      case 'VOLUNTEER':
+        return '자원봉사자';
+      case 'CARE_WORKER':
+        return '요양보호사';
+      default:
+        return '';
+    }
+  };
+
   const getCertificatedBackImage = (userType: string) => {
     switch (userType) {
       case 'CAREGIVER':
@@ -58,120 +71,105 @@ const Memories: React.FC = () => {
     }
   };
 
-    const getUserTypeText = (userType: string) => {
-      switch (userType) {
-        case 'CAREGIVER':
-          return '간병인';
-        case 'VOLUNTEER':
-          return '자원봉사자';
-        case 'CARE_WORKER':
-          return '요양보호사';
-        default:
-          return '';
-      }
-    };
-
   const getBackgroundColor = (userType: string) => {
     switch (userType) {
       case 'CAREGIVER':
-        return 'bg-[#fff1f1]'; 
+        return 'bg-[#fff1f1]';
       case 'VOLUNTEER':
-        return 'bg-[#eff9ff]'; 
+        return 'bg-[#eff9ff]';
       case 'CARE_WORKER':
-        return 'bg-[#ebfef4]'; 
+        return 'bg-[#ebfef4]';
       default:
-        return 'bg-gray-100'; 
+        return 'bg-gray-100';
     }
   };
 
-    const getBackgroundColor2 = (userType: string): string => {
-      switch (userType) {
-        case 'CAREGIVER':
-          return '#ff6b6b';
-        case 'VOLUNTEER':
-          return '#00AEFF';
-        case 'CARE_WORKER':
-          return '#20CE86';
-        default:
-          return '#ffffff';
-      }
-    };
-    
-    return (
-      <div className="mt-6">
-        <div className="flex justify-between items-center mb-[16px]">
-          <div className="text-[#2a2e36] text-xl font-semibold font-['Pretendard'] leading-7">
-            함께 한 추억
-          </div>
-          <div className="text-[#575f70] text-sm font-medium font-['Pretendard'] leading-tight cursor-pointer">
-            더보기
-          </div>
-        </div>
-        <div className="space-y-4">
-          {isLoading ? (
-            <div>null</div>
-          ) : isError || !topTwoEntries ? (
-            <div>방명록 데이터를 불러오는 중 오류가 발생했습니다.</div>
-          ) : (
-            topTwoEntries.map((entry) => (
-              <div
-                key={entry.sectionId}
-                className={`flex p-4 rounded-lg shadow-md ${getBackgroundColor(
-                  entry.caregiverAge ? 'CARE_WORKER' : 'VOLUNTEER'
-                )}`}
-              >
-                <div
-                  className="items-center rounded-full justify-center items-center inline-flex mr-3"
-                  style={{
-                    border: `2px solid ${getBackgroundColor2(
-                      entry.caregiverAge ? 'CARE_WORKER' : 'VOLUNTEER'
-                    )}`,
-                  }}
-                >
-                  <img
-                    src={
-                      imageMapping[
-                        entry.caregiverAge ? 'CARE_WORKER' : 'VOLUNTEER'
-                      ][entry.sectionId % 10]
-                    }
-                    alt="user"
-                    className="w-[60px] h-[60px] rounded-full object-cover"
-                  />
-                </div>
+  const getBorderColor = (userType: string): string => {
+    switch (userType) {
+      case 'CAREGIVER':
+        return '#ff6b6b';
+      case 'VOLUNTEER':
+        return '#00AEFF';
+      case 'CARE_WORKER':
+        return '#20CE86';
+      default:
+        return '#ffffff';
+    }
+  };
 
-                <div className="flex flex-col">
-                  <div
-                    className="text-lg font-semibold text-[#2a2e37] line-clamp-2 overflow-hidden"
-                    style={{
-                      display: '-webkit-box',
-                      WebkitBoxOrient: 'vertical',
-                      WebkitLineClamp: 2,
-                    }}
-                  >
-                    {getUserTypeText(
-                      entry.caregiverAge ? 'CARE_WORKER' : 'VOLUNTEER'
-                    )}{' '}
-                    {entry.caregiverAge
-                      ? `${entry.caregiverName}님`
-                      : `${entry.volunteerName}님`}
-                  </div>
-                  <div
-                    className="text-sm text-[#575f70] mt-1 line-clamp-2 overflow-hidden"
-                    style={{
-                      display: '-webkit-box',
-                      WebkitBoxOrient: 'vertical',
-                      WebkitLineClamp: 2,
-                    }}
-                  >
-                    {entry.content}
-                  </div>
-                </div>
-              </div>
-            ))
-          )}
+  return (
+    <div className="mt-6">
+      <div className="flex justify-between items-center mb-[16px]">
+        <div className="text-[#2a2e36] text-xl font-semibold font-['Pretendard'] leading-7">
+          함께 한 추억
+        </div>
+        <div className="text-[#575f70] text-sm font-medium font-['Pretendard'] leading-tight cursor-pointer">
+          더보기
         </div>
       </div>
-    );
-  }
+      <div className="space-y-4">
+        {isLoading ? (
+          <div></div>
+        ) : isError || !topTwoEntries ? (
+          <div>방명록 데이터를 불러오는 중 오류가 발생했습니다.</div>
+        ) : (
+          topTwoEntries.map((entry) => (
+            <div
+              key={entry.sectionId}
+              className={`relative flex p-4 rounded-lg shadow-md ${getBackgroundColor(entry.userType)}`}
+            >
+               <img
+                src={getCertificatedBackImage(entry.userType)}
+                alt="backImage"
+                className="absolute bottom-0 right-0 h-auto z-[50]"
+                style={{
+                  width: 'auto',
+                  objectFit: 'cover',
+                  objectPosition: 'right',
+                }}
+              />
+              <div
+                className="items-center rounded-full justify-center items-center inline-flex mr-3"
+                style={{
+                  border: `2px solid ${getBorderColor(entry.userType)}`,
+                }}
+              >
+                <img
+                  src={imageMapping[entry.userType][entry.sectionId % 10]}
+                  alt="user"
+                  className="w-[60px] h-[60px] rounded-full object-cover"
+                />
+              </div>
+
+              {/* 텍스트 내용 */}
+              <div className="flex flex-col">
+                <div
+                  className="text-lg font-semibold text-[#2a2e37] line-clamp-2 overflow-hidden"
+                  style={{
+                    display: '-webkit-box',
+                    WebkitBoxOrient: 'vertical',
+                    WebkitLineClamp: 2,
+                  }}
+                >
+                  {getUserTypeText(entry.userType)} {entry.profileName}님
+                </div>
+                <div
+                  className="text-sm text-[#575f70] mt-1 line-clamp-2 overflow-hidden"
+                  style={{
+                    display: '-webkit-box',
+                    WebkitBoxOrient: 'vertical',
+                    WebkitLineClamp: 2,
+                  }}
+                >
+                  {entry.content}
+                </div>
+              </div>
+            </div>
+          ))
+        )}
+      </div>
+    </div>
+  );
+};
 
 export default Memories;
