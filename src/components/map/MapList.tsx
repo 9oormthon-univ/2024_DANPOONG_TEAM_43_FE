@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import caregiverProfile from '../../assets/img/mypage/profile-caregiver.svg';
 import volunteerProfile from '../../assets/img/mypage/profile-volunteer.svg';
 import careWorkerProfile from '../../assets/img/mypage/profile-careworker.svg';
@@ -18,12 +18,23 @@ import toiletIcon3 from '../../assets/img/map/toilet3.svg';
 import bathIcon3 from '../../assets/img/map/bath3.svg';
 import walkIcon3 from '../../assets/img/map/walk3.svg';
 import timeIcon from '../../assets/img/map/time.svg'; 
+import UserDetailModal from './UserDetailModal';
 
 interface MapListProps {
   userList: any[];
 }
 
 const MapList: React.FC<MapListProps> = ({ userList }) => {
+  const [selectedUser, setSelectedUser] = useState<any | null>(null);
+
+  const handleModalClose = () => {
+    setSelectedUser(null);
+  };
+
+  const handleUserClick = (user: any) => {
+    setSelectedUser(user);
+  };
+
   const getUserTypeText = (userType: string) => {
     switch (userType) {
       case 'CAREGIVER':
@@ -97,11 +108,13 @@ const MapList: React.FC<MapListProps> = ({ userList }) => {
   };
 
   return (
+  <>
     <div className="absolute bottom-0 left-0 w-full bg-white p-4 shadow-lg z-[99999] overflow-y-auto max-h-[93%]">
       {userList.map((user) => (
         <div
           key={user.userId}
-          className={`flex flex-col justify-between border-b p-4 ${getBackgroundColor(user.userType)} rounded-lg mb-4`}
+          onClick={() => handleUserClick(user)}
+          className={`flex flex-col justify-between border-b p-4 ${getBackgroundColor(user.userType)} rounded-lg mb-4 cursor-pointer`}
         >
           <div className="flex justify-between">
             <div className='flex flex-row'>
@@ -152,6 +165,10 @@ const MapList: React.FC<MapListProps> = ({ userList }) => {
         </div>
       ))}
     </div>
+       {selectedUser && (
+        <UserDetailModal userId={selectedUser.userId} onClose={handleModalClose} />
+      )}
+    </>
   );
 };
 
