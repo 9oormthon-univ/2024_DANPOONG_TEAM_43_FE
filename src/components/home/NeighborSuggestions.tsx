@@ -139,7 +139,7 @@ const NeighborSuggestions: React.FC = () => {
           </div>
         </div>
         <div
-          className={`flex space-x-2 ${
+          className={`flex space-x-2 cursor-pointer ${
             isAuthenticated ? 'overflow-x-auto' : 'overflow-x-hidden'
           }`}
         >

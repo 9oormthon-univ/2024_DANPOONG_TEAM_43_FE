@@ -97,13 +97,13 @@ const MapList: React.FC<MapListProps> = ({ userList }) => {
   };
 
   return (
-    <div className="absolute bottom-0 left-0 w-full bg-white p-4 shadow-lg z-[99999] overflow-y-auto max-h-[92%]">
+    <div className="absolute bottom-0 left-0 w-full bg-white p-4 shadow-lg z-[99999] overflow-y-auto max-h-[93%]">
       {userList.map((user) => (
         <div
           key={user.userId}
           className={`flex flex-col justify-between border-b p-4 ${getBackgroundColor(user.userType)} rounded-lg mb-4`}
         >
-          <div className="flex justify-between px-3">
+          <div className="flex justify-between">
             <div className='flex flex-row'>
               <img
                 src={

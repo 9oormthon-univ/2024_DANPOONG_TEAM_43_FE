@@ -406,7 +406,7 @@ const MapPage: React.FC = () => {
             <img src={userIcon} alt="User List Icon" className="w-[24px] h-[24px]" />
           )}
         </button>
-        <div className="absolute top-[64px] left-0 w-full flex justify-around p-2  z-[99999]">
+        <div className="absolute top-[64px] left-0 w-full flex space-x-4 p-2 pl-4 z-[99999]">
         {['ALL', 'CAREGIVER', 'VOLUNTEER', 'CARE_WORKER'].map((type) => (
           <button
             key={type}
@@ -462,7 +462,7 @@ const MapPage: React.FC = () => {
       >
         {userInfo.city}
       </div>
-      <div id="map-container" className="w-full h-[calc(100vh-140px)] z-[999]"></div>
+      <div id="map-container" className="w-full h-[calc(100vh-120px)] z-[999]"></div>
       {isListExpanded && (
         <div
           className={`transition-all duration-300 ease-in-out overflow-hidden ${

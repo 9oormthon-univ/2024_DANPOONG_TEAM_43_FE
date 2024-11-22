@@ -155,7 +155,7 @@ interface UserCardProps {
                 user.userType
             )} rounded-lg`}
             >
-            <div className="flex justify-between px-3 mb-4">
+            <div className="flex justify-between  mb-4">
                 <div className="flex flex-row">
                 <img
                     src={getUserProfileImage()}
