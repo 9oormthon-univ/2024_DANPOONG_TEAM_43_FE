@@ -27,6 +27,7 @@ const MapPage: React.FC = () => {
   const userInfo = useUserStore((state) => state.userInfo);
   const userCardRef = useRef<any>(null); 
   const [selectedUserType, setSelectedUserType] = useState<string>('ALL'); 
+  const [activeMarkerId, setActiveMarkerId] = useState<number | null>(null);
 
   const { data: userList = [], isLoading: isQueryLoading } = useUserListQuery(userInfo?.city || '', selectedUserType);
 
@@ -138,6 +139,7 @@ const MapPage: React.FC = () => {
   }, [map, userList, currentZoomLevel]);
 
   const handleZoomChange = (mapInstance: any, zoomLevel: number) => {
+    setActiveMarkerId(null);
     clearMarkersAndClusterers();
     if (zoomLevel >= 4) {
       showTypeClustering(mapInstance);
@@ -145,6 +147,30 @@ const MapPage: React.FC = () => {
       showIndividualMarkers(mapInstance);
     }
   };
+
+  // 선택 마커 크기 키우기
+  useEffect(() => {
+    if (map) {
+      clearMarkersAndClusterers();
+      showIndividualMarkers(map);
+    }
+  }, [activeMarkerId, map]);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      // 지도 외부를 클릭했을 때 activeMarkerId를 초기화
+      if (!e.target || !(e.target as HTMLElement).closest('#map-container')) {
+        setActiveMarkerId(null); // 마커 초기화
+        setSelectedUser(null);   // 선택된 유저 정보 초기화
+      }
+    };
+  
+    document.addEventListener('mousedown', handleClickOutside);
+  
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside); // 이벤트 정리
+    };
+  }, []);
 
   const handleFilterChange = (type: string) => {
     setSelectedUserType(type);
@@ -204,36 +230,40 @@ const MapPage: React.FC = () => {
 
   const showIndividualMarkers = (mapInstance: any) => {
     const markers = userList.map((user) => {
-      const markerImage = getMarkerImage(user.userType);
-
+      const markerImage = getMarkerImage(user.userType, user.userId === activeMarkerId);
+  
       const marker = new window.kakao.maps.Marker({
         position: new window.kakao.maps.LatLng(user.latitude, user.longitude),
         image: markerImage, 
       });
-
+  
       window.kakao.maps.event.addListener(marker, 'click', () => {
+        setActiveMarkerId(user.userId); 
         setSelectedUser(user); 
         mapInstance.panTo(marker.getPosition());
-        setMarkerSize(new window.kakao.maps.Size(60, 60));
       });
-
+  
       marker.setMap(mapInstance);
       return marker;
     });
-
+  
     markersRef.current = markers;
   };
 
-  const getMarkerImage = (userType: string) => {
+  const getMarkerImage = (userType: string, isActive: boolean = false) => {
+    const size = isActive
+      ? new window.kakao.maps.Size(50, 50) 
+      : new window.kakao.maps.Size(40, 40); 
+  
     switch (userType) {
       case 'CAREGIVER':
-        return new window.kakao.maps.MarkerImage(caregiverProfile, markerSize);
+        return new window.kakao.maps.MarkerImage(caregiverProfile, size);
       case 'VOLUNTEER':
-        return new window.kakao.maps.MarkerImage(volunteerProfile, markerSize);
+        return new window.kakao.maps.MarkerImage(volunteerProfile, size);
       case 'CARE_WORKER':
-        return new window.kakao.maps.MarkerImage(careWorkerProfile, markerSize);
+        return new window.kakao.maps.MarkerImage(careWorkerProfile, size);
       default:
-        return new window.kakao.maps.MarkerImage(caregiverProfile, markerSize);
+        return new window.kakao.maps.MarkerImage(caregiverProfile, size);
     }
   };
 

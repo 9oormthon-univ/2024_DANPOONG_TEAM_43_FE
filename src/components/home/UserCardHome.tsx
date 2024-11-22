@@ -99,9 +99,8 @@ interface UserCardProps {
 
     const getUserImage = (userId: number, userType: string): string => {
         const images = imageMapping[userType];
-        if (!images) return ''; // 유효하지 않은 타입일 경우 기본값 반환
-    
-        // userId를 10으로 나눈 나머지를 이용해 이미지 인덱스를 고정
+        if (!images) return ''; 
+
         const index = userId % 10;
         return images[index];
     };
@@ -270,9 +269,10 @@ interface UserCardProps {
                     </div>
                 </div>
                 </div>
-                <div className="text-right text-[#a6acba] items-center my-auto text-xs font-medium font-['Pretendard'] leading-none">
+                {user.km && (<div className="text-right text-[#a6acba] items-center my-auto text-xs font-medium font-['Pretendard'] leading-none">
                 {user.km.toFixed(2)} km
-                </div>
+                </div>)}
+
             </div>
 
             <div className="flex space-x-0 mt-6">
