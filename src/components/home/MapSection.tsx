@@ -245,6 +245,7 @@ const MapSection: React.FC<MapSectionProps> = ({ userData }) => {
         setTimeout(() => {
           window.alert('위치 정보에 동의했습니다.');
           setShowAgreementModal(false); 
+          window.location.reload();
         }, 2000);
         setOpenModal(false);
       }
