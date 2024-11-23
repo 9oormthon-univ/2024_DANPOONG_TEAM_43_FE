@@ -20,6 +20,7 @@ import RequestDetail from 'page/RequestDetail';
 import RequestPay from 'page/RequestPay';
 import PayDone from 'page/PayDone';
 import Memory from 'page/Memory';
+import AIContents from 'page/AIContents';
 
 const queryClient = new QueryClient();
 
@@ -41,7 +42,7 @@ const App: React.FC = () => {
     }
   }, [location, navigate]);
 
-  const showHeaderAndNav = !['/login', '/kakao-login', '/signup', '/chat-room','/chat-volunteer','/chat-volunteer','/chat-worker','/request-detail','/request-sure','/request-pay','/pay-done', '/Memory'].includes(location.pathname);
+  const showHeaderAndNav = !['/login', '/kakao-login', '/signup', '/chat-room','/chat-volunteer','/chat-volunteer','/chat-worker','/request-detail','/request-sure','/request-pay','/pay-done', '/Memory','/ai-contents'].includes(location.pathname);
 
 
   return (
@@ -65,6 +66,7 @@ const App: React.FC = () => {
         <Route path="/request-pay" element={<RequestPay />} />
         <Route path="/pay-done" element={<PayDone />} />
         <Route path="/Memory" element={<Memory />} />
+        <Route path="/ai-contents" element={<AIContents />} />
       </Routes>
       {showHeaderAndNav && <Nav />}
       </QueryClientProvider>

@@ -17,7 +17,7 @@ const KakaoLoginRedirect: React.FC = () => {
     if (code) {
       setLoading(true);
 
-      fetch(`http://54.180.171.247:8080/kakao-code?code=${code}`, {
+      fetch(`https://carely-backend.site/kakao-code?code=${code}`, {
         method: 'POST',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },

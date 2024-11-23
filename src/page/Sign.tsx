@@ -91,7 +91,7 @@ const Sign = () => {
     }
 
     try {
-      const response = await fetch("http://54.180.171.247:8080/register", {
+      const response = await fetch("https://carely-backend.site/register", {
         method: "POST",
         body: formDataToSubmit,
       });
