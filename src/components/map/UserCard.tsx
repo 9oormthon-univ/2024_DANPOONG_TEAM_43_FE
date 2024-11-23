@@ -187,7 +187,7 @@ const UserCard: React.FC<UserCardProps> = ({ user }) => {
     
   return (
     <>
-    <div className="absolute bottom-0 left-0 w-full bg-white p-4 shadow-md z-[99999] rounded-t-lg overflow-y-auto cursor-pointer" onClick={handleCardClick} >
+    <div className="absolute bottom-0 left-0 w-full bg-white p-4 shadow-md z-[99998] rounded-t-lg overflow-y-auto cursor-pointer" onClick={handleCardClick} >
         <div
           key={user.userId}
           className={`relative flex flex-col justify-between border-b p-4 ${getBackgroundColor(user.userType)} rounded-lg z-[100]`}
