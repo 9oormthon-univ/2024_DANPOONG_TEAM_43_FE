@@ -33,6 +33,7 @@ import type3_7 from '../../assets/img/user/type3-7.svg';
 import type3_8 from '../../assets/img/user/type3-8.svg';
 import type3_9 from '../../assets/img/user/type3-9.svg';
 import type3_10 from '../../assets/img/user/type3-10.svg';
+import { useMemoDetailQuery } from 'service/aiMemos';
 
 const imageMapping: { [key: string]: string[] } = {
     CAREGIVER: [type1_1, type1_2, type1_3, type1_4, type1_5, type1_6, type1_7, type1_8, type1_9, type1_10],
@@ -40,116 +41,104 @@ const imageMapping: { [key: string]: string[] } = {
     VOLUNTEER: [type3_1, type3_2, type3_3, type3_4, type3_5, type3_6, type3_7, type3_8, type3_9, type3_10],
   };
 
-const ConnectAI = () => {
-  const navigate = useNavigate();
-  const { data: volunteerData, isLoading } = useVolunteerDataQuery();
-
-  const formatDate = (dateString: string) => {
-    const options: Intl.DateTimeFormatOptions = {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: false,
-    };
-    return new Date(dateString).toLocaleString('ko-KR', options);
-  };
-
-  const getUserImage = (userId: number, userType: string): string => {
-    const images = imageMapping[userType];
-    if (!images) return ''; 
-
-    const index = userId % 10;
-    return images[index];
-    };
-
-
-  const GoToAI = () => {
-    if (volunteerData && volunteerData.length > 0) {
-      navigate(`/ai-contents/${volunteerData[0].roomId}`);
+  
+  const ConnectAI = () => {
+    const navigate = useNavigate();
+    const { data: volunteerData, isLoading: volunteerLoading } = useVolunteerDataQuery();
+  
+    if (volunteerLoading || !volunteerData || volunteerData.length === 0) {
+      return <p>데이터가 없습니다.</p>;
     }
-  };
-
-  const getBackgroundColor2 = (userType: string): string => {
-    switch (userType) {
-      case 'CAREGIVER':
-        return '#ff6b6b';
-      case 'VOLUNTEER':
-        return '#00AEFF';
-      case 'CARE_WORKER':
-        return '#20CE86';
-      default:
-        return '#ffffff';
-    }
-  };
-
-  if (isLoading) {
-    return <p></p>;
-  }
-
-  if (!volunteerData || volunteerData.length === 0) {
-    return <p>데이터가 없습니다.</p>;
-  }
-
-  const firstVolunteer = volunteerData[0];
-
-  console.log(firstVolunteer.caregiverId)
-  console.log(firstVolunteer.userType)
-
-  return (
-    <div className='Connect_AI'>
-         <div className="mt-[36px] mb-[24px]">
-            <div className="text-[#2a2e36] text-xl font-semibold font-['Pretendard'] leading-7">
-                안녕하세요 {firstVolunteer.volunteerName}님,<br/>
-                {firstVolunteer.caregiverName}님과의 인연이 기다리고 있어요
-            </div>
-            </div>
-      <div className="outbox">
-        <div className="top">
-
-        <div
-            className="flex items-center justify-center rounded-full border-2"
-            style={{
+  
+    const firstVolunteer = volunteerData[0];
+    const { data: memoDetail, isLoading: memoLoading } = useMemoDetailQuery(firstVolunteer.caregiverId);
+  
+    const formatDate = (dateString: string) => {
+      const options: Intl.DateTimeFormatOptions = {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false,
+      };
+      return new Date(dateString).toLocaleString('ko-KR', options);
+    };
+  
+    const getUserImage = (userId: number, userType: string): string => {
+      const images = imageMapping[userType];
+      if (!images) return '';
+  
+      const index = userId % images.length;
+      return images[index];
+    };
+  
+    const GoToAI = () => {
+        if (volunteerData && volunteerData.length > 0) {
+          navigate(`/ai-contents/${volunteerData[0].roomId}`);
+        }
+      };
+  
+    const getBackgroundColor2 = (userType: string): string => {
+      switch (userType) {
+        case 'CAREGIVER':
+          return '#ff6b6b';
+        case 'VOLUNTEER':
+          return '#00AEFF';
+        case 'CARE_WORKER':
+          return '#20CE86';
+        default:
+          return '#ffffff';
+      }
+    };
+  
+    
+    return (
+      <div className="Connect_AI">
+        <div className="mt-[36px] mb-[24px]">
+          <div className="text-[#2a2e36] text-xl font-semibold font-['Pretendard'] leading-7">
+            안녕하세요 {firstVolunteer.volunteerName}님,<br />
+            {firstVolunteer.caregiverName}님과의 인연이 기다리고 있어요
+          </div>
+        </div>
+        <div className="outbox">
+          <div className="top">
+            <div
+              className="flex items-center justify-center rounded-full border-2"
+              style={{
                 border: `2px solid ${getBackgroundColor2('CAREGIVER')}`,
                 minWidth: '64px',
                 minHeight: '64px',
                 maxWidth: '64px',
                 maxHeight: '64px',
-            }}
+              }}
             >
-            <img
+              <img
                 src={getUserImage(firstVolunteer.caregiverId, 'CAREGIVER')}
                 alt="user"
                 className="w-[60px] h-[60px] object-cover rounded-full"
-                style={{
-                minWidth: '60px',
-                minHeight: '60px',
-                maxWidth: '60px',
-                maxHeight: '60px',
-                }}
-            />
-        </div>
-          <div className="text">
-            <p className="top_title">
-              {firstVolunteer.caregiverName}님과의 약속{' '}
-              <img src={next} alt="" className="next" onClick={GoToAI} />
-            </p>
-            <p className="when">{formatDate(firstVolunteer.startTime)}</p>
+              />
+            </div>
+            <div className="text">
+              <p className="top_title">
+                {firstVolunteer.caregiverName}님과의 약속{' '}
+                <img src={next} alt="" className="next" onClick={GoToAI} />
+              </p>
+              <p className="when">{formatDate(firstVolunteer.startTime)}</p>
+            </div>
           </div>
+          <div className="middle">
+            <img src={AI_icon} alt="" className="AI_img" />
+            <p className="AI_info">{firstVolunteer.caregiverName}님의 간병 정보를 요약해 드려요</p>
+          </div>
+          <p className="AI_text line-clamp-2">
+            {memoLoading
+              ? ''
+              : memoDetail?.description || '정보를 불러올 수 없습니다.'}
+          </p>
         </div>
-        <div className="middle">
-          <img src={AI_icon} alt="" className="AI_img" />
-          <p className="AI_info">{firstVolunteer.volunteerName}님의 간병 정보를 요약해 드려요</p>
-        </div>
-        <p className="AI_text">
-          투약은 하루 2번, 아침 10시와 저녁 6시에 진행합니다. 또한, 복약 후에는 환자 상태를 세심하게
-          관찰하여 이상 반응이 없는지 확인해야 합니다. 식사는 매일 아침 8시와 저녁 5시에 급여됩니다.
-          식단은 계란과 우유를 필수로 급여해야 합니다. 필요한 경우 추가적인 수분 보충을 권장합니다.
-        </p>
       </div>
-    </div>
-  );
-};
-
-export default ConnectAI;
+    );
+  };
+  
+  export default ConnectAI;
