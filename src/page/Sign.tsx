@@ -106,7 +106,7 @@ const Sign = () => {
       console.error("폼 전송 오류:", error);
     }
   };
-
+  
   const renderStepContent = () => {
     if (isComplete) {
       return (
@@ -118,38 +118,67 @@ const Sign = () => {
   
     switch (step) {
       case 1:
-        return <Step1RoleSelection onSelectRole={handleSelectRole} onBackClick={() => setShowExitModal(true)} />;
+        return (
+          <div className="mx-auto max-w-[440px] min-w-[320px] w-[90%]">
+            <Step1RoleSelection onSelectRole={handleSelectRole} onBackClick={() => setShowExitModal(true)} />
+          </div>
+        );
       case 2:
-        return <Step2BasicInfo formData={formData} setFormData={setFormData} onNext={handleNextStep} onBackClick={() => setShowExitModal(true)} />;
+        return (
+          <div className="mx-auto max-w-[440px] min-w-[320px] w-[90%]">
+            <Step2BasicInfo formData={formData} setFormData={setFormData} onNext={handleNextStep} onBackClick={() => setShowExitModal(true)} />
+          </div>
+        );
       case 3:
-        return <Step3ContactInfo formData={formData} setFormData={setFormData} onNext={handleNextStep} onBackClick={() => setShowExitModal(true)} />;
+        return (
+          <div className="mx-auto max-w-[440px] min-w-[320px] w-[90%]">
+            <Step3ContactInfo formData={formData} setFormData={setFormData} onNext={handleNextStep} onBackClick={() => setShowExitModal(true)} />
+          </div>
+        );
       case 4:
-        return <Step4CareInfo role={formData.userType} formData={formData} setFormData={setFormData} onNext={handleNextStep} onBackClick={() => setShowExitModal(true)} />;
+        return (
+          <div className="mx-auto max-w-[440px] min-w-[320px] w-[90%]">
+            <Step4CareInfo role={formData.userType} formData={formData} setFormData={setFormData} onNext={handleNextStep} onBackClick={() => setShowExitModal(true)} />
+          </div>
+        );
       case 5:
-        return <Step5Story formData={formData} setFormData={setFormData} onNext={handleNextStep} onBackClick={() => setShowExitModal(true)} />;
+        return (
+          <div className="mx-auto max-w-[440px] min-w-[320px] w-[90%]">
+            <Step5Story formData={formData} setFormData={setFormData} onNext={handleNextStep} onBackClick={() => setShowExitModal(true)} />
+          </div>
+        );
       case 6:
         return formData.userType === 'CARE_WORKER' ? (
-          <Step6Certification formData={formData} setFormData={setFormData} onNext={handleNextStep} onBackClick={() => setShowExitModal(true)} />
+          <div className="w-full mx-auto max-w-[440px] min-w-[320px]">
+            <Step6Certification
+              formData={formData}
+              setFormData={setFormData}
+              onNext={handleNextStep}
+              onBackClick={() => setShowExitModal(true)}
+            />
+          </div>
         ) : (
-          <Step7LocationSharing formData={formData} setFormData={setFormData} onSubmit={handleSubmit} onBackClick={() => setShowExitModal(true)} />
+          <div className="mx-auto max-w-[440px] min-w-[320px] w-[90%]">
+            <Step7LocationSharing formData={formData} setFormData={setFormData} onSubmit={handleSubmit} onBackClick={() => setShowExitModal(true)} />
+          </div>
         );
       case 7:
-        return <Step7LocationSharing formData={formData} setFormData={setFormData} onSubmit={handleSubmit} onBackClick={() => setShowExitModal(true)} />;
+        return (
+          <div className="mx-auto max-w-[440px] min-w-[320px] w-[90%]">
+            <Step7LocationSharing formData={formData} setFormData={setFormData} onSubmit={handleSubmit} onBackClick={() => setShowExitModal(true)} />
+          </div>
+        );
       default:
         return null;
     }
   };
-
-  const containerClass = isComplete
-    ? "w-full mx-auto max-w-[440px] min-w-[320px]" 
-    : "mx-auto max-w-[440px] min-w-[320px] w-[90%]";
   
   return (
-    <div className={containerClass}>
+    <div>
       {renderStepContent()}
       {showExitModal && (
         <ExitConfirmationModal
-          onConfirm={() => navigate('/login')} 
+          onConfirm={() => navigate('/login')}
           onCancel={() => setShowExitModal(false)}
         />
       )}
