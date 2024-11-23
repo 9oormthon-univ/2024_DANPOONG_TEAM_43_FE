@@ -361,11 +361,27 @@ const MapPage: React.FC = () => {
           return;
         }
   
+        // **검색어와 사용자 타입 매핑**
+        const typeMapping: { [key: string]: string } = {
+          간병: 'CAREGIVER',
+          간병인: 'CAREGIVER',
+          자원: 'VOLUNTEER',
+          자원봉사자: 'VOLUNTEER',
+          요양: 'CARE_WORKER',
+          요양보호사: 'CARE_WORKER',
+        };
+  
+        // 매핑된 타입 가져오기
+        const mappedType = Object.keys(typeMapping).find((key) =>
+          normalizedSearchTerm.includes(key)
+        );
+  
         const filteredUsers = userList
           .filter(
             (user) =>
               user.username.toLowerCase().includes(normalizedSearchTerm) ||
-              user.userType.toLowerCase().includes(normalizedSearchTerm)
+              user.userType.toLowerCase().includes(normalizedSearchTerm) ||
+              (mappedType && user.userType === typeMapping[mappedType]) // 타입 매핑 조건 추가
           )
           .map((user) => ({
             ...user,
@@ -397,7 +413,7 @@ const MapPage: React.FC = () => {
             map?.setLevel(3); // 줌 인
             handleZoomChange(map, 3); // 마커 상태 업데이트
           }, 500);
-          setSelectedUser(nearestUser);
+          setSelectedUser(nearestUser); // 유저 모달 표시
         }
       } catch (error) {
         console.error("Error in search:", error);
