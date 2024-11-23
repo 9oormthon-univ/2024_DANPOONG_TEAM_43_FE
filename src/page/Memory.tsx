@@ -60,7 +60,6 @@ const Memory: React.FC = () => {
         />
         <div className="text-center text-[#2a2e36] text-base font-medium font-['Pretendard'] leading-snug">함께 한 추억</div>
       </div>
-        {/* 탭 헤더 */}
         <div className="flex w-[90%] mx-auto justify-start items-center space-x-3 mb-4">
         {['전체', '내 집', '이웃의 집'].map((tab) => (
           <button
@@ -76,15 +75,14 @@ const Memory: React.FC = () => {
           </button>
         ))}
       </div>
-  
-        {/* 데이터 영역 */}
+
         <div className="flex-1 space-y-4 w-full mx-auto ">
           {isLoading ? (
             <div></div>
           ) : isError ? (
             <div>데이터를 불러오는 중 오류가 발생했습니다.</div>
           ) : guestbookData?.length === 0 ? (
-            <div>현재 표시할 데이터가 없습니다.</div>
+            <div>함께 한 추억이 아직 없습니다!</div>
           ) : (
             guestbookData?.map((entry) => {
               if (entry.content === null) {

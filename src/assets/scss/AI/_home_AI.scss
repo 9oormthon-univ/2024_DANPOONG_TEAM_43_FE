@@ -2,8 +2,6 @@
     margin: 0;
     padding: 0;
     width: 100%;
-    padding-left: 20px;
-    padding-right: 20px;
 
     .outbox {
         display: flex;
@@ -15,7 +13,6 @@
         gap: 16px;
         border-radius: 8px;
         background: var(--White, #FFF);
-        border: 1px solid #000;
 
         .top {
             display: flex;

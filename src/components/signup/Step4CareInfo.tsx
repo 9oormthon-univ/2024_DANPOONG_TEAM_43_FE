@@ -134,7 +134,7 @@ const Step4CareInfo: React.FC<Step4Props> = ({ role, formData, setFormData, onNe
             </div>
             <button
               onClick={handleConfirm}
-              className="w-full h-14 mt-[28px] bg-[#ff6b6b] text-white rounded-lg"
+              className="w-full h-[52px] mt-[28px] bg-[#ff6b6b] text-white font-semibold text-base font-['Pretendard'] leading-snug rounded-lg"
             >
               확인
             </button>

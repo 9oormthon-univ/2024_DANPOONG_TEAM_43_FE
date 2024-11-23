@@ -114,7 +114,7 @@ const Memories: React.FC = () => {
         {isLoading ? (
           <div></div>
         ) : isError || !validEntries || validEntries.length === 0 ? (
-          <div>방명록 데이터를 불러오는 중 오류가 발생했습니다.</div>
+          <div>함께 한 추억이 아직 없습니다!</div>
         ) : (
           validEntries.map((entry) => (
             <div
