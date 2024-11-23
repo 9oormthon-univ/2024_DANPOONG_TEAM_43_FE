@@ -142,7 +142,6 @@ const MapPage: React.FC = () => {
   }, [map, userList, currentZoomLevel]);
 
   const handleZoomChange = (mapInstance: any, zoomLevel: number) => {
-    setActiveMarkerId(null); // 활성화 상태 초기화
     clearMarkersAndClusterers();
   
     if (zoomLevel >= 4) {
@@ -150,19 +149,20 @@ const MapPage: React.FC = () => {
     } else if (zoomLevel <= 3) {
       showIndividualMarkers(mapInstance); // 개별 마커 표시
   
-      // **활성화된 마커 다시 강조 표시**
+      // 활성화된 마커 강조
       if (activeMarkerId !== null) {
-        const activeMarker = markersRef.current.find(
-          (marker) => marker.getPosition().equals(
-            new window.kakao.maps.LatLng(
-              userList.find((user) => user.userId === activeMarkerId)?.latitude,
-              userList.find((user) => user.userId === activeMarkerId)?.longitude
-            )
-          )
-        );
+        const activeUser = userList.find((user) => user.userId === activeMarkerId);
+        if (activeUser) {
+          const activeMarker = markersRef.current.find(
+            (marker) =>
+              marker.getPosition().equals(
+                new window.kakao.maps.LatLng(activeUser.latitude, activeUser.longitude)
+              )
+          );
   
-        if (activeMarker) {
-          activeMarker.setImage(getMarkerImage('CAREGIVER', true)); // 예시: 활성화된 마커 크기와 이미지
+          if (activeMarker) {
+            activeMarker.setImage(getMarkerImage(activeUser.userType, true)); // 강조된 이미지로 변경
+          }
         }
       }
     }
@@ -251,7 +251,8 @@ const MapPage: React.FC = () => {
 
   const showIndividualMarkers = (mapInstance: any) => {
     const markers = userList.map((user) => {
-      const markerImage = getMarkerImage(user.userType, user.userId === activeMarkerId);
+      const isActive = user.userId === activeMarkerId;
+      const markerImage = getMarkerImage(user.userType, isActive);
   
       const marker = new window.kakao.maps.Marker({
         position: new window.kakao.maps.LatLng(user.latitude, user.longitude),
@@ -388,35 +389,15 @@ const MapPage: React.FC = () => {
             nearestUser.longitude
           );
   
-          // 중심 이동
-          map?.panTo(userPosition);
+          map?.panTo(userPosition); // 지도 중심 이동
+          setActiveMarkerId(nearestUser.userId); // 활성화된 마커 설정
   
-          // 줌 레벨을 단계적으로 변경
-          const smoothZoom = (startLevel: number, endLevel: number, duration: number) => {
-            const steps = Math.abs(startLevel - endLevel);
-            const stepDuration = duration / steps;
-  
-            for (let i = 1; i <= steps; i++) {
-              setTimeout(() => {
-                const zoomLevel = startLevel > endLevel ? startLevel - i : startLevel + i;
-                map?.setLevel(zoomLevel, { animate: true });
-              }, i * stepDuration);
-            }
-          };
-  
-          if (currentZoomLevel >= 4) {
-            smoothZoom(currentZoomLevel, 3, 1000);
-          }
-  
-          // 유저 선택 후 모달 표시
+          // 줌 레벨 변경과 마커 상태 갱신
+          setTimeout(() => {
+            map?.setLevel(3); // 줌 인
+            handleZoomChange(map, 3); // 마커 상태 업데이트
+          }, 500);
           setSelectedUser(nearestUser);
-  
-          // **활성화된 마커 설정**
-          setActiveMarkerId(nearestUser.userId);
-  
-          // **마커 이미지와 크기 업데이트**
-          clearMarkersAndClusterers();
-          showIndividualMarkers(map); // 이 함수에서 activeMarkerId를 기반으로 이미지와 크기가 업데이트됩니다.
         }
       } catch (error) {
         console.error("Error in search:", error);
