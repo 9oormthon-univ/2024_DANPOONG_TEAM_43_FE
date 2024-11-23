@@ -69,14 +69,19 @@ const RequestPay = () => {
     }
     const handleAccept = async () => {
         try {
-            const response = await axiosInstance.patch(`/volunteer/approval/${requestId}`, {
-                roomId,
-                messageId,
-            });
-
+            // JSON 객체 생성
+            const requestData = {
+                roomId: roomId,
+                messageId: messageId,
+            };
+    
+            // 서버로 PATCH 요청 보내기
+            const response = await axiosInstance.patch(`/volunteer/approval/${requestId}`, requestData);
+    
+            console.log(requestData)
             if (response.status === 200) {
                 alert('요청을 성공적으로 수락했습니다.');
-                navigate('/pay-done', { state: { bgColor, color, mainColor, roomId, requestId, messageId,receiverUserType,receiverName,receiverId } });
+                navigate(-1); // 이전 페이지로 이동
             }
         } catch (err) {
             console.error('Failed to accept request:', err);
