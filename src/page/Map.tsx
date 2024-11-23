@@ -142,12 +142,29 @@ const MapPage: React.FC = () => {
   }, [map, userList, currentZoomLevel]);
 
   const handleZoomChange = (mapInstance: any, zoomLevel: number) => {
-    setActiveMarkerId(null);
+    setActiveMarkerId(null); // 활성화 상태 초기화
     clearMarkersAndClusterers();
+  
     if (zoomLevel >= 4) {
-      showTypeClustering(mapInstance);
+      showTypeClustering(mapInstance); // 클러스터링 표시
     } else if (zoomLevel <= 3) {
-      showIndividualMarkers(mapInstance);
+      showIndividualMarkers(mapInstance); // 개별 마커 표시
+  
+      // **활성화된 마커 다시 강조 표시**
+      if (activeMarkerId !== null) {
+        const activeMarker = markersRef.current.find(
+          (marker) => marker.getPosition().equals(
+            new window.kakao.maps.LatLng(
+              userList.find((user) => user.userId === activeMarkerId)?.latitude,
+              userList.find((user) => user.userId === activeMarkerId)?.longitude
+            )
+          )
+        );
+  
+        if (activeMarker) {
+          activeMarker.setImage(getMarkerImage('CAREGIVER', true)); // 예시: 활성화된 마커 크기와 이미지
+        }
+      }
     }
   };
 
@@ -343,7 +360,6 @@ const MapPage: React.FC = () => {
           return;
         }
   
-        // 검색 필터링 및 거리 계산
         const filteredUsers = userList
           .filter(
             (user) =>
@@ -377,24 +393,30 @@ const MapPage: React.FC = () => {
   
           // 줌 레벨을 단계적으로 변경
           const smoothZoom = (startLevel: number, endLevel: number, duration: number) => {
-            const steps = Math.abs(startLevel - endLevel); // 줌 변경 단계 수
-            const stepDuration = duration / steps; // 단계별 지속 시간
+            const steps = Math.abs(startLevel - endLevel);
+            const stepDuration = duration / steps;
   
             for (let i = 1; i <= steps; i++) {
               setTimeout(() => {
                 const zoomLevel = startLevel > endLevel ? startLevel - i : startLevel + i;
-                map?.setLevel(zoomLevel, { animate: true }); // 부드러운 애니메이션
+                map?.setLevel(zoomLevel, { animate: true });
               }, i * stepDuration);
             }
           };
   
-          // 현재 줌 레벨에서 2단계까지 천천히 확대
           if (currentZoomLevel >= 4) {
-            smoothZoom(currentZoomLevel, 3, 1000); // 1초 동안 줌 단계 변경
+            smoothZoom(currentZoomLevel, 3, 1000);
           }
   
           // 유저 선택 후 모달 표시
           setSelectedUser(nearestUser);
+  
+          // **활성화된 마커 설정**
+          setActiveMarkerId(nearestUser.userId);
+  
+          // **마커 이미지와 크기 업데이트**
+          clearMarkersAndClusterers();
+          showIndividualMarkers(map); // 이 함수에서 activeMarkerId를 기반으로 이미지와 크기가 업데이트됩니다.
         }
       } catch (error) {
         console.error("Error in search:", error);
