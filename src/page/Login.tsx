@@ -32,7 +32,7 @@ const Login = () => {
 
   const handleKakaoLogin = () => {
     const clientId = '78256822bbbbbe614142bcad43930708';
-    const redirectUri = 'https://carely-backend.site/kakao-code';
+    const redirectUri = 'https://carely-seven.vercel.app/kakao-code';
     window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=profile_nickname`;
   };
 
