@@ -46,7 +46,7 @@ const ChatRoomMain: React.FC = () => {
     const [messages, setMessages] = useState<Message[]>([]);
     const [newMessage, setNewMessage] = useState('');
     const [stompClient, setStompClient] = useState<any>(null); // 실제로 stompClient 초기화 필요
-
+    const sc = useRef<any>(null)
     const openChatRoomMutation = useMutation({
         mutationFn: async () => {
             const response = await axiosInstance.post(`/chat/rooms/${roomId}/close`);
@@ -92,8 +92,10 @@ const ChatRoomMain: React.FC = () => {
 
     // Connect to WebSocket and set up STOMP client
     useEffect(() => {
-        const connectToChatRoom = async () => {
-            if (roomId) {
+        const connectToChatRoom = () => {
+            console.log("roomId", roomId);
+
+            if (roomId && sc.current == null) {
                 setMessages([]); // Clear previous messages
                 try {
                     const socket = new SockJS('http://54.180.171.247:8080/chat'); // Replace with your actual URL
@@ -108,6 +110,7 @@ const ChatRoomMain: React.FC = () => {
                     };
 
                     client.activate();
+                    sc.current = client;
                     setStompClient(client);
                 } catch (error) {
                     console.error('Error connecting to chat room:', error);
