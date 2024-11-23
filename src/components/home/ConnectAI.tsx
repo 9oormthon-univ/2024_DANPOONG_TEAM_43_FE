@@ -85,9 +85,15 @@ const imageMapping: { [key: string]: string[] } = {
       return images[index];
     };
   
-    const GoToAI = () => {
+    const GoToAI = (caregiverId: string | number, id: string | number,caregiverName:string) => {
       if (volunteerData && volunteerData.length > 0) {
-        navigate('/ai-contents');
+        navigate('/ai-contents', {
+          state: {
+            caregiverId: caregiverId, // 전달받은 caregiverId
+            id: id,
+            caregiverName: caregiverName // 전달받은 id
+          },
+        });
       }
     };
   
@@ -177,7 +183,7 @@ const imageMapping: { [key: string]: string[] } = {
                 <div className="text">
                   <p className="top_title">
                     {firstVolunteer?.caregiverName}님과의 약속{' '}
-                    <img src={next} alt="" className="next" onClick={GoToAI} />
+                    <img src={next} alt="" className="next" onClick={()=>GoToAI(firstVolunteer.caregiverId,firstVolunteer.id,firstVolunteer.caregiverName)} />
                   </p>
                   <p className="when">{formatDate(firstVolunteer?.startTime || '')}</p>
                 </div>
