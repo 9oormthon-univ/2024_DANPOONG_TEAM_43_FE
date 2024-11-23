@@ -17,4 +17,5 @@ export interface MemoData {
     roomId: string;
     userId: number;
     userType: 'CAREGIVER';
+    memo: string;
   }

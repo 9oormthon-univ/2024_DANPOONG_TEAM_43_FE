@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import next from '../../assets/img/home/Ai_next.svg';
 import AI_icon from '../../assets/img/home/AI_icon.svg';
 import { useNavigate } from 'react-router-dom';
@@ -34,6 +34,7 @@ import type3_8 from '../../assets/img/user/type3-8.svg';
 import type3_9 from '../../assets/img/user/type3-9.svg';
 import type3_10 from '../../assets/img/user/type3-10.svg';
 import { useMemoDetailQuery } from 'service/aiMemos';
+import { useUserStore } from 'stores/useUserStore';
 
 const imageMapping: { [key: string]: string[] } = {
     CAREGIVER: [type1_1, type1_2, type1_3, type1_4, type1_5, type1_6, type1_7, type1_8, type1_9, type1_10],
@@ -45,13 +46,24 @@ const imageMapping: { [key: string]: string[] } = {
   const ConnectAI = () => {
     const navigate = useNavigate();
     const { data: volunteerData, isLoading: volunteerLoading } = useVolunteerDataQuery();
+    const userInfo = useUserStore((state) => state.userInfo);
+
+    const [forceLoading, setForceLoading] = useState(true);
+
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+        setForceLoading(false);
+        }, 500); 
+        return () => clearTimeout(timer);
+    }, []);
+
   
     if (volunteerLoading || !volunteerData || volunteerData.length === 0) {
-      return <p>데이터가 없습니다.</p>;
+      return <p></p>;
     }
   
     const firstVolunteer = volunteerData[0];
-    const { data: memoDetail, isLoading: memoLoading } = useMemoDetailQuery(firstVolunteer.caregiverId);
   
     const formatDate = (dateString: string) => {
       const options: Intl.DateTimeFormatOptions = {
@@ -74,10 +86,10 @@ const imageMapping: { [key: string]: string[] } = {
     };
   
     const GoToAI = () => {
-        if (volunteerData && volunteerData.length > 0) {
-          navigate(`/ai-contents/${volunteerData[0].roomId}`);
-        }
-      };
+      if (volunteerData && volunteerData.length > 0) {
+        navigate('/ai-contents');
+      }
+    };
   
     const getBackgroundColor2 = (userType: string): string => {
       switch (userType) {
@@ -92,53 +104,97 @@ const imageMapping: { [key: string]: string[] } = {
       }
     };
   
+    const renderMockData = () => (
+        <div className="Connect_AI blur-sm">
+          <div className="mt-[36px] mb-[24px]">
+            <div className="text-[#2a2e36] text-xl font-semibold font-['Pretendard'] leading-7">
+              안녕하세요 {userInfo.username}님,<br />
+              {userInfo.username}님과의 인연이 기다리고 있어요
+            </div>
+          </div>
+          <div className="outbox">
+            <div className="top">
+              <div
+                className="flex items-center justify-center rounded-full border-2"
+                style={{
+                  border: `2px solid #ff6b6b`,
+                  minWidth: '64px',
+                  minHeight: '64px',
+                  maxWidth: '64px',
+                  maxHeight: '64px',
+                }}
+              >
+                <img
+                  src={type1_1}
+                  alt="default user"
+                  className="w-[60px] h-[60px] object-cover rounded-full"
+                />
+              </div>
+              <div className="text">
+                <p className="top_title">정지오님과의 약속</p>
+                <p className="when">2024년 11월 25일 08:20</p>
+              </div>
+            </div>
+            <div className="middle">
+              <img src={AI_icon} alt="AI Icon" className="AI_img" />
+              <p className="AI_info">정지오님의 간병 정보를 요약해 드려요</p>
+            </div>
+            <p className="AI_text line-clamp-2 min-h-[44px]">
+     
+            </p>
+          </div>
+        </div>
+      );
     
-    return (
-      <div className="Connect_AI">
-        <div className="mt-[36px] mb-[24px]">
-          <div className="text-[#2a2e36] text-xl font-semibold font-['Pretendard'] leading-7">
-            안녕하세요 {firstVolunteer.volunteerName}님,<br />
-            {firstVolunteer.caregiverName}님과의 인연이 기다리고 있어요
-          </div>
-        </div>
-        <div className="outbox">
-          <div className="top">
-            <div
-              className="flex items-center justify-center rounded-full border-2"
-              style={{
-                border: `2px solid ${getBackgroundColor2('CAREGIVER')}`,
-                minWidth: '64px',
-                minHeight: '64px',
-                maxWidth: '64px',
-                maxHeight: '64px',
-              }}
-            >
-              <img
-                src={getUserImage(firstVolunteer.caregiverId, 'CAREGIVER')}
-                alt="user"
-                className="w-[60px] h-[60px] object-cover rounded-full"
-              />
+      const renderRealData = () => {
+        const firstVolunteer = volunteerData?.[0];
+        return (
+          <div className="Connect_AI">
+            <div className="mt-[36px] mb-[24px]">
+              <div className="text-[#2a2e36] text-xl font-semibold font-['Pretendard'] leading-7">
+                안녕하세요 {firstVolunteer?.volunteerName}님,<br />
+                {firstVolunteer?.caregiverName}님과의 인연이 기다리고 있어요
+              </div>
             </div>
-            <div className="text">
-              <p className="top_title">
-                {firstVolunteer.caregiverName}님과의 약속{' '}
-                <img src={next} alt="" className="next" onClick={GoToAI} />
+            <div className="outbox">
+              <div className="top">
+                <div
+                  className="flex items-center justify-center rounded-full border-2"
+                  style={{
+                    border: `2px solid ${getBackgroundColor2('CAREGIVER')}`,
+                    minWidth: '64px',
+                    minHeight: '64px',
+                    maxWidth: '64px',
+                    maxHeight: '64px',
+                  }}
+                >
+                  <img
+                    src={getUserImage(firstVolunteer.caregiverId, 'CAREGIVER')}
+                    alt="user"
+                    className="w-[60px] h-[60px] object-cover rounded-full"
+                  />
+                </div>
+                <div className="text">
+                  <p className="top_title">
+                    {firstVolunteer?.caregiverName}님과의 약속{' '}
+                    <img src={next} alt="" className="next" onClick={GoToAI} />
+                  </p>
+                  <p className="when">{formatDate(firstVolunteer?.startTime || '')}</p>
+                </div>
+              </div>
+              <div className="middle">
+                <img src={AI_icon} alt="AI Icon" className="AI_img" />
+                <p className="AI_info">{firstVolunteer?.caregiverName}님의 간병 정보를 요약해 드려요</p>
+              </div>
+              <p className="AI_text line-clamp-2 min-h-[44px]">
+                {firstVolunteer?.memo || '요약 내역이 없습니다.'}
               </p>
-              <p className="when">{formatDate(firstVolunteer.startTime)}</p>
             </div>
           </div>
-          <div className="middle">
-            <img src={AI_icon} alt="" className="AI_img" />
-            <p className="AI_info">{firstVolunteer.caregiverName}님의 간병 정보를 요약해 드려요</p>
-          </div>
-          <p className="AI_text line-clamp-2">
-            {memoLoading
-              ? ''
-              : memoDetail?.description || '정보를 불러올 수 없습니다.'}
-          </p>
-        </div>
-      </div>
-    );
-  };
-  
-  export default ConnectAI;
+        );
+      };
+    
+      return forceLoading || volunteerLoading  ? renderMockData() : renderRealData();
+    };
+    
+    export default ConnectAI;

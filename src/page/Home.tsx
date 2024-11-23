@@ -64,7 +64,7 @@ const Home: React.FC = () => {
           <UserGreeting username={userData.username} userType={userData.userType} />
         </div>
       )}
-        <div className="w-[90%] mx-auto">
+        <div className="w-[90%] mx-auto min-h-[150px]">
           {/* Location Authentication에 따라 조건부 렌더링 */}
           {isLocationAuthenticated ? (
             <ConnectAI />
