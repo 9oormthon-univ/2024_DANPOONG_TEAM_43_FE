@@ -52,7 +52,7 @@ const Step1RoleSelection: React.FC<Step1Props> = ({ onSelectRole, onBackClick })
           className={`flex items-center p-4 rounded-lg border ${selectedRole === 'CARE_WORKER' ? 'border-[#0cd380] bg-[#d8fbed]' : 'border-gray-200 bg-white'} cursor-pointer`}
         >
           <img src={traineeIcon} alt="CARE_WORKER" className="w-12 h-12 mr-4" />
-          <span className="text-base text-gray-800">예비요양보호사</span>
+          <span className="text-base text-gray-800">요양보호사</span>
         </div>
       </div>
       <div className="w-full mt-auto mb-6 space-y-2">

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import PersonChat from 'components/chat/PersonChat';
 import axiosInstance from 'utils/axiosInstance';
 import { useQuery } from '@tanstack/react-query';
+import ConnectAI from 'components/home/ConnectAI';
 
 const fetchChatRooms = async () => {
   const response = await axiosInstance.get('/chat/rooms');
@@ -39,6 +40,7 @@ const Chats: React.FC = () => {
           />
         ))}
       </div>
+      <ConnectAI/>
     </div>
   )
 }
