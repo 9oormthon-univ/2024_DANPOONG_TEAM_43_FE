@@ -15,7 +15,7 @@ const UserInfoCard: React.FC<UserInfoCardProps> = ({ userType, city }) => {
   const userTypeMap: { [key: string]: { label: string; color: string; bgColor: string } } = {
     CAREGIVER: { label: '간병인', color: '#ff6b6b', bgColor: '#ffe5e5' },
     VOLUNTEER: { label: '자원봉사자', color: '#067dfd', bgColor: '#eef7ff' },
-    CARE_WORKER: { label: '예비요양보호사', color: '#0cd380', bgColor: '#d8fbed' },
+    CARE_WORKER: { label: '요양보호사', color: '#0cd380', bgColor: '#d8fbed' },
   };
 
   const { label, color, bgColor } = userTypeMap[userType] || userTypeMap['CAREGIVER'];

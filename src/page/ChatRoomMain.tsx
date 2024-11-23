@@ -40,7 +40,7 @@ interface Message {
 
 const ChatRoomMain: React.FC = () => {
     const location = useLocation();
-    const { roomId, receiverUserType = 'CAREWORKER', receiverName = '기본 이름', receiverId } = location.state || {};
+    const { roomId, receiverUserType = 'CAREWORKER', receiverName = '기본 이름', receiverId, profileImage } = location.state || {};
     const navigate = useNavigate();
     const { data: userData, isLoading, error } = useUserDataQuery();
     const [messages, setMessages] = useState<Message[]>([]);
@@ -349,13 +349,13 @@ const ChatRoomMain: React.FC = () => {
                                                 <p className="time">
                                                     {new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                                                 </p>
-                                                <div className="request_div" style={{background:'#fff',color:'#2A2E37'}}>
+                                                <div className="request_div" style={{ background: '#fff', color: '#2A2E37' }}>
                                                     <p className="request_title">약속을 수락했어요!</p>
                                                     <p className="request_text">간병인의 상세 정보를 확인하세요</p>
                                                     <div
                                                         className="more"
                                                         onClick={handleCalendarClick}
-                                                        style={{background:'var(--Chat_Sub)', color:'var(--Chat_Main)'}}
+                                                        style={{ background: 'var(--Chat_Sub)', color: 'var(--Chat_Main)' }}
                                                     >
                                                         자세히 보기
                                                     </div>
@@ -364,7 +364,7 @@ const ChatRoomMain: React.FC = () => {
                                         ) : null
                                     ) : isTalk ? (
                                         <div className="you">
-                                            <img src={config.profileImg} alt="" className="profile" />
+                                            <img src={profileImage} alt="" className="profile" />
                                             <div className="txt">
                                                 <div className="text">{msg.message}</div>
                                                 <p className="time">
@@ -375,9 +375,9 @@ const ChatRoomMain: React.FC = () => {
                                     ) : isReservation && isJsonMessage && parsedMessage ? (
                                         // 약속 요청을 받은 경우
                                         <div className="you">
-                                            <img src={config.profileImg} alt="" className="profile" />
+                                            <img src={profileImage} alt="" className="profile" />
                                             <div className="txt">
-                                                <div className="request_div" style={{background:'#fff', color:'#2A2E37'}}>
+                                                <div className="request_div" style={{ background: '#fff', color: '#2A2E37' }}>
                                                     <p className="request_title">약속 요청을 받았어요!</p>
                                                     <p className="request_text">장소 : {parsedMessage.location}</p>
                                                     <p className="request_text">
@@ -393,9 +393,9 @@ const ChatRoomMain: React.FC = () => {
                                                         })}
                                                     </p>
                                                     <div
-                                                    style={{
-                                                        background: msg.isApproved ? 'var(--Chat_Main)' : 'var(--Chat_Sub)',
-                                                    }}
+                                                        style={{
+                                                            background: msg.isApproved ? 'var(--Chat_Main)' : 'var(--Chat_Sub)',
+                                                        }}
                                                         className="more"
                                                         onClick={() =>
                                                             handleDetailsClick(parsedMessage.isApproved, parsedMessage.id, msg.id, msg.senderId)
@@ -412,7 +412,7 @@ const ChatRoomMain: React.FC = () => {
                                     ) : isReservation && !isJsonMessage ? (
                                         // 약속을 수락받은 경우
                                         <div className="you">
-                                            <img src={config.profileImg} alt="" className="profile" />
+                                            <img src={profileImage} alt="" className="profile" />
                                             <div className="txt">
                                                 <div className="request_div">
                                                     <p className="request_title">약속을 수락했어요!</p>
