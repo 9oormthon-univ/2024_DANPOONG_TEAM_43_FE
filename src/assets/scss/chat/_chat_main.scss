@@ -1,4 +1,5 @@
 #chat {
+    
     .page_title {
         color: var(--gray-800-txtp, #2A2E37);
         text-align: center;
@@ -15,6 +16,16 @@
         margin-left: 1px;
         margin-bottom: 17px;
     }
+    .empty_chat {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 50%;
+        img {
+          width: 248.4px;
+        }
+      }
 
     .person_chat {
         width: 100%;

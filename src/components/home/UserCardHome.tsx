@@ -51,6 +51,8 @@ import type3_10 from '../../assets/img/user/type3-10.svg';
 import certificatedBackImage1 from '../../assets/img/mypage/certificatedBackImage1.svg';
 import certificatedBackImage2 from '../../assets/img/mypage/certificatedBackImage2.svg';
 import certificatedBackImage3 from '../../assets/img/sign/certificate-back.svg';
+import { useNavigate } from "react-router-dom";
+import axiosInstance from 'utils/axiosInstance';
 
 const imageMapping: { [key: string]: string[] } = {
     CAREGIVER: [type1_1, type1_2, type1_3, type1_4, type1_5, type1_6, type1_7, type1_8, type1_9, type1_10],
@@ -66,6 +68,9 @@ interface UserCardProps {
   const UserCardHome: React.FC<UserCardProps> = ({ user, onClose }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
+    const navigate = useNavigate();
+    const [isloading, setIsloading] = useState(false);
+
 
     const getUserImage = (userId: number, userType: string): string => {
         const images = imageMapping[userType];
@@ -83,6 +88,21 @@ interface UserCardProps {
       const handleCloseModal = () => {
         setIsModalOpen(false);
         setSelectedUserId(null);
+      };
+      const handleStartChat = async () => {
+        try {
+          setIsloading(true);
+          const response = await axiosInstance.post('/chat', { toUser: user.userId });
+          console.log('Chat room created successfully:', response.data);
+          // 대화방 생성 성공 시 필요한 로직 추가
+          alert('채팅방이 생성되었습니다.');
+          navigate('/Chats');
+        } catch (error) {
+          console.error('Error creating chat room:', error);
+          alert('채팅방 생성에 실패했습니다.');
+        } finally {
+          setIsloading(false);
+        }
       };
 
   const getIconPath = (icon: string) => {
@@ -317,7 +337,8 @@ interface UserCardProps {
                     user.userType
                 )}`}
                 >
-                <div className="text-center text-white text-base font-semibold font-['Pretendard'] leading-snug">
+                <div className="text-center text-white text-base font-semibold font-['Pretendard'] leading-snug"
+                onClick={handleStartChat}>
                     대화 시작하기
                 </div>
                 </div>

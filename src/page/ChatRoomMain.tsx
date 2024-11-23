@@ -394,7 +394,7 @@ const ChatRoomMain: React.FC = () => {
                                                     </p>
                                                     <div
                                                         style={{
-                                                            background: msg.isApproved ? 'var(--Chat_Main)' : 'var(--Chat_Sub)',
+                                                            background: 'var(--Chat_Sub)',
                                                         }}
                                                         className="more"
                                                         onClick={() =>

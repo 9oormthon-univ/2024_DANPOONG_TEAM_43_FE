@@ -34,7 +34,7 @@ const ChatVolunteer: React.FC = () => {
 
     const { username, age, address, phoneNum, userId } = userData;
     // 모든 필드가 입력되었는지 확인하는 상태
-    const isComplete = !!startTime && !!stopTime && !!workDetails && !!payment && !!selectedDate;
+    const isComplete = !!startTime && !!stopTime && !!workDetails  && !!selectedDate;
 
     // 모달 열고 닫기
     const openStartModal = () => setIsStartModalOpen(true);
@@ -117,7 +117,7 @@ const ChatVolunteer: React.FC = () => {
                 startTime: start.toISOString(), // ISO 형식으로 변환
                 endTime: end.toISOString(),
                 durationHours: calculateDurationHours(start, end),
-                salary: parseInt(payment.replace(/,/g, '')) || 0,
+                salary: 0,
                 mainTask: workDetails,
                 volunteerType: 'VOLUNTEER_REQUEST', // 고정된 타입
                 roomId, // 채팅방 ID
