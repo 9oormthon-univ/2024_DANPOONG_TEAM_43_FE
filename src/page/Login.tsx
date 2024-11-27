@@ -36,6 +36,7 @@ const Login = () => {
     window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=profile_nickname`;
   };
 
+
   return (
     <div className="login-page">
       <div className="logo-container">
