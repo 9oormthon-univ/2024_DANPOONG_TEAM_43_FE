@@ -98,7 +98,7 @@ const ChatRoomMain: React.FC = () => {
             if (roomId && sc.current == null) {
                 setMessages([]); // Clear previous messages
                 try {
-                    const socket = new SockJS('http://54.180.171.247:8080/chat'); // Replace with your actual URL
+                    const socket = new SockJS('https://carely-backend.site/chat'); // Replace with your actual URL
                     const client = Stomp.over(socket);
 
                     client.onConnect = () => {

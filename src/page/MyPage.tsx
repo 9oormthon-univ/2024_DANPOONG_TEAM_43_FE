@@ -40,6 +40,7 @@ import type3_7 from '../assets/img/user/type3-7.svg';
 import type3_8 from '../assets/img/user/type3-8.svg';
 import type3_9 from '../assets/img/user/type3-9.svg';
 import type3_10 from '../assets/img/user/type3-10.svg';
+import NeighborTime from 'components/mypage/NeighborTime';
 
 const imageMapping: { [key: string]: string[] } = {
   CAREGIVER: [
@@ -147,6 +148,7 @@ const getBackgroundColor2 = (userType: string): string => {
           <img src={settingsIcon} alt="Settings" className="w-5 h-5 ml-2" />
         </div>
       </div>
+      <NeighborTime/>
 
       <div className="w-full px-4">
         <ManageNeighbors />

@@ -10,10 +10,14 @@ import caregiverBg from '../assets/img/home/main_caregiver.svg';
 import volunteerBg from '../assets/img/home/main_volunteer.svg';
 import careWorkerBg from '../assets/img/home/main_careworker.svg';
 import { checkLocationAuthentication } from 'service/locationVerification';
+import { useVolunteerDataQuery } from 'service/memos';
+
 
 const Home: React.FC = () => {
   const { data: userData, isLoading } = useUserDataQuery();
-  const [isLocationAuthenticated, setIsLocationAuthenticated] = useState<boolean | null>(null); 
+  const [isLocationAuthenticated, setIsLocationAuthenticated] = useState<boolean | null>(null);
+
+  const { data: volunteerData, isLoading: volunteerLoading } = useVolunteerDataQuery();
 
   // Location Authentication 확인
   useEffect(() => {
@@ -59,14 +63,14 @@ const Home: React.FC = () => {
         }}
       />
       <div className="w-full mx-auto relative z-10 overflow-y-auto">
-      {!isLocationAuthenticated && (
-        <div className="w-[90%] mx-auto">
-          <UserGreeting username={userData.username} userType={userData.userType} />
-        </div>
-      )}
+        {!isLocationAuthenticated && (
+          <div className="w-[90%] mx-auto">
+            <UserGreeting username={userData.username} userType={userData.userType} />
+          </div>
+        )}
         <div className="w-[90%] mx-auto min-h-[150px]">
           {/* Location Authentication에 따라 조건부 렌더링 */}
-          {isLocationAuthenticated ? (
+          {isLocationAuthenticated && volunteerData? ( 
             <ConnectAI />
           ) : (
             <UserInfoCard userType={userData.userType} city={userData.city} />

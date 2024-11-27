@@ -24,6 +24,11 @@
 //group
 @import "group/group_main";
 
+//mypage
+@import "mypage/certificate_person_page";
+@import "mypage/neighbor_time";
+@import "mypage/certificate_page";
+
 //components
 @import "chat/chat_calendar";
 @import "chat/chat_time_popup";
