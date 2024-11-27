@@ -21,6 +21,8 @@ import RequestPay from 'page/RequestPay';
 import PayDone from 'page/PayDone';
 import Memory from 'page/Memory';
 import AIContents from 'page/AIContents';
+import CertificatePersonPage from 'page/CertificatePersonPage';
+import CertificatePage from 'page/CertificatePage';
 
 const queryClient = new QueryClient();
 
@@ -42,7 +44,7 @@ const App: React.FC = () => {
     }
   }, [location, navigate]);
 
-  const showHeaderAndNav = !['/login', '/kakao-login', '/signup', '/chat-room','/chat-volunteer','/chat-volunteer','/chat-worker','/request-detail','/request-sure','/request-pay','/pay-done', '/Memory','/ai-contents'].includes(location.pathname);
+  const showHeaderAndNav = !['/login', '/kakao-login', '/signup', '/chat-room','/chat-volunteer','/chat-volunteer','/chat-worker','/request-detail','/request-sure','/request-pay','/pay-done', '/Memory','/ai-contents','/certificate-person-page','/certificate-page'].includes(location.pathname);
 
 
   return (
@@ -67,6 +69,9 @@ const App: React.FC = () => {
         <Route path="/pay-done" element={<PayDone />} />
         <Route path="/Memory" element={<Memory />} />
         <Route path="/ai-contents" element={<AIContents />} />
+        <Route path="/certificate-person-page" element={<CertificatePersonPage />} />
+        <Route path="/certificate-page" element={<CertificatePage />} />
+
       </Routes>
       {showHeaderAndNav && <Nav />}
       </QueryClientProvider>

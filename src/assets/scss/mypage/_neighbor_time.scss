@@ -1,0 +1,51 @@
+.neighbor_time {
+    display: flex;
+    position: relative;
+    width: 100%;
+    min-height: 82px;
+    flex-direction: column;
+    justify-content: center;
+    padding: 24px 20px;
+    background-color: var(--bg_color);
+    margin-bottom: 32px;
+
+    .background_img {
+        position: absolute;
+        z-index: 0;
+        width: 187px;
+        height: 78px;
+        right: 0;
+        bottom: 0;
+    }
+
+    .text {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 1;
+
+        .txt {
+            color: var(--txt_primary, #2A2E37);
+            font-size: 15px;
+            font-weight: 600;
+            line-height: 140%;
+        }
+
+        .time {
+            color: var(--main_color);
+            font-size: 24px;
+            font-weight: 700;
+            line-height: 140%;
+        }
+
+    }
+
+    .option {
+        text-align: left;
+        color: var(--gray-600-txts, #575F70);
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 140%;
+        z-index: 1;
+    }
+}

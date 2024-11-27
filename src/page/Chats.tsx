@@ -50,7 +50,6 @@ const Chats: React.FC = () => {
           ))}
         </div>
       )}
-      <ConnectAI/>
     </div>
   )
 }
