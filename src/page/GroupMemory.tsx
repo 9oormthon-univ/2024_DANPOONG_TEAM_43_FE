@@ -10,6 +10,7 @@ const GroupMemory = () => {
     const handleBackClick = () => {
         navigate(-1);
     };
+    
     return (
         <div className='container' id='group_memory'>
             <div className="top">

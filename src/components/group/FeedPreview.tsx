@@ -1,10 +1,15 @@
 import React from 'react'
+import { useNavigate, useLocation } from 'react-router-dom';
 import profile from '../../assets/img/user/type1-1.svg'
 import comment from '../../assets/img/group/group_comment_icon.svg'
 
 const FeedPreview = () => {
+  const navigate = useNavigate();
+  const GoToDetail = () => {
+    navigate('/group-feed-detail');
+}
   return (
-    <div className='feed_preview_div'>
+    <div className='feed_preview_div' onClick={GoToDetail}>
         <img src={profile} alt="" className="feed_profile" />
         <div className="contents">
             <p className="title">안녕하세요, 새롭게 가입하게 되었습니다!</p>

@@ -12,13 +12,16 @@ const MyGroupMain = () => {
     const GoToMemory=()=>{
         navigate('/group-memory')
     }
+    const GoToNeighbor=()=>{
+        navigate('/group-neighbor')
+    }
     return (
         <div className='mygroup_main'>
             <div className="top_info_img">
                 <p className="title">도움의 손길</p>
                 <div className="info">
                     <p className="info_txt">경기도 용인시 수지구</p>
-                    <div className="people">
+                    <div className="people" onClick={GoToNeighbor}>
                         <img src={people_icon} alt="" />
                         <p className="num">10명</p>
                     </div>

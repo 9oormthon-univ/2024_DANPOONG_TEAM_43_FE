@@ -10,12 +10,16 @@ const GroupFeedList = () => {
     const handleBackClick = () => {
         navigate(-1);
     };
+    const GoToAdd = () => {
+        navigate('/group-feed-add')
+    }
+    
     return (
         <div className='container' id='group_feed_list'>
             <div className="top">
                 <img src={back} alt="" onClick={handleBackClick} className='back' />
                 <p className='top_title'>이웃 소식</p>
-                <img src={new_post} alt="" className='post' />
+                <img src={new_post} alt="" className='post' onClick={GoToAdd}/>
             </div>
             <div className="feed_div">
                 <FeedPreview/>
