@@ -31,7 +31,7 @@ const Login = () => {
   }, [navigate]);
 
   const handleKakaoLogin = () => {
-    const clientId = '78256822bbbbbe614142bcad43930708';
+    const clientId = '45aa82bd53369b05e84cece7117f5c06';
     const redirectUri = 'http://localhost:3000/kakao-login';
     window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=profile_nickname`;
   };
