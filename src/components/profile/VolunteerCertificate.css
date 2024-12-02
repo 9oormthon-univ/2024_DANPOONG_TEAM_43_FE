@@ -1,0 +1,56 @@
+.certificate-container {
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.certificate-title {
+  text-align: center;
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+
+.certificate-section {
+  margin-bottom: 20px;
+}
+
+.certificate-section p {
+  margin: 5px 0;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.certificate-footer {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #555;
+  margin-top: 20px;
+}
+
+.certificate-signature {
+  text-align: center;
+  font-size: 1rem;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.download-button {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  font-size: 1rem;
+  color: #fff;
+  background-color: #ff6b6b;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.download-button:hover {
+  background-color: #ff4c4c;
+}
