@@ -18,7 +18,6 @@ const CertificatePage = () => {
     }
     const { userType } = userData;
 
-    // userType에 따른 제목 설정
     const type = userType === 'CARE_WORKER'
         ? '요양보호'
         : '자원봉사';
@@ -26,21 +25,18 @@ const CertificatePage = () => {
         navigate(-1);
     };
     const handleExportPdf = async () => {
-        const element = certificateRef.current; // 캡처할 요소
+        const element = certificateRef.current;
         if (!element) return;
 
         try {
-            // HTML 요소를 캡처
             const canvas = await html2canvas(element, { scale: 2 });
             const imageData = canvas.toDataURL('image/png');
-
-            // jsPDF로 PDF 생성
             const pdf = new jsPDF('p', 'mm', 'a4');
             const pdfWidth = pdf.internal.pageSize.getWidth();
             const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
 
             pdf.addImage(imageData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-            pdf.save('certificate.pdf'); // 파일 이름 지정
+            pdf.save('certificate.pdf');
         } catch (error) {
             console.error('PDF 생성 중 오류:', error);
         }

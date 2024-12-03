@@ -29,6 +29,24 @@ import type3_8 from '../assets/img/user/type3-8.svg';
 import type3_9 from '../assets/img/user/type3-9.svg';
 import type3_10 from '../assets/img/user/type3-10.svg';
 import timeIcon from '../assets/img/map/time.svg'; 
+import talkIcon1 from '../assets/img/map/talk1.svg';
+import eatIcon1 from '../assets/img/map/eat1.svg';
+import toiletIcon1 from '../assets/img/map/toilet1.svg';
+import bathIcon1 from '../assets/img/map/bath1.svg';
+import walkIcon1 from '../assets/img/map/walk1.svg';
+import talkIcon2 from '../assets/img/map/talk2.svg';
+import eatIcon2 from '../assets/img/map/eat2.svg';
+import toiletIcon2 from '../assets/img/map/toilet2.svg';
+import bathIcon2 from '../assets/img/map/bath2.svg';
+import walkIcon2 from '../assets/img/map/walk2.svg';
+import talkIcon3 from '../assets/img/map/talk3.svg';
+import eatIcon3 from '../assets/img/map/eat3.svg';
+import toiletIcon3 from '../assets/img/map/toilet3.svg';
+import bathIcon3 from '../assets/img/map/bath3.svg';
+import walkIcon3 from '../assets/img/map/walk3.svg';
+import certificatedBackImage1 from '../assets/img/mypage/certificatedBackImage1.svg';
+import certificatedBackImage2 from '../assets/img/mypage/certificatedBackImage2.svg';
+import certificatedBackImage3 from '../assets/img/sign/certificate-back.svg';
 import { iconMapping } from './iconMapping';
 
 // 이미지 매핑 데이터
@@ -93,6 +111,20 @@ export const getBackgroundColor = (userType: string): string => {
   return colorMapping[userType] || 'bg-gray-100';
 };
 
+// 배경 테두리 색상 결정
+export const getBackgroundColor2 = (userType: string): string => {
+  switch (userType) {
+    case 'CAREGIVER':
+      return '#ff6b6b';
+    case 'VOLUNTEER':
+      return '#00AEFF';
+    case 'CARE_WORKER':
+      return '#20CE86';
+    default:
+      return '#ffffff';
+  }
+};
+
 // 사용자 유형 텍스트 가져오기
 export const getUserTypeText = (userType: string): string => {
   const textMapping: { [key: string]: string } = {
@@ -101,4 +133,77 @@ export const getUserTypeText = (userType: string): string => {
     CARE_WORKER: '요양보호사',
   };
   return textMapping[userType] || '정보 없음';
+};
+
+export const getCertificatedBackImage = (userType: string) => {
+  switch (userType) {
+    case 'CAREGIVER':
+      return certificatedBackImage1;
+    case 'VOLUNTEER':
+      return certificatedBackImage2;
+    case 'CARE_WORKER':
+      return certificatedBackImage3;
+    default:
+      return certificatedBackImage1;
+  }
+};
+
+export const getBtnColor = (userType: string | undefined): string => {
+  switch (userType) {
+    case 'CAREGIVER':
+      return 'bg-[#ff6b6b]';
+    case 'VOLUNTEER':
+      return 'bg-[#00aeff]';
+    case 'CARE_WORKER':
+      return 'bg-[#20ce86]';
+    default:
+      return 'bg-white';
+  }
+};
+
+// 아이콘 경로 가져오기 (switch 문 기반)
+export const getIconPathBySwitch = (userType: string, icon: string): string => {
+  switch (userType) {
+    case 'CAREGIVER':
+      switch (icon) {
+        case 'walk':
+          return walkIcon1;
+        case 'eat':
+          return eatIcon1;
+        case 'toilet':
+          return toiletIcon1;
+        case 'bath':
+          return bathIcon1;
+        default:
+          return talkIcon1;
+      }
+    case 'VOLUNTEER':
+      switch (icon) {
+        case 'walk':
+          return walkIcon2;
+        case 'eat':
+          return eatIcon2;
+        case 'toilet':
+          return toiletIcon2;
+        case 'bath':
+          return bathIcon2;
+        default:
+          return talkIcon2;
+      }
+    case 'CARE_WORKER':
+      switch (icon) {
+        case 'walk':
+          return walkIcon3;
+        case 'eat':
+          return eatIcon3;
+        case 'toilet':
+          return toiletIcon3;
+        case 'bath':
+          return bathIcon3;
+        default:
+          return talkIcon3;
+      }
+    default:
+      return timeIcon; 
+  }
 };

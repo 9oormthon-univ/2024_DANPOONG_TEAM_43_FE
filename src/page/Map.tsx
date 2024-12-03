@@ -447,7 +447,7 @@ const MapPage: React.FC = () => {
       {(loading || (initialLoading && !isDataLoaded)) && (
         <MapLoadingSpinner/>
     )}
-      <div className="absolute h-[56px] top-0 left-0 w-full px-4 py-2 bg-white shadow-md z-[9999] flex justify-between">
+      <div className="absolute h-[56px] top-0 left-0 w-full px-4 py-2 bg-white  z-[9999] flex justify-between">
         <div className="flex items-center rounded-md w-4/5">
           <img
             src={searchIcon}

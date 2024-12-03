@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom'; // React Router를 사용할 경우
+import { useNavigate } from 'react-router-dom';
 import rightArrow from '../../assets/img/mypage/right-arrow.svg';
 
 interface MenuItemProps {
@@ -7,10 +7,10 @@ interface MenuItemProps {
 }
 
 const MenuItem: React.FC<MenuItemProps> = ({ label }) => {
-  const navigate = useNavigate(); // 라우터 네비게이션 훅 사용
+  const navigate = useNavigate(); 
 
   const handleNavigation = ({}) => {
-    navigate('/certificate-person-page',{state:{label}}); // 원하는 경로로 이동
+    navigate('/certificate-person-page',{state:{label}}); 
   };
   return(
   <div className="flex items-center justify-between w-full py-3">
