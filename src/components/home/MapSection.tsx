@@ -194,11 +194,17 @@ const MapSection: React.FC<MapSectionProps> = ({ userData }) => {
     return new Promise((resolve, reject) => {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
-          position => resolve(position.coords),
-          error => reject(error),
+          position => {
+            console.log("좌표 값:", position.coords); // 확인용 로그
+            resolve(position.coords);
+          },
+          error => {
+            console.error("Geolocation 에러:", error); // 에러 확인
+            reject(error);
+          },
         );
       } else {
-        reject(new Error('Geolocation is not supported by this browser.'));
+        reject(new Error("Geolocation이 지원되지 않는 브라우저입니다."));
       }
     });
   };
@@ -210,18 +216,15 @@ const MapSection: React.FC<MapSectionProps> = ({ userData }) => {
     return new Promise((resolve, reject) => {
       const geocoder = new window.kakao.maps.services.Geocoder();
       const latlng = new window.kakao.maps.LatLng(latitude, longitude);
-
+  
       geocoder.coord2Address(latlng.getLng(), latlng.getLat(), (result: any, status: any) => {
-        if (status === window.kakao.maps.services.Status.OK) {
-          const fullAddress = result[0].road_address?.address_name || '주소 변환 실패';
-
-          const addressParts = fullAddress.split(' ');
-          const address = addressParts.slice(0, 3).join(' ');
-          const detailAddress = addressParts.slice(3).join(' '); 
-
-          resolve({ address, detailAddress });
+        if (status === window.kakao.maps.services.Status.OK && result[0]) {
+          const roadAddress = result[0].road_address?.address_name; // 도로명 주소
+          const address = roadAddress || result[0].address?.address_name || '주소 없음'; // 기본 주소 처리
+  
+          resolve({ address, detailAddress: '' });
         } else {
-          reject('주소 변환 실패');
+          reject(new Error('주소 변환 실패'));
         }
       });
     });
