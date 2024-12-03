@@ -2,30 +2,30 @@ import React, { useState } from 'react'
 
 interface StopTimeProps {
     closeModal: () => void;
-    onTimeSelect: (time: string) => void; // closeModal은 아무것도 반환하지 않는 함수
+    onTimeSelect: (time: string) => void;
 }
 
 const StopTime: React.FC<StopTimeProps> = ({ closeModal, onTimeSelect }) => {
-    const [selectedPeriod, setSelectedPeriod] = useState<'AM' | 'PM'>('AM'); // 오전/오후 선택 상태
-    const [selectedHour, setSelectedHour] = useState<number | null>(null); // 선택된 시
-    const [selectedMinute, setSelectedMinute] = useState<number | null>(null); // 선택된 분
+    const [selectedPeriod, setSelectedPeriod] = useState<'AM' | 'PM'>('AM'); 
+    const [selectedHour, setSelectedHour] = useState<number | null>(null); 
+    const [selectedMinute, setSelectedMinute] = useState<number | null>(null); 
 
     const handlePeriodClick = (period: 'AM' | 'PM') => {
-        setSelectedPeriod(period); // 오전/오후 설정
+        setSelectedPeriod(period); 
     };
 
     const handleHourClick = (hour: number) => {
-        setSelectedHour(hour); // 시 선택
+        setSelectedHour(hour); 
     };
 
     const handleMinuteClick = (minute: number) => {
-        setSelectedMinute(minute); // 분 선택
+        setSelectedMinute(minute); 
     };
     const handleConfirm = () => {
         if (selectedHour !== null && selectedMinute !== null) {
             const formattedTime = `${selectedPeriod === 'AM' ? '오전' : '오후'} ${selectedHour}시 ${selectedMinute}분`;
-            onTimeSelect(formattedTime); // 부모 컴포넌트에 시간 전달
-            closeModal(); // 모달 닫기
+            onTimeSelect(formattedTime);
+            closeModal();
         } else {
             alert('시간과 분을 모두 선택해주세요.');
         }
