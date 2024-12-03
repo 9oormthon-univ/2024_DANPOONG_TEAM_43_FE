@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Calendar from 'react-calendar';
-import moment from "moment";
-import 'react-calendar/dist/Calendar.css'; // react-calendar 기본 스타일
+import 'react-calendar/dist/Calendar.css';
 
 interface CalendarPopupProps {
   onClose: () => void;
@@ -15,16 +14,14 @@ const ChatCalendar: React.FC<CalendarPopupProps> = ({ onClose, onSelectDate }) =
     value: Date | [Date, Date] | null,
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
-    // value를 명시적으로 단언하여 타입 오류를 방지
     if (value instanceof Date) {
-      setSelectedDate(value); // 단일 날짜 선택
+      setSelectedDate(value); 
     } else if (Array.isArray(value) && value.length === 2 && value[0] instanceof Date) {
-      setSelectedDate(value[0]); // 범위 선택 시 첫 번째 날짜 저장
+      setSelectedDate(value[0]); 
     } else {
-      setSelectedDate(null); // 값이 없을 경우
+      setSelectedDate(null);
     }
   };
-
 
   const handleConfirm = () => {
     if (selectedDate) {
@@ -34,16 +31,13 @@ const ChatCalendar: React.FC<CalendarPopupProps> = ({ onClose, onSelectDate }) =
       alert('날짜를 선택해주세요.');
     }
   };
-  
 
   return (
     <div className="calendar-popup-overlay" onClick={onClose}>
       <div className="calendar-popup-content" onClick={(e) => e.stopPropagation()}>
         <Calendar
-onChange={(value, event) =>
-  handleDateChange(value as Date | [Date, Date] | null, event)
-} // 이벤트 객체 전달          
-formatDay={(locale, date) => date.getDate().toString()}
+          onChange={(value, event) => handleDateChange(value as Date | [Date, Date] | null, event)}
+          formatDay={(locale, date) => date.getDate().toString()}
           value={selectedDate}
           className="custom-calendar"
         />

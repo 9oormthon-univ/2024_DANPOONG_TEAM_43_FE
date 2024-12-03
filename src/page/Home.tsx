@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import UserGreeting from 'components/home/UserGreeting';
 import UserInfoCard from 'components/home/UserInfoCard';
 import NeighborSuggestions from 'components/home/NeighborSuggestions';
@@ -14,7 +14,7 @@ import { useUserStore } from 'stores/useUserStore';
 
 const Home: React.FC = () => {
   const { data: userData, isLoading } = useUserDataQuery();
-  const [isLocationAuthenticated, setIsLocationAuthenticated] = useState<boolean | null>(null); 
+  const [isLocationAuthenticated, setIsLocationAuthenticated] = useState<boolean | null>(null);
   const userInfo = useUserStore((state) => state.userInfo);
 
   useEffect(() => {
@@ -24,12 +24,34 @@ const Home: React.FC = () => {
         setIsLocationAuthenticated(response.data.locationAuthentication);
       } catch (error) {
         console.error('Failed to fetch location authentication', error);
-        setIsLocationAuthenticated(false); 
+        setIsLocationAuthenticated(false);
       }
     };
 
     fetchLocationAuthentication();
   }, []);
+
+  const backgroundSettings = useMemo(() => ({
+    CAREGIVER: { color: 'bg-[#ffe5e5]', image: caregiverBg },
+    VOLUNTEER: { color: 'bg-[#eef7ff]', image: volunteerBg },
+    CARE_WORKER: { color: 'bg-[#d8fbed]', image: careWorkerBg },
+  }), []);
+
+  const background = userData?.userType
+    ? backgroundSettings[userData.userType] || backgroundSettings['CAREGIVER']
+    : backgroundSettings['CAREGIVER'];
+
+  const renderGreetingOrConnectAI = () => {
+    if (isLocationAuthenticated && userInfo.userType !== 'CAREGIVER') {
+      return <ConnectAI />;
+    }
+    return (
+      <UserGreeting
+        username={userData?.username || ''}
+        userType={userData?.userType || 'CAREGIVER'}
+      />
+    );
+  };
 
   if (isLoading || isLocationAuthenticated === null) {
     return null;
@@ -39,18 +61,12 @@ const Home: React.FC = () => {
     return null;
   }
 
-  const backgroundSettings = {
-    CAREGIVER: { color: 'bg-[#ffe5e5]', image: caregiverBg },
-    VOLUNTEER: { color: 'bg-[#eef7ff]', image: volunteerBg },
-    CARE_WORKER: { color: 'bg-[#d8fbed]', image: careWorkerBg },
-  };
-
-  const { color, image } = backgroundSettings[userData.userType] || backgroundSettings['CAREGIVER'];
-
   return (
-    <div className={`relative ${color} max-w-[440px] min-w-[340px] w-full mx-auto pb-[100px] pb-8 overflow-y-auto`}>
+    <div
+      className={`relative ${background.color} max-w-[440px] min-w-[340px] w-full mx-auto pb-[100px] pb-8 overflow-y-auto`}
+    >
       <img
-        src={image}
+        src={background.image}
         alt="UserType Background"
         className="absolute top-[3.8rem] right-0 h-auto"
         style={{
@@ -60,18 +76,10 @@ const Home: React.FC = () => {
         }}
       />
       <div className="w-full mx-auto relative z-10 overflow-y-auto">
-      {(!isLocationAuthenticated || userInfo.userType === "CAREGIVER") && (
+        <div className="w-[90%] mx-auto">{renderGreetingOrConnectAI()}</div>
         <div className="w-[90%] mx-auto">
-          <UserGreeting username={userData.username} userType={userData.userType} />
-        </div>
-      )}
-      <div className="w-[90%] mx-auto">
-        {isLocationAuthenticated && userInfo.userType !== "CAREGIVER" ? (
-          <ConnectAI />
-        ) : (
           <UserInfoCard userType={userData.userType} city={userData.city} />
-        )}
-      </div>
+        </div>
         <NeighborSuggestions />
         <div className="w-[90%] mx-auto">
           <MapSection userData={userData} />

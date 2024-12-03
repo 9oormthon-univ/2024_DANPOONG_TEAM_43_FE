@@ -3,7 +3,7 @@ import bgimg from '../../assets/img/mypage/certificate_background_img.svg'
 import center_bg from '../../assets/img/mypage/certificate_center_bgimg.svg'
 
 interface CertificateProps {
-  type: string; // type prop 정의
+  type: string;
 }
 
 const Certificate: React.FC<CertificateProps> = ({type}) => {
@@ -57,4 +57,4 @@ const Certificate: React.FC<CertificateProps> = ({type}) => {
   )
 }
 
-export default Certificate
+export default Certificate;

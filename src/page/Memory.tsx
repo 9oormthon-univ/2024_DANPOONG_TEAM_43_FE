@@ -4,34 +4,13 @@ import { postGuestbookEntry } from 'service/guestbook';
 import MemoriesMy from 'components/mypage/MemoriesMy';
 import leftButtonIcon from '../assets/img/sign/sign-left-btn.svg';
 import { useNavigate } from 'react-router-dom';
+import { formatDate } from 'utils/dateUtils';
 
 const Memory: React.FC = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('전체');
   const [textInputs, setTextInputs] = useState<{ [key: number]: string }>({}); 
   const { data: guestbookData, isLoading, isError, refetch } = useGuestbookByTabQuery(activeTab);
-
-  const formatDate = (dateString: string) => {
-    const options: Intl.DateTimeFormatOptions = {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    };
-    return new Intl.DateTimeFormat('ko-KR', options).format(new Date(dateString));
-  };
-
-  const getUserTypeText = (userType: string) => {
-    switch (userType) {
-      case 'CAREGIVER':
-        return '간병인';
-      case 'VOLUNTEER':
-        return '자원봉사자';
-      case 'CARE_WORKER':
-        return '요양보호사';
-      default:
-        return '';
-    }
-  };
 
   const handlePostGuestbook = async (id: number) => {
     const content = textInputs[id];

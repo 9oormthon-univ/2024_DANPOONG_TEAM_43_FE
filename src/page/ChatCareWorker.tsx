@@ -8,21 +8,18 @@ import RequestWorkFinal from '../components/chat/RequestWorkFinal';
 import ChatCalendar from '../components/chat/ChatCalendar';
 import { useUserDataQuery } from 'service/user';
 import axiosInstance from 'utils/axiosInstance';
+import { calculateDurationHours, convertTo24HourTime } from 'utils/dateUtils';
 
 
 const ChatCareWorker: React.FC = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const { bgColor, color, mainColor, caregiverId, roomId, receiverUserType, receiverName } = location.state || {};
+    const { bgColor, mainColor, caregiverId, roomId } = location.state || {};
     const [selectedDate, setSelectedDate] = useState<Date | null>(null);
     const [isRequestModalOpen, setIsRequestModalOpen] = useState(false);
-
-    // 모달 상태
     const [isStartModalOpen, setIsStartModalOpen] = useState(false);
     const [isStopModalOpen, setIsStopModalOpen] = useState(false);
     const [isDateModalOpen, setIsDateModalOpen] = useState(false);
-
-    // 시작 시간과 종료 시간 상태
     const [startTime, setStartTime] = useState<string | null>(null);
     const [stopTime, setStopTime] = useState<string | null>(null);
     const [workDetails, setWorkDetails] = useState('');
@@ -34,10 +31,8 @@ const ChatCareWorker: React.FC = () => {
     }
 
     const { username, age, address, phoneNum, userId } = userData;
-    // 모든 필드가 입력되었는지 확인하는 상태
     const isComplete = !!startTime && !!stopTime && !!workDetails && !!payment && !!selectedDate;
 
-    // 모달 열고 닫기
     const openStartModal = () => setIsStartModalOpen(true);
     const closeStartModal = () => setIsStartModalOpen(false);
 
@@ -55,39 +50,15 @@ const ChatCareWorker: React.FC = () => {
     };
     const handleSelectDate = (date: Date) => {
         setSelectedDate(date);
-        closeDateModal(); // 날짜 선택 후 모달 닫기
+        closeDateModal();
     };
-    // "다음" 버튼 클릭 시 데이터 전달
+
     const handleNextClick = () => {
         if (!isComplete) {
             alert('모든 필드를 입력해주세요.');
             return;
         }
-        openRequestModal(); // 팝업 열기
-    };
-
-    const convertTo24HourTime = (timeString: string, selectedDate: Date): Date | null => {
-        const regex = /(오전|오후) (\d{1,2})시 (\d{1,2})분/;
-        const match = timeString.match(regex);
-
-        if (!match) return null; // 형식이 맞지 않으면 null 반환
-
-        const [, period, hours, minutes] = match;
-        let hour = parseInt(hours, 10);
-        const minute = parseInt(minutes, 10);
-
-        // 오전/오후에 따라 시간 계산
-        if (period === '오후' && hour !== 12) {
-            hour += 12; // 오후이면서 12시가 아니면 12를 더함
-        } else if (period === '오전' && hour === 12) {
-            hour = 0; // 오전 12시는 0시로 변환
-        }
-
-        // 선택한 날짜를 기반으로 시간 설정
-        const date = new Date(selectedDate);
-        date.setHours(hour, minute, 0, 0);
-
-        return date;
+        openRequestModal(); 
     };
 
     const handleRequestSubmit = async () => {
@@ -101,7 +72,6 @@ const ChatCareWorker: React.FC = () => {
             return;
         }
 
-        // 시간을 Date로 변환
         const start = convertTo24HourTime(startTime, selectedDate);
         const end = convertTo24HourTime(stopTime, selectedDate);
 
@@ -112,16 +82,16 @@ const ChatCareWorker: React.FC = () => {
 
         try {
             const requestData = {
-                volunteerId: userId, // 본인의 ID
-                caregiverId, // 대상자의 ID
+                volunteerId: userId, 
+                caregiverId,
                 location: address,
-                startTime: start.toISOString(), // ISO 형식으로 변환
+                startTime: start.toISOString(),
                 endTime: end.toISOString(),
                 durationHours: calculateDurationHours(start, end),
                 salary: parseInt(payment.replace(/,/g, '')) || 0,
                 mainTask: workDetails,
-                volunteerType: 'CARE_WORKER_REQUEST', // 고정된 타입
-                roomId, // 채팅방 ID
+                volunteerType: 'CARE_WORKER_REQUEST', 
+                roomId,
             };
 
             const response = await axiosInstance.post('/volunteer', requestData);
@@ -135,13 +105,6 @@ const ChatCareWorker: React.FC = () => {
             alert('요청 중 오류가 발생했습니다. 다시 시도해주세요.');
         }
     };
-
-
-    const calculateDurationHours = (start: Date, end: Date): number => {
-        const diffInMs = end.getTime() - start.getTime();
-        return diffInMs / (1000 * 60 * 60); // 밀리초 -> 시간 변환
-    };
-
 
     return (
         <div className='container' id='chat_volunteer' style={{ background: bgColor, '--Chat_Main': mainColor } as React.CSSProperties}>
