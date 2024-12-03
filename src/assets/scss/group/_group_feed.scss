@@ -127,6 +127,10 @@
         }
     }
 
+    .comment_div {
+        padding-bottom: 70px;
+    }
+
     .send_section {
         width: 100%;
         display: flex;
@@ -237,7 +241,7 @@
             color: var(--gray-800-txtp, #2A2E37);
             border: 1.2px solid var(--surface100, #D4D7DE);
             background: var(--background, #FFF);
-            
+
         }
 
         ::placeholder {
@@ -246,16 +250,17 @@
             font-weight: 400;
             line-height: 140%;
         }
-        .text_count{
+
+        .text_count {
             position: relative;
             text-align: right;
             color: var(--surface300, #A6ACBA);
-font-size: 14px;
-font-weight: 400;
-line-height: 140%;
-margin-top: -35px;
-margin-right: 16px;
-z-index: 1000;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 140%;
+            margin-top: -35px;
+            margin-right: 16px;
+            z-index: 1000;
         }
     }
 
@@ -275,4 +280,12 @@ z-index: 1000;
             align-items: center;
         }
     }
+}
+
+.none {
+    padding: 16px 20px;
+    color: var(--gray-800-txtp, #2A2E37);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 140%;
 }
