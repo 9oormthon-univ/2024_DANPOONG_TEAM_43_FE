@@ -35,6 +35,8 @@ const Sign = () => {
     issueMonth: '',
     issueDay: '',
     issueDate: '',
+    identityFront: '',
+    identityBack: ''
   });
   const [isComplete, setIsComplete] = useState(false);
 
@@ -46,7 +48,7 @@ const Sign = () => {
         ...prevData,
         kakaoId: kakaoId || '',
         username: nickname || '',
-        phoneNum: phoneNum?.replace(/-/g, '') || '', // 하이픈 제거 후 설정
+        phoneNum: phoneNum?.replace(/-/g, '') || '', 
       }));
     }
   }, [location.state]);
@@ -75,6 +77,8 @@ const Sign = () => {
 
   const handleSubmit = async () => {
     const formDataToSubmit = new FormData();
+    const identity = `${formData.identityFront}${formData.identityBack}`;
+  
     formDataToSubmit.append("registerDTO", JSON.stringify({
       kakaoId: formData.kakaoId,
       userType: formData.userType,
@@ -90,19 +94,20 @@ const Sign = () => {
       walk: formData.walk,
       story: formData.story,
       shareLocation: formData.shareLocation,
+      identity, 
     }));
-
+  
     if (formData.userType === 'CARE_WORKER' && formData.certificationImage) {
       formDataToSubmit.append("image", formData.certificationImage);
     }
-
+  
     try {
       const response = await fetch("https://carely-backend.site/register", {
         method: "POST",
         body: formDataToSubmit,
       });
       const result = await response.json();
-
+  
       if (result.status === 200 && result.code === "SUCCESS_REGISTER") {
         setIsComplete(true);
       } else {

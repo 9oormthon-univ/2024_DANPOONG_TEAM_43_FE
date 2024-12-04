@@ -130,7 +130,7 @@ const Step2BasicInfo: React.FC<Step2Props> = ({
           <label className="block text-gray-700 mb-2">핸드폰 번호</label>
           <input
             type="text"
-            placeholder="핸드폰 번호를 입력하세요"
+            placeholder="전화번호를 입력해주세요"
             value={handlePhoneDisplay(formData.phoneNum)} 
             readOnly
             onChange={handlePhoneChange}
