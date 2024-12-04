@@ -83,7 +83,6 @@ const Sign = () => {
       kakaoId: formData.kakaoId,
       userType: formData.userType,
       username: formData.username,
-      age: formData.age,
       phoneNum: formData.phoneNum,
       address: formData.address,
       detailAddress: formData.detailAddress,
@@ -94,12 +93,16 @@ const Sign = () => {
       walk: formData.walk,
       story: formData.story,
       shareLocation: formData.shareLocation,
-      identity, 
+      identity 
     }));
   
     if (formData.userType === 'CARE_WORKER' && formData.certificationImage) {
-      formDataToSubmit.append("image", formData.certificationImage);
+      formDataToSubmit.append("file", formData.certificationImage);
     }
+
+    formDataToSubmit.forEach((value, key) => {
+      console.log(`Key: ${key}, Value:`, value);
+    });
   
     try {
       const response = await fetch("https://carely-backend.site/register", {
@@ -107,11 +110,13 @@ const Sign = () => {
         body: formDataToSubmit,
       });
       const result = await response.json();
+
+      console.log(result);
   
-      if (result.status === 200 && result.code === "SUCCESS_REGISTER") {
+      if (result.status === 200) {
         setIsComplete(true);
       } else {
-        console.error("회원가입 실패:", result.message);
+        console.error("회원가입 실패:", result);
       }
     } catch (error) {
       console.error("폼 전송 오류:", error);

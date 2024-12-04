@@ -24,7 +24,6 @@ export const registerUser = async (data: any): Promise<any> => {
     })
   );
 
-  // 파일이 있다면 'file' 파라미터로 전송
   if (data.userType === 'CARE_WORKER' && data.certificationImage) {
     formDataToSubmit.append('file', data.certificationImage);
   }
@@ -32,7 +31,7 @@ export const registerUser = async (data: any): Promise<any> => {
   try {
     const response = await axiosNoAuthInstance.post('/register', formDataToSubmit, {
       headers: {
-        'Content-Type': 'multipart/form-data', // 자동으로 설정되긴 하지만 명시적으로 추가 가능
+        'Content-Type': 'multipart/form-data', 
       }
     });
     return response.data;
