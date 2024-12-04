@@ -31,6 +31,11 @@ const Step2BasicInfo: React.FC<Step2Props> = ({
   formData.issueMonth?.length >= 1 &&
   formData.issueDay?.length >= 1;
 
+  const handlePhoneDisplay = (phone: string) => {
+    return phone.replace(/(\d{3})(\d{3,4})(\d{4})/, '$1-$2-$3');
+  };
+
+
   const handleNext = () => {
     if (isFormValid) {
       onNext();
@@ -66,7 +71,7 @@ const Step2BasicInfo: React.FC<Step2Props> = ({
     setIsLoading(true);
     try {
       const response = await connectAPI({
-        phoneNum,
+        phoneNum: phoneNum.replace(/-/g, ''),
         username,
         identity: `${identityFront}${identityBack}`,
         issueDate,
@@ -110,6 +115,7 @@ const Step2BasicInfo: React.FC<Step2Props> = ({
             type="text"
             placeholder="성함을 적어주세요"
             value={formData.username}
+            readOnly 
             onChange={(e) => setFormData({ ...formData, username: e.target.value })}
             className="w-full focus:outline-none placeholder-gray-400 pb-2"
             style={{
@@ -125,7 +131,8 @@ const Step2BasicInfo: React.FC<Step2Props> = ({
           <input
             type="text"
             placeholder="핸드폰 번호를 입력하세요"
-            value={formData.phoneNum}
+            value={handlePhoneDisplay(formData.phoneNum)} 
+            readOnly
             onChange={handlePhoneChange}
             className="w-full focus:outline-none placeholder-gray-400 pb-2"
             style={{
@@ -191,7 +198,11 @@ const Step2BasicInfo: React.FC<Step2Props> = ({
                 onFocus={(e) => (e.target.style.borderBottomColor = '#ff6b6b')}
                 onBlur={(e) => (e.target.style.borderBottomColor = '#d1d5db')}
               />
-              <span className="absolute top-1/2 transform -translate-y-1/2 right-0 text-gray-400 text-sm">
+                <span
+                className={`absolute top-1/2 transform -translate-y-1/2 right-0 text-sm ${
+                  formData.issueYear ? 'text-black' : 'text-gray-400'
+                }`}
+              >
                 년
               </span>
             </div>
@@ -209,9 +220,13 @@ const Step2BasicInfo: React.FC<Step2Props> = ({
                 onFocus={(e) => (e.target.style.borderBottomColor = '#ff6b6b')}
                 onBlur={(e) => (e.target.style.borderBottomColor = '#d1d5db')}
               />
-              <span className="absolute top-1/2 transform -translate-y-1/2 right-0 text-gray-400 text-sm">
-                월
-              </span>
+             <span
+              className={`absolute top-1/2 transform -translate-y-1/2 right-0 text-sm ${
+                formData.issueMonth ? 'text-black' : 'text-gray-400'
+              }`}
+            >
+              월
+            </span>
             </div>
             <div className="relative w-full max-w-[20%] text-center">
               <input
@@ -227,7 +242,11 @@ const Step2BasicInfo: React.FC<Step2Props> = ({
                 onFocus={(e) => (e.target.style.borderBottomColor = '#ff6b6b')}
                 onBlur={(e) => (e.target.style.borderBottomColor = '#d1d5db')}
               />
-              <span className="absolute top-1/2 transform -translate-y-1/2 right-0 text-gray-400 text-sm">
+               <span
+                className={`absolute top-1/2 transform -translate-y-1/2 right-0 text-sm ${
+                  formData.issueDay ? 'text-black' : 'text-gray-400'
+                }`}
+              >
                 일
               </span>
             </div>
