@@ -46,6 +46,7 @@ const KakaoLoginRedirect: React.FC = () => {
               state: {
                 kakaoId: data.data.kakaoId,
                 nickname: data.data.nickname,
+                phoneNum: data.data.phoneNum,
               },
             });
           }

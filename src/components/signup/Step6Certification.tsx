@@ -28,6 +28,7 @@ const Step6Certification: React.FC<Step6Props> = ({ formData, setFormData, onNex
   const [showNoCertificateModal, setShowNoCertificateModal] = useState(false);
   const [preview, setPreview] = useState<string | ArrayBuffer | null>(null);
   const [isCompleted, setIsCompleted] = useState(false);
+  
 
   const { mutate: uploadCertificate, status } = useUploadCertificate(
     (data) => {
@@ -40,18 +41,33 @@ const Step6Certification: React.FC<Step6Props> = ({ formData, setFormData, onNex
     }
   );
 
+  const [isTallImage, setIsTallImage] = useState(false);
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      setFormData({ ...formData, certificationImage: file });
+      setFormData((prevData: any) => ({ ...prevData, certificationImage: file })); 
       const reader = new FileReader();
       reader.onloadend = () => {
-        setPreview(reader.result);
+        const result = reader.result;
+        if (typeof result === 'string') {
+          const img = new Image();
+          img.src = result;
+          img.onload = () => {
+            if (img.height > img.width * 2) {
+              setIsTallImage(true);
+            } else {
+              setIsTallImage(false);
+            }
+          };
+  
+          setPreview(result);
+        }
       };
       reader.readAsDataURL(file);
     }
   };
-
+  
   const handleUpload = () => {
     if (formData.certificationImage && formData.username) {
       const uploadData = new FormData();
@@ -60,14 +76,31 @@ const Step6Certification: React.FC<Step6Props> = ({ formData, setFormData, onNex
         'ocrCreateDTO',
         JSON.stringify({ username: formData.username })
       );
-
-      uploadCertificate(uploadData);
+  
+      setIsCompleted(false);
+  
+      const startTime = Date.now(); 
+  
+      uploadCertificate(uploadData, {
+        onSuccess: () => {
+          const elapsed = Date.now() - startTime; 
+          const remainingTime = Math.max(2000 - elapsed, 0); 
+          setTimeout(() => {
+            setIsCompleted(true); 
+          }, remainingTime);
+        },
+        onError: () => {
+          alert('인증에 실패했습니다. 다시 시도해주세요.');
+          setIsCompleted(false);
+        },
+      });
     } else {
       alert('필수 정보를 입력해주세요.');
     }
   };
-
-  const isNextEnabled = formData.certificationImage && status !== 'pending';
+  
+  const isNextEnabled =
+    !!formData.certificationImage && status !== 'pending'; 
 
   if (isCompleted) {
     const iconMapping: { [key: string]: string } = {
@@ -177,7 +210,7 @@ const Step6Certification: React.FC<Step6Props> = ({ formData, setFormData, onNex
 
   return (
     <div className="w-full flex flex-col items-center justify-between h-[calc(100dvh)] relative">
-      {status === 'pending' && (
+      {status === 'pending' && !isCompleted && (
         <div className="absolute h-full inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 max-w-[440px] ">
           <img src={certificateLogo} alt="Loading Logo" className="w-[217.45px] h-[123.98px]" />
         </div>
@@ -199,7 +232,12 @@ const Step6Certification: React.FC<Step6Props> = ({ formData, setFormData, onNex
       <p className="text-sm text-gray-500 mb-6">
         가지고 계신 요양보호사 자격증을 사진찍어 첨부해 주세요
       </p>
-      <label className="block w-full h-[200px] rounded-lg flex items-center justify-center cursor-pointer overflow-hidden mb-auto">
+      <label
+        className="block w-full rounded-lg flex items-center justify-center cursor-pointer overflow-hidden mb-auto"
+        style={{
+          height: 'auto',
+        }}
+      >
         <input
           type="file"
           accept="image/*"
@@ -208,15 +246,23 @@ const Step6Certification: React.FC<Step6Props> = ({ formData, setFormData, onNex
         />
         {preview ? (
           <img
-            src={preview as string}
+            src={typeof preview === "string" ? preview : undefined} 
             alt="Preview"
-            className="w-full h-[430px] object-cover"
+            className="w-full"
+            style={{
+              height: 'auto', 
+              objectFit: 'contain',
+            }}
           />
         ) : (
           <img
             src={defaultImage}
             alt="userCertificateImage"
-            className="w-full h-[200px] object-cover"
+            className="w-full"
+            style={{
+              height: 'auto',
+              objectFit: 'contain',
+            }}
           />
         )}
       </label>
@@ -232,7 +278,7 @@ const Step6Certification: React.FC<Step6Props> = ({ formData, setFormData, onNex
     </div>
     <div className="w-[90%] mx-auto  mt-auto mb-6">
       <button
-        className="text-center w-full text-sm font-medium text-[#565e70] underline mb-4"
+        className="text-center w-full text-sm font-medium text-[#565e70] underline my-4"
         onClick={() => setShowNoCertificateModal(true)}
       >
         아직 자격증이 없어요
@@ -240,7 +286,7 @@ const Step6Certification: React.FC<Step6Props> = ({ formData, setFormData, onNex
       <button
         onClick={handleUpload}
         disabled={!isNextEnabled}
-        className={`w-full h-[52px] rounded-lg ${
+        className={`w-full h-[52px] mb-[10px] rounded-lg ${
           isNextEnabled ? 'bg-[#ff6b6b]' : 'bg-[#d4d7de]'
         } text-white font-semibold text-base font-['Pretendard'] leading-snug`}
       >

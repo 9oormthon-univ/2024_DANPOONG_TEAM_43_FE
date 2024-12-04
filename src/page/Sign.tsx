@@ -17,8 +17,8 @@ const Sign = () => {
   const [showExitModal, setShowExitModal] = useState(false); 
   const [formData, setFormData] = useState({
     kakaoId: '',
-    userType: '', 
-    username: '', 
+    userType: '',
+    username: '',
     age: '',
     phoneNum: '',
     address: '',
@@ -31,16 +31,24 @@ const Sign = () => {
     story: '',
     shareLocation: false,
     certificationImage: null,
+    issueYear: '',
+    issueMonth: '',
+    issueDay: '',
+    issueDate: '',
+    identityFront: '',
+    identityBack: ''
   });
   const [isComplete, setIsComplete] = useState(false);
 
   useEffect(() => {
+    console.log('Location State:', location.state); 
     if (location.state) {
-      const { kakaoId, nickname } = location.state;
+      const { kakaoId, nickname, phoneNum } = location.state;
       setFormData((prevData) => ({
         ...prevData,
         kakaoId: kakaoId || '',
         username: nickname || '',
+        phoneNum: phoneNum?.replace(/-/g, '') || '', 
       }));
     }
   }, [location.state]);
@@ -69,11 +77,12 @@ const Sign = () => {
 
   const handleSubmit = async () => {
     const formDataToSubmit = new FormData();
+    const identity = `${formData.identityFront}${formData.identityBack}`;
+  
     formDataToSubmit.append("registerDTO", JSON.stringify({
       kakaoId: formData.kakaoId,
       userType: formData.userType,
       username: formData.username,
-      age: formData.age,
       phoneNum: formData.phoneNum,
       address: formData.address,
       detailAddress: formData.detailAddress,
@@ -84,12 +93,17 @@ const Sign = () => {
       walk: formData.walk,
       story: formData.story,
       shareLocation: formData.shareLocation,
+      identity 
     }));
-
+  
     if (formData.userType === 'CARE_WORKER' && formData.certificationImage) {
-      formDataToSubmit.append("image", formData.certificationImage);
+      formDataToSubmit.append("file", formData.certificationImage);
     }
 
+    formDataToSubmit.forEach((value, key) => {
+      console.log(`Key: ${key}, Value:`, value);
+    });
+  
     try {
       const response = await fetch("https://carely-backend.site/register", {
         method: "POST",
@@ -97,10 +111,12 @@ const Sign = () => {
       });
       const result = await response.json();
 
-      if (result.status === 200 && result.code === "SUCCESS_REGISTER") {
+      console.log(result);
+  
+      if (result.status === 200) {
         setIsComplete(true);
       } else {
-        console.error("회원가입 실패:", result.message);
+        console.error("회원가입 실패:", result);
       }
     } catch (error) {
       console.error("폼 전송 오류:", error);

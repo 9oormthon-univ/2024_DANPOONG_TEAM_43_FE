@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { UserData } from 'type/user';
+import { UserData, UserDetailResponse } from 'type/user';
 import axiosInstance from 'utils/axiosInstance';
 
 export const fetchUserData = async (): Promise<UserData | null> => {
@@ -22,28 +22,6 @@ export const useUserDataQuery = () => {
     staleTime: 5 * 60 * 1000, 
   });
 };
-
-export interface UserDetailResponse {
-  userId: number;
-  username: string;
-  age: number | null;
-  phoneNum: string;
-  city: string;
-  address: string;
-  detailAddress: string;
-  locationAuthentication: boolean;
-  userType: string;
-  shareLocation: boolean;
-  latitude: number;
-  longitude: number;
-  talk: string;
-  eat: string;
-  toilet: string;
-  bath: string;
-  walk: string;
-  story: string;
-  togetherTime: number;
-}
 
 export const fetchUserDetail = async (userId: number): Promise<UserDetailResponse> => {
   const { data } = await axiosInstance.get(`/user-info/detail/${userId}`);

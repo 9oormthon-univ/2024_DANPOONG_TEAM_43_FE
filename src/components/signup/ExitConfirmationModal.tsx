@@ -7,7 +7,7 @@ interface ExitConfirmationModalProps {
 
 const ExitConfirmationModal: React.FC<ExitConfirmationModalProps> = ({ onConfirm, onCancel }) => {
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-[99999]">
       <div className="bg-white p-6 rounded-lg text-center w-80">
         <div className="text-center text-[#2a2e37] text-base font-bold font-['Pretendard'] leading-snug">
           회원가입 취소
