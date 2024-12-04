@@ -17,8 +17,8 @@ const Sign = () => {
   const [showExitModal, setShowExitModal] = useState(false); 
   const [formData, setFormData] = useState({
     kakaoId: '',
-    userType: '', 
-    username: '', 
+    userType: '',
+    username: '',
     age: '',
     phoneNum: '',
     address: '',
@@ -31,16 +31,22 @@ const Sign = () => {
     story: '',
     shareLocation: false,
     certificationImage: null,
+    issueYear: '',
+    issueMonth: '',
+    issueDay: '',
+    issueDate: '',
   });
   const [isComplete, setIsComplete] = useState(false);
 
   useEffect(() => {
+    console.log('Location State:', location.state); 
     if (location.state) {
-      const { kakaoId, nickname } = location.state;
+      const { kakaoId, nickname, phoneNum } = location.state;
       setFormData((prevData) => ({
         ...prevData,
         kakaoId: kakaoId || '',
         username: nickname || '',
+        phoneNum: phoneNum?.replace(/-/g, '') || '', // 하이픈 제거 후 설정
       }));
     }
   }, [location.state]);
