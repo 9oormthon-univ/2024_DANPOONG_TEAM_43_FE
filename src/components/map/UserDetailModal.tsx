@@ -158,7 +158,7 @@ const UserDetailModal: React.FC<UserDetailModalProps> = ({ userId, onClose }) =>
               <img
                 src={user.certificateImage}
                 alt="Certificate"
-                className="mx-auto w-[300px] h-[500px] shadow-md object-cover"
+                className="mx-auto w-[320px] h-[500px] shadow-md object-cover"
               />
             </div>
           )}

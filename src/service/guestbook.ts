@@ -4,7 +4,7 @@ import { GuestbookEntry } from 'type/guestbook';
 
 export const fetchGuestbook = async (): Promise<GuestbookEntry[]> => {
   const response = await axiosInstance.get<{ status: number; data: GuestbookEntry[] }>(
-    '/guestbook/all'
+    '/guestbook/myPage'
   );
 
   if (response.status !== 200) {
@@ -19,6 +19,7 @@ export const useGuestbookQuery = () => {
     queryKey: ['guestbook'],
     queryFn: fetchGuestbook,
     staleTime: 5 * 60 * 1000,
+    retry: 2
   });
 };
 

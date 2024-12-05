@@ -7,23 +7,19 @@ import mapImage from '../../assets/img/map/map-image1.svg';
 import mapBlurImage from '../../assets/img/home/map-blur1.svg';
 import { useUserStore } from 'stores/useUserStore';
 import { useUserListQuery } from 'service/fetchUserList';
-import caregiverProfile from '../../assets/img/map/marker1.svg';
-import volunteerProfile from '../../assets/img/map/marker2.svg';
-import careWorkerProfile from '../../assets/img/map/marker3.svg';
 import marker1Default from '../../assets/img/map/marker1-1.svg';
 import marker2Default from '../../assets/img/map/marker2-1.svg';
 import marker3Default from '../../assets/img/map/marker3-1.svg';
 import marker1Active from '../../assets/img/map/marker1.svg';
 import marker2Active from '../../assets/img/map/marker2.svg';
 import marker3Active from '../../assets/img/map/marker3.svg';
-import UserCard from 'components/map/UserCard';
 import UserCardHome from './UserCardHome';
 
 interface MapSectionProps {
   userData: UserData;
 }
 
-const MapSection: React.FC<MapSectionProps> = ({ userData }) => {
+const MapSection: React.FC<MapSectionProps> = () => {
   const { isAuthenticated, setAuthenticated, openModal, setOpenModal } = useLocationStore(); 
   const [isBlurred, setIsBlurred] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -92,13 +88,11 @@ const MapSection: React.FC<MapSectionProps> = ({ userData }) => {
 
   const addMarkersToMap = useCallback(() => {
     if (!map) return;
-
-    // 기존 마커 초기화
     markersRef.current.forEach((marker) => marker.setMap(null));
     markersRef.current = [];
 
     userList.forEach((user: any) => {
-      const isActive = user.userId === activeMarkerId; // 현재 마커 활성화 여부
+      const isActive = user.userId === activeMarkerId;
       const markerImage = getMarkerImage(user.userType, isActive);
 
       const marker = new window.kakao.maps.Marker({
@@ -106,15 +100,14 @@ const MapSection: React.FC<MapSectionProps> = ({ userData }) => {
         image: markerImage,
       });
 
-      // 마커 클릭 이벤트
       window.kakao.maps.event.addListener(marker, 'click', () => {
-        setSelectedUser(user); // 선택된 유저 설정
-        setActiveMarkerId(user.userId); // 클릭된 마커 ID 설정
-        map.panTo(marker.getPosition()); // 지도 중심 이동
+        setSelectedUser(user); 
+        setActiveMarkerId(user.userId);
+        map.panTo(marker.getPosition()); 
       });
 
-      marker.setMap(map); // 지도에 마커 표시
-      markersRef.current.push(marker); // 마커 참조 저장
+      marker.setMap(map); 
+      markersRef.current.push(marker);
     });
   }, [map, userList, activeMarkerId]);
 
@@ -134,13 +127,12 @@ const MapSection: React.FC<MapSectionProps> = ({ userData }) => {
     if (!map) return;
 
     const handleMapClick = () => {
-      setActiveMarkerId(null); // 활성화된 마커 ID 초기화
-      setSelectedUser(null);   // 선택된 유저 정보 초기화
+      setActiveMarkerId(null); 
+      setSelectedUser(null);  
     };
-    // 지도 클릭 이벤트 등록
+
     window.kakao.maps.event.addListener(map, 'click', handleMapClick);
     return () => {
-      // 컴포넌트 언마운트 시 이벤트 제거
       window.kakao.maps.event.removeListener(map, 'click', handleMapClick);
     };
   }, [map]);
@@ -160,7 +152,6 @@ const MapSection: React.FC<MapSectionProps> = ({ userData }) => {
 
 
   useEffect(() => {
-    const storedLocation = sessionStorage.getItem('userLocation');
     const isSessionAuthenticated = sessionStorage.getItem('locationAuthenticated') === 'true';
 
     if (isAuthenticated || isSessionAuthenticated) {
@@ -195,11 +186,10 @@ const MapSection: React.FC<MapSectionProps> = ({ userData }) => {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           position => {
-            console.log("좌표 값:", position.coords); // 확인용 로그
             resolve(position.coords);
           },
           error => {
-            console.error("Geolocation 에러:", error); // 에러 확인
+            console.error("Geolocation 에러:", error);
             reject(error);
           },
         );
@@ -219,8 +209,8 @@ const MapSection: React.FC<MapSectionProps> = ({ userData }) => {
   
       geocoder.coord2Address(latlng.getLng(), latlng.getLat(), (result: any, status: any) => {
         if (status === window.kakao.maps.services.Status.OK && result[0]) {
-          const roadAddress = result[0].road_address?.address_name; // 도로명 주소
-          const address = roadAddress || result[0].address?.address_name || '주소 없음'; // 기본 주소 처리
+          const roadAddress = result[0].road_address?.address_name; 
+          const address = roadAddress || result[0].address?.address_name || '주소 없음';
   
           resolve({ address, detailAddress: '' });
         } else {
@@ -244,7 +234,6 @@ const MapSection: React.FC<MapSectionProps> = ({ userData }) => {
         );
   
         setAuthenticated(true);
-        // initializeMap();
         setTimeout(() => {
           window.alert('위치 정보에 동의했습니다.');
           setShowAgreementModal(false); 
