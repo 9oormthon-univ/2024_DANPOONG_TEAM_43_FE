@@ -8,6 +8,7 @@ import VolunteerCertificate from 'components/profile/VolunteerCertificate.tsx';
 import MemoriesSetting from 'components/profile/MemoriesSetting';
 import NeighborTime from 'components/mypage/NeighborTime';
 import { getBackgroundColor2, getUserImage } from 'utils/userUtils';
+import CareLicense from 'components/profile/CareLicense';
 
 const MyPage: React.FC = () => {
   const { data: userData, isLoading, error } = useUserDataQuery();
@@ -50,6 +51,7 @@ const MyPage: React.FC = () => {
         <ManageNeighbors />
         {userType === 'VOLUNTEER' && <VolunteerCertificate />}
         {userType === 'CARE_WORKER' && <CareWorkerCertificate />}
+        <CareLicense/>
         <MemoriesSetting />
         <CustomerService />
       </div>

@@ -4,13 +4,16 @@ import bg_img_giver from '../../assets/img/group/neighbor_list_giver_bg.svg'
 import bg_img_volunteer from '../../assets/img/group/neighbor_list_volunteer_bg.svg'
 import bg_img_worker from '../../assets/img/group/neighbor_list_worker_bg.svg'
 import { UserType } from 'type/user';
+import { getBackgroundColor2, getUserImage } from 'utils/userUtils';
+
 
 interface NeighborListProps {
   username: string;
   userType: UserType;
+  userId: number;
 }
 
-const NeighborList: React.FC<NeighborListProps> = ({ username, userType }) => {
+const NeighborList: React.FC<NeighborListProps> = ({ username, userType, userId }) => {
   const userTypeConfig = {
     CAREGIVER: {
       label: '간병인',
@@ -35,7 +38,9 @@ const NeighborList: React.FC<NeighborListProps> = ({ username, userType }) => {
   return (
     <div className='neighbor_list' style={{ backgroundColor: config.bgColor }}>
         <img src={config.bgImg} alt="" className='bg_img'/>
-        <img src={profile} alt="" className='profile'/>
+        <img src={getUserImage(userId, userType)} alt="" className='profile' style={{
+            border: `1px solid ${getBackgroundColor2(userType)}`,
+          }}/>
         <p className="name">{config.label} {username}</p>
     </div>
   )

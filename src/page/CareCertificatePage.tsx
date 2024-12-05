@@ -1,26 +1,39 @@
-import React, { useRef } from 'react'
+import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import back from '../assets/img/chat/chat-back.svg'
 import Certificate from 'components/mypage/Certificate';
 import { useUserDataQuery } from 'service/user';
+import CareCertificate from 'components/mypage/CareCertificate';
+import axiosInstance from 'utils/axiosInstance';
 
 
-const CertificatePage = () => {
+const CareCertificatePage = () => {
     const navigate = useNavigate();
-    const location = useLocation();
-  const { label, certificateData } = location.state || {};
     const certificateRef = useRef<HTMLDivElement>(null);
     const { data: userData, isLoading, error } = useUserDataQuery();
+    const [certificateData, setCertificateData] = useState<any>(null);
+    useEffect(() => {
+        const fetchCertificateData = async () => {
+          try {
+            const response = await axiosInstance.get(`/api/certificates/certificate/userId/${userId}`);
+            setCertificateData(response.data.data);
+          } catch (error) {
+            console.error('Failed to fetch certificate data:', error);
+          }
+        };
+    
+        if (userId) {
+          fetchCertificateData();
+        }
+      }, [userData?.userId]);
+
     if (error || !userData) {
         return null;
     }
-    const { userType } = userData;
+    const { userType, userId } = userData;
 
-    const type = userType === 'CARE_WORKER'
-        ? '요양보호'
-        : '자원봉사';
     const handleBackClick = () => {
         navigate(-1);
     };
@@ -45,11 +58,15 @@ const CertificatePage = () => {
         <div className='container' id='certificate_page'>
             <div className="top">
                 <img src={back} alt="" onClick={handleBackClick} />
-                <p className='top_title'>{label}</p>
+                <p className='top_title'>요양 보호 자격증 발급</p>
             </div>
-            <div className="certificate_div" ref={certificateRef}>
-                <Certificate type={type} certificateData={certificateData} />
-            </div>
+            {certificateData ? (
+        <div className="certificate_div" ref={certificateRef}>
+          <CareCertificate certificateData={certificateData} />
+        </div>
+      ) : (
+        <p>로딩 중...</p>
+      )}
             <p className="certificate_info_text">
                 본 증명서는 인터넷으로 발급되었으며, 자원봉사 포탈 시스템(www.1365.go.kr)의 확인서 조회 메뉴를 통해 문서발급 번호 입력으로 내용의 위변조를 확인해 주세요
             </p>
@@ -60,4 +77,4 @@ const CertificatePage = () => {
     )
 }
 
-export default CertificatePage
+export default CareCertificatePage
