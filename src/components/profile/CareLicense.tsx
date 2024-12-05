@@ -19,7 +19,7 @@ const CareLicense: React.FC = () => {
         navigate('/care-certificate-page');
       } else {
         console.error('Failed to issue care license:', error);
-        alert('자격증 발급에 실패했습니다. 다시 시도해주세요.');
+        alert('이수 시간이 부족해 아직 자격증을 발급할 수 없습니다.');
       }
     }
   };

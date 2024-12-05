@@ -1,43 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import giver_bg from '../../assets/img/mypage/neighbor_time_giver_bg.svg';
-import volunteer_bg from '../../assets/img/mypage/neighbor_time_volunteer_bg.svg';
-import worker from '../../assets/img/mypage/neighbor_time_worker_bg.svg';
-import { UserType } from 'type/user';
-import { useUserDataQuery } from 'service/user';
-import axiosInstance from 'utils/axiosInstance';
-
-const userTypeConfig: Record<UserType, { label: string; color: string; bgColor: string; bgImg: string }> = {
-  CAREGIVER: { label: '간병인', color: '#FF6B6B', bgColor: '#FFF1F1', bgImg: giver_bg },
-  VOLUNTEER: { label: '자원봉사자', color: '#00AEFF', bgColor: '#EFF9FF', bgImg: volunteer_bg },
-  CARE_WORKER: { label: '요양보호사', color: '#20CE86', bgColor: '#EBFEF4', bgImg: worker },
-};
+import React from "react";
+import { useUserDataQuery } from "service/user";
+import { useVolunteerHoursQuery } from "service/volunteerTimes";
+import { UserType } from "type/user";
+import { userTypeConfig } from "utils/userUtils";
 
 const NeighborTime: React.FC = () => {
-  const { data: userData, isLoading, error } = useUserDataQuery();
-  const [volunteerHours, setVolunteerHours] = useState<number | null>(null);
+  const { data: userData, error: userError } = useUserDataQuery();
+  const userId = userData?.userId; 
+  const userType = userData?.userType;
+  const {
+    data: volunteerHours,
+    error: volunteerError,
+    isLoading: isVolunteerHoursLoading,
+  } = useVolunteerHoursQuery(userId!);
 
-  useEffect(() => {
-    if (userId) {
-      // API 호출
-      axiosInstance
-        .get('/api/certificates/total-volunteer-hours', {
-          params: { userId },
-        })
-        .then((response) => {
-          setVolunteerHours(response.data);
-        })
-        .catch((err) => {
-          console.error('Error fetching volunteer hours:', err);
-        });
-    }
-  }, [userData]);
-
-  if (error || !userData) {
+  if (userError || volunteerError || !userData) {
     return null;
   }
-  
 
-  const { userType, userId } = userData;
   const config = userTypeConfig[userType as UserType];
 
   return (
@@ -51,9 +31,11 @@ const NeighborTime: React.FC = () => {
       <img src={config.bgImg} alt="" className="background_img" />
       <div className="text">
         <p className="txt">이웃과 함께한 시간</p>
-        <p className="time">{volunteerHours}시간</p>
+        <p className="time">
+          {isVolunteerHoursLoading ? '시간' : `${volunteerHours}시간`}
+        </p>
       </div>
-      {volunteerHours !== null && volunteerHours >= 80 && (
+      {volunteerHours !== undefined && volunteerHours !== null && volunteerHours >= 80 && (
         <div className="option">요양보호사 자격을 위한 80시간을 모두 이수했어요</div>
       )}
     </div>

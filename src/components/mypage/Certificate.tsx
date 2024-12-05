@@ -1,20 +1,7 @@
 import React from 'react'
 import bgimg from '../../assets/img/mypage/certificate_background_img.svg'
 import center_bg from '../../assets/img/mypage/certificate_center_bgimg.svg'
-
-interface CertificateProps {
-  type: string;
-  certificateData: {
-    myName: string;
-    volunteerDate: string;
-    myType: string;
-    partnerName: string;
-    myIdentity:number;
-    address:string;
-    durationTimes:number;
-    content:string;
-  };
-}
+import { CertificateProps } from 'type/mypage'
 
 const Certificate: React.FC<CertificateProps> = ({type, certificateData}) => {
   return (

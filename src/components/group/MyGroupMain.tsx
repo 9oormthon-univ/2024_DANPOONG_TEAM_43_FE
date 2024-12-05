@@ -112,7 +112,7 @@ const MyGroupMain = () => {
           </div>
         </>
       ) : (
-        <p>모임 정보를 불러오는 중입니다...</p>
+        null
       )}
     </div>
   )

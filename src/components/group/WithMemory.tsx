@@ -1,23 +1,9 @@
 import React from 'react'
-import profile from '../../assets/img/user/type1-1.svg'
 import worker_bg from '../../assets/img/group/memory_worker_bg_img.svg'
 import volunteer_bg from '../../assets/img/group/memory_volunteer_bg_img.svg'
 import giver_bg from '../../assets/img/group/memory_giver_bg_img.svg'
 import { getBackgroundColor2, getUserImage } from 'utils/userUtils';
-
-interface WithMemoryProps {
-  memory: WithMemoryPropsType;
-}
-interface WithMemoryPropsType {
-  otherType: WithMemoryPropsInfo;
-  caregiver: WithMemoryPropsInfo;
-}
-interface WithMemoryPropsInfo {
-  username: string;
-  userType: string;
-  content: string;
-  userId: number;
-}
+import { WithMemoryProps } from 'type/group';
 
 const WithMemory: React.FC<WithMemoryProps> = ({ memory }) => {
   const getBackgroundImage = () => {
@@ -65,4 +51,4 @@ const WithMemory: React.FC<WithMemoryProps> = ({ memory }) => {
   )
 }
 
-export default WithMemory
+export default WithMemory;

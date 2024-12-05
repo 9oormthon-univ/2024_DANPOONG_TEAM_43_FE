@@ -1,18 +1,9 @@
 import React from 'react'
-import { useNavigate, useLocation } from 'react-router-dom';
-import profile from '../../assets/img/user/type1-1.svg'
+import { useNavigate } from 'react-router-dom';
 import comment from '../../assets/img/group/group_comment_icon.svg'
-import { getBackgroundColor2, getUserImage } from 'utils/userUtils';
+import { getUserImage } from 'utils/userUtils';
+import { FeedPreviewProps } from 'type/group';
 
-interface FeedPreviewProps {
-  title: string;
-  content: string;
-  writerType: string;
-  createdAt: string;
-  newsId:number;
-  commentCount:number;
-  writerId:number;
-}
 const FeedPreview: React.FC<FeedPreviewProps> = ({ title, content, writerType, createdAt,newsId,commentCount,writerId }) => {
   const navigate = useNavigate();
   const GoToDetail = () => {

@@ -1,14 +1,5 @@
 import React from 'react';
-
-interface RequestWorkFinalProps {
-    location: string;
-    time: string;
-    work: string;
-    payment: string;
-    onClose: () => void;
-    onSubmit: () => void;
-    onEdit: () => void;
-}
+import { RequestWorkFinalProps } from 'type/chat';
 
 const RequestWorkFinal: React.FC<RequestWorkFinalProps> = ({ location, time, work, payment, onClose, onSubmit, onEdit }) => {
     return (

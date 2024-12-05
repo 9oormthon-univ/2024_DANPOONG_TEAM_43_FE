@@ -36,3 +36,12 @@ export const calculateDurationHours = (start: Date, end: Date): number => {
     const diffInMs = end.getTime() - start.getTime();
     return diffInMs / (1000 * 60 * 60); 
 };
+
+// 시간 차이를 계산하는 함수
+export const calculateTimeDifference = (lastNews: string) => {
+    const now = new Date(); 
+    const newsTime = new Date(lastNews);
+    const diffInMs = now.getTime() - newsTime.getTime(); 
+    const diffInHours = Math.floor(diffInMs / (1000 * 60 * 60)); 
+    return diffInHours;
+};

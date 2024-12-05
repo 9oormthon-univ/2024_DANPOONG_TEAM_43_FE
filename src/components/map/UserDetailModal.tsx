@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUserDetailQuery } from 'service/user';
 import { getIconPath, getUserImage, getUserTypeText, getBackgroundColor, getBtnColor } from 'utils/userUtils';
-
 import leftButtonIcon from '../../assets/img/sign/sign-left-btn.svg';
 import friendIcon from '../../assets/img/map/friend.svg';
 import basketIcon from '../../assets/img/map/basket.svg';
