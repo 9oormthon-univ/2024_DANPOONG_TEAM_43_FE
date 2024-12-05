@@ -39,4 +39,5 @@ export interface UserDetailResponse {
   walk: string;
   story: string;
   togetherTime: number;
+  certificateImage: string;
 }

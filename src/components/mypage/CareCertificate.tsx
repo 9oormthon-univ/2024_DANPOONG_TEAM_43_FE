@@ -1,34 +1,12 @@
 import React from 'react'
 import icon from '../../assets/img/mypage/certificate_icon.svg'
-import profile from '../../assets/img/user/type1-1.svg'
 import sign from '../../assets/img/mypage/certificate_sign.svg'
 import { useUserDataQuery } from 'service/user';
-import { getBackgroundColor2, getUserImage } from 'utils/userUtils';
-
-interface CareCertificateProps {
-    certificateData: {
-      certificateId: string;
-      identity: string;
-      username: string;
-      issueDate: string;
-      totalHours: number;
-    };
-  }
-  const getBirthInfoAndAge = (identity: string, age:number) => {
-    if (identity.length < 6) return { month: '', day: '', age: '' };
-  
-    // 생년월일 추출
-    const month = identity.slice(2, 4); // 월
-    const day = identity.slice(4, 6); // 일
-
-    const currentYear = new Date().getFullYear(); // 현재 연도 가져오기
-    const year = currentYear - age + 1;
-  
-    return { year, month, day };
-  };
+import { getBirthInfoAndAge, getUserImage } from 'utils/userUtils';
+import { CareCertificateProps } from 'type/mypage';
 
 const CareCertificate: React.FC<CareCertificateProps> = ({ certificateData }) => {
-    const { data: userData, isLoading, error } = useUserDataQuery();
+    const { data: userData, error } = useUserDataQuery();
     if (error || !userData) {
         return null;
     }

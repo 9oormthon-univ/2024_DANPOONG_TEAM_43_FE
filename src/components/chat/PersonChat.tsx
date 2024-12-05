@@ -3,17 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useMutation } from '@tanstack/react-query';
 import axiosInstance from 'utils/axiosInstance';
 import { imageMapping,getBackgroundColor2 } from 'utils/userUtils';
-
-
-interface PersonChatProps {
-  roomId: string;
-  receiverName: string;
-  lastMessage: string;
-  lastUpdated: string;
-  receiverUserType: string;
-  receiverId:number;
-}
-
+import { PersonChatProps } from 'type/chat';
 
 const getProfileImage = (userId: number, userType: string): string => {
   const images = imageMapping[userType];

@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUserDetailQuery } from 'service/user';
 import { getIconPath, getUserImage, getUserTypeText, getBackgroundColor, getBtnColor } from 'utils/userUtils';
-
 import leftButtonIcon from '../../assets/img/sign/sign-left-btn.svg';
 import friendIcon from '../../assets/img/map/friend.svg';
 import basketIcon from '../../assets/img/map/basket.svg';
@@ -149,6 +148,20 @@ const UserDetailModal: React.FC<UserDetailModalProps> = ({ userId, onClose }) =>
               </div>
             )}
           </div>
+          <div className="mt-6">
+          {user.userType === 'CARE_WORKER' && user.certificateImage && (
+            <div className="mt-6 mb-4">
+              <h3 className="text-[#2a2e36] text-xl font-semibold font-['Pretendard'] leading-7 mb-4">
+                자격증
+              </h3>
+              <img
+                src={user.certificateImage}
+                alt="Certificate"
+                className="mx-auto w-[320px] h-[500px] shadow-md object-cover"
+              />
+            </div>
+          )}
+        </div>
         </div>
       </div>
       <div className='w-full'>

@@ -1,20 +1,6 @@
 import React from 'react'
-import { getBackgroundColor2, getUserImage } from 'utils/userUtils';
-
-
-interface FeedCommentProps {
-    writerType: string;
-    writer: string;
-    createdAt: string;
-    content: string;
-    writerId:number;
-  }
-
-interface UserTypeConfig {
-    CAREGIVER: { label: string };
-    VOLUNTEER: { label: string };
-    CARE_WORKER: { label: string };
-  }
+import { FeedCommentProps, UserTypeConfig } from 'type/group';
+import { getUserImage } from 'utils/userUtils';
 
 const FeedComment: React.FC<FeedCommentProps> = ({ writerType, writer, createdAt, content, writerId }) => {
     const userTypeConfig: UserTypeConfig = {

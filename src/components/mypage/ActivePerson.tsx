@@ -1,24 +1,9 @@
 import React from 'react'
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import giver_bg from '../../assets/img/mypage/neighbor_time_giver_bg.svg'
-import profile from '../../assets/img/mypage/profile-caregiver.svg'
 import { getBackgroundColor2, getUserImage } from 'utils/userUtils';
+import { MenuItemProps } from 'type/mypage';
 
-interface MenuItemProps {
-  label: string;
-  certificateData: {
-    myName: string;
-    volunteerDate: string;
-    myType: string;
-    partnerName: string;
-    myIdentity:number;
-    address:string;
-    durationTimes:number;
-    content:string;
-    partnerId:number;
-    partnerType:string;
-  };
-}
 const ActivePerson: React.FC<MenuItemProps> = ({ label, certificateData }) => {
   const navigate = useNavigate();
   const GoToCertificate = () =>{

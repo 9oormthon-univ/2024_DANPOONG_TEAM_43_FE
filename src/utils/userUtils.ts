@@ -47,6 +47,9 @@ import walkIcon3 from '../assets/img/map/walk3.svg';
 import certificatedBackImage1 from '../assets/img/mypage/certificatedBackImage1.svg';
 import certificatedBackImage2 from '../assets/img/mypage/certificatedBackImage2.svg';
 import certificatedBackImage3 from '../assets/img/sign/certificate-back.svg';
+import bg_img_giver from '../assets/img/group/neighbor_list_giver_bg.svg'
+import bg_img_volunteer from '../assets/img/group/neighbor_list_volunteer_bg.svg'
+import bg_img_worker from '../assets/img/group/neighbor_list_worker_bg.svg'
 import { iconMapping } from './iconMapping';
 
 // 이미지 매핑 데이터
@@ -206,4 +209,37 @@ export const getIconPathBySwitch = (userType: string, icon: string): string => {
     default:
       return timeIcon; 
   }
+};
+
+export const userTypeConfig = {
+  CAREGIVER: {
+    label: '간병인',
+    color: '#FF6B6B', 
+    bgColor: '#FFF1F1', 
+    bgImg: bg_img_giver 
+  },
+  VOLUNTEER: {
+    label: '자원봉사자',
+    color: '#00AEFF', 
+    bgColor: '#EFF9FF', 
+    bgImg: bg_img_volunteer 
+  },
+  CARE_WORKER: {
+    label: '요양보호사',
+    color: '#20CE86', 
+    bgColor: '#EBFEF4',
+    bgImg: bg_img_worker 
+  }
+};
+
+export const getBirthInfoAndAge = (identity: string, age:number) => {
+  if (identity.length < 6) return { month: '', day: '', age: '' };
+
+  const month = identity.slice(2, 4);
+  const day = identity.slice(4, 6);
+
+  const currentYear = new Date().getFullYear(); 
+  const year = currentYear - age + 1;
+
+  return { year, month, day };
 };
