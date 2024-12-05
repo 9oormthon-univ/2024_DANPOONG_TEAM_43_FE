@@ -149,6 +149,20 @@ const UserDetailModal: React.FC<UserDetailModalProps> = ({ userId, onClose }) =>
               </div>
             )}
           </div>
+          <div className="mt-6">
+          {user.userType === 'CARE_WORKER' && user.certificateImage && (
+            <div className="mt-6 mb-4">
+              <h3 className="text-[#2a2e36] text-xl font-semibold font-['Pretendard'] leading-7 mb-4">
+                자격증
+              </h3>
+              <img
+                src={user.certificateImage}
+                alt="Certificate"
+                className="mx-auto w-[300px] h-[500px] shadow-md object-cover"
+              />
+            </div>
+          )}
+        </div>
         </div>
       </div>
       <div className='w-full'>
