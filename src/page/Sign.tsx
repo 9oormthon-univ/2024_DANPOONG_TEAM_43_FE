@@ -9,11 +9,17 @@ import Step6Certification from 'components/signup/Step6Certification';
 import Step7LocationSharing from 'components/signup/Step7LocationSharing';
 import CompletionScreen from '../components/signup/CompletionScreen';
 import ExitConfirmationModal from 'components/signup/ExitConfirmationModal';
+import TermsAndConditions from 'components/signup/TermsAndConditions';
 
 const Sign = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(0); // 초기 단계 0으로 설정
+
+  const handleAcceptTerms = () => {
+    setStep(1); // 약관 동의 후 다음 단계로 이동
+  };
+
   const [showExitModal, setShowExitModal] = useState(false); 
   const [formData, setFormData] = useState({
     kakaoId: '',
@@ -41,7 +47,6 @@ const Sign = () => {
   const [isComplete, setIsComplete] = useState(false);
 
   useEffect(() => {
-    console.log('Location State:', location.state); 
     if (location.state) {
       const { kakaoId, nickname, phoneNum } = location.state;
       setFormData((prevData) => ({
@@ -100,18 +105,12 @@ const Sign = () => {
       formDataToSubmit.append("file", formData.certificationImage);
     }
 
-    formDataToSubmit.forEach((value, key) => {
-      console.log(`Key: ${key}, Value:`, value);
-    });
-  
     try {
       const response = await fetch("https://carely-backend.site/register", {
         method: "POST",
         body: formDataToSubmit,
       });
       const result = await response.json();
-
-      console.log(result);
   
       if (result.status === 200) {
         setIsComplete(true);
@@ -122,7 +121,7 @@ const Sign = () => {
       console.error("폼 전송 오류:", error);
     }
   };
-  
+
   const renderStepContent = () => {
     if (isComplete) {
       return (
@@ -131,8 +130,14 @@ const Sign = () => {
         </div>
       );
     }
-  
+
     switch (step) {
+      case 0:
+        return (
+          <div className="mx-auto max-w-[440px] min-w-[320px] w-[90%]">
+            <TermsAndConditions onAccept={handleAcceptTerms} />
+          </div>
+        );
       case 1:
         return (
           <div className="mx-auto max-w-[440px] min-w-[320px] w-[90%]">
@@ -143,6 +148,12 @@ const Sign = () => {
         return (
           <div className="mx-auto max-w-[440px] min-w-[320px] w-[90%]">
             <Step2BasicInfo formData={formData} setFormData={setFormData} onNext={handleNextStep} onBackClick={() => setShowExitModal(true)} />
+          </div>
+        );
+      case 3:
+        return (
+          <div className="mx-auto max-w-[440px] min-w-[320px] w-[90%]">
+            <Step3ContactInfo formData={formData} setFormData={setFormData} onNext={handleNextStep} onBackClick={() => setShowExitModal(true)} />
           </div>
         );
       case 3:
