@@ -23,7 +23,7 @@
 }
 
 .fade-in {
-  animation: fadeIn 0.7s forwards;
+  animation: fadeIn 1s forwards;
 }
 
 .fade-out {
@@ -34,7 +34,6 @@
   animation: fadeInOut 2.5s forwards;
 }
 
-/* 로고 기본 스타일 */
 .initial-logo {
   position: absolute;
   width: 50%; 
@@ -68,20 +67,20 @@
 
 .final-logo {
   height: 320px;
-  animation-delay: 2.5s;
+  animation-delay: 1s;
   margin-bottom: 50px;
 }
 
 .text-logo {
   width: 80%;
-  animation-delay: 2.5s;
+  animation-delay: 1s;
   margin-bottom: 100px;
 }
 
 .kakao-login-button {
   opacity: 0;
   animation: fadeIn 1s forwards;
-  animation-delay: 3.5s; 
+  animation-delay: 2s; 
 }
 
 .login-button {
