@@ -7,6 +7,7 @@ import FeedComment from 'components/group/FeedComment';
 import axiosInstance from 'utils/axiosInstance';
 import { UserType } from 'type/user';
 import { useUserDataQuery } from 'service/user';
+import { getBackgroundColor2, getUserImage } from 'utils/userUtils';
 
 
 interface UserTypeConfig {
@@ -23,6 +24,7 @@ const GroupFeedDetail = () => {
     const { newsId } = location.state || {};
     const [feedData, setFeedData] = useState<any>(null); // 피드 데이터 저장
     const [newComment, setNewComment] = useState(''); // 작성 중인 댓글
+    const [newComments, setNewComments] = useState<any[]>([]); // 새로 추가된 댓글
     const [isPosting, setIsPosting] = useState(false); // 댓글 작성 중 상태
 
     useEffect(() => {
@@ -42,7 +44,7 @@ const GroupFeedDetail = () => {
         return null;
     }
 
-    const { username, userType } = userData;
+    const { username, userType, userId } = userData;
 
     const userTypeConfig: UserTypeConfig = {
         CAREGIVER: {
@@ -65,31 +67,27 @@ const GroupFeedDetail = () => {
         if (!newComment.trim() || isPosting) return;
 
         try {
-            setIsPosting(true); // 요청 중 상태 활성화
+            setIsPosting(true);
             const payload = { content: newComment.trim() };
             const response = await axiosInstance.post(`/news/create/news/${newsId}/comment`, payload);
 
-            // 새로운 댓글을 기존 댓글 리스트에 추가
-            setFeedData((prevFeedData: any) => ({
-                ...prevFeedData,
-                newsComments: [
-                    ...prevFeedData.newsComments,
-                    {
-                        newsCommentId: response.data.data.commentId, // 새로운 댓글 ID
-                        content: newComment.trim(),
-                        writerType: userType, // 작성자 유형 (적절히 변경 가능)
-                        writer: username, // 현재 사용자 이름 (적절히 설정 가능)
-                        createdAt: new Date().toISOString(),
-                    },
-                ],
-            }));
+            const newCommentData = {
+                newsCommentId: response.data.data.commentId, // 새 댓글 ID
+                content: newComment.trim(),
+                writerType: userType,
+                writer: username,
+                createdAt: new Date().toISOString(),
+                writerId: userId,
+            };
 
-            setNewComment(''); // 댓글 입력 필드 초기화
+            // 새 댓글은 별도의 상태로 추가
+            setNewComments((prev) => [...prev, newCommentData]);
+            setNewComment('');
         } catch (error) {
             console.error('Failed to post comment:', error);
             alert('댓글 작성에 실패했습니다.');
         } finally {
-            setIsPosting(false); // 요청 중 상태 비활성화
+            setIsPosting(false);
         }
     };
 
@@ -104,7 +102,7 @@ const GroupFeedDetail = () => {
                         <img src={back} alt="back" onClick={handleBackClick} className="back" />
                         <p className='top_div'>
                             <div className="contents_div">
-                                <img src={profile} alt="" className='profile' />
+                                <img src={getUserImage(feedData.writerId, feedData.writerType)} alt="" className='profile' />
                                 <div className="text">
                                     <p className="name">{`${config.label} ${feedData.writer}`}</p>
                                     <p className="when">{new Date(feedData.createdAt).toLocaleString()}</p>
@@ -117,19 +115,30 @@ const GroupFeedDetail = () => {
                         <p className="contents_txt">{feedData.content}</p>
                     </div>
                     <div className="comment_div">
-                        {feedData.newsComments.length > 0 ? (
-                            feedData.newsComments.map((comment: any) => (
+                        {/* 기존 댓글은 역순으로 렌더링 */}
+                        {feedData.newsComments.length > 0 &&
+                            [...feedData.newsComments].reverse().map((comment: any) => (
                                 <FeedComment
                                     key={comment.newsCommentId}
                                     writerType={comment.writerType}
                                     writer={comment.writer}
                                     createdAt={comment.createdAt}
                                     content={comment.content}
+                                    writerId={comment.writerId}
                                 />
-                            ))
-                        ) : (
-                            <p className='none'>댓글이 없습니다.</p>
-                        )}
+                            ))}
+
+                        {/* 새로 작성된 댓글은 마지막에 렌더링 */}
+                        {newComments.map((comment: any) => (
+                            <FeedComment
+                                key={comment.newsCommentId}
+                                writerType={comment.writerType}
+                                writer={comment.writer}
+                                createdAt={comment.createdAt}
+                                content={comment.content}
+                                writerId={comment.writerId}
+                            />
+                        ))}
                     </div>
                     <div className="send_section">
                         <div className="send_box">

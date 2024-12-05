@@ -45,8 +45,8 @@ const AIContents: React.FC = () => {
   const handleBackClick = () => navigate(-1);
 
   const getTypeFillStyle = () => {
-    if (userType === 'VOLUNTEER') return { fill: 'var(--Blue-300, #00AEFF)' };
-    if (userType === 'CARE_WORKER') return { fill: 'var(--Green-300, #20CE86)' };
+    if (userType === 'VOLUNTEER') return { background: '#00AEFF' };
+    if (userType === 'CARE_WORKER') return { background: '#20CE86' };
     return {};
   };
 
@@ -99,7 +99,7 @@ const AIContents: React.FC = () => {
         eat: memoData.eat,
         active: memoData.additionalHealth,
         chat: memoData.social,
-        toilet: memoData.voiding || '정보 없음',
+        toilet: memoData.voiding,
       };
       setConditionText(conditionTextMapping[key] || text);
     }
@@ -134,7 +134,7 @@ const AIContents: React.FC = () => {
               <div
                 key={condition.key}
                 className={condition.key}
-                onClick={() => handleConditionClick(condition.key, `No data available for ${condition.key}`)}
+                onClick={() => handleConditionClick(condition.key, ' ')}
                 style={{
                   backgroundImage: `url(${
                     selectedCondition === condition.key ? condition.fillIcon : condition.defaultIcon

@@ -165,5 +165,117 @@
             z-index: 1;
         }
     }
+}
 
+.care_certificate_components {
+    display: flex;
+    width: 100%;
+    border-radius: 8px;
+    background: #FFF;
+    box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.25);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .icon_div {
+        width: 100%;
+        display: flex;
+        padding: 13px 19px;
+        justify-content: flex-end;
+
+        .icon {
+            width: 45.985px;
+            height: 9.412px;
+        }
+    }
+
+    .top_title {
+        color: var(--gray-800-txtp, #2A2E37);
+        text-align: center;
+        font-size: 22.067px;
+        font-weight: 600;
+        line-height: 140%;
+        margin-top: 52px;
+    }
+
+    .info_title {
+        color: var(--gray-800-txtp, #2A2E37);
+        font-size: 8.275px;
+        font-weight: 600;
+        line-height: 140%;
+    }
+
+    .info_txt {
+        color: var(--gray-800-txtp, #2A2E37);
+        font-size: 10.344px;
+        font-weight: 600;
+        line-height: 140%;
+    }
+
+    .user_info_div {
+        margin-top: 10px;
+        display: flex;
+        gap: 34px;
+        align-items: center;
+
+        .profile {
+            width: 65.511px;
+            height: 65.511px;
+        }
+
+        .text_info {
+            display: flex;
+            gap: 7.59px;
+            flex-direction: column;
+
+            div {
+                display: flex;
+                align-items: center;
+            }
+        }
+
+        .info_title {
+            width: 40px;
+        }
+
+    }
+
+    .certificate_info_div {
+        margin-top: 40px;
+        display: flex;
+        gap: 6.21px;
+        flex-direction: column;
+        margin-bottom: 53px;
+
+        div {
+            display: flex;
+            gap: 29.65px;
+            align-items: center;
+
+            .info_title {
+                letter-spacing: 2.069px;
+            }
+            .info_txt{
+                width: 120px;
+            }
+        }
+        .num_div{
+            align-items: stretch;
+        }
+    }
+
+    .info_text {
+        margin-top: 6px;
+        color: #6C6C6C;
+        text-align: center;
+        font-size: 8.275px;
+        font-weight: 400;
+        line-height: 140%;
+    }
+    .sign{
+        height: 15px;
+        width: 140px;
+        margin-top: 22px;
+        margin-bottom: 61px;
+    }
 }
