@@ -2,7 +2,7 @@ import React from 'react'
 import { useNavigate } from "react-router-dom";
 import { useMutation } from '@tanstack/react-query';
 import axiosInstance from 'utils/axiosInstance';
-import { imageMapping } from 'utils/userUtils';
+import { imageMapping,getBackgroundColor2 } from 'utils/userUtils';
 
 
 interface PersonChatProps {
@@ -55,7 +55,9 @@ const PersonChat: React.FC<PersonChatProps> = ({ roomId, receiverName, lastMessa
 
   return (
     <div className="chat_room_div" onClick={GoToRoom}>
-      <img src={profileImage} alt="" className="profile" />
+      <img src={profileImage} alt="" className="profile" style={{
+            border: `2px solid ${getBackgroundColor2(receiverUserType)}`,
+          }}/>
       <div className="text">
         <div className="top">
           <p className="name">{receiverName}</p>

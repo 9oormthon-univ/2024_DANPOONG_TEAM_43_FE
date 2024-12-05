@@ -55,6 +55,7 @@ const GroupFeedList = () => {
                 writerType={feed.writerType}
                 createdAt={feed.createdAt}
                 newsId = {feed.newsId}
+                writerId={feed.writerId}
                 commentCount={feed.commentCount}
               />
               <hr />

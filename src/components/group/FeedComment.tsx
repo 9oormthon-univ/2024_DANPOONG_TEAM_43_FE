@@ -1,11 +1,13 @@
 import React from 'react'
-import profile from '../../assets/img/user/type1-1.svg'
+import { getBackgroundColor2, getUserImage } from 'utils/userUtils';
+
 
 interface FeedCommentProps {
     writerType: string;
     writer: string;
     createdAt: string;
     content: string;
+    writerId:number;
   }
 
 interface UserTypeConfig {
@@ -14,7 +16,7 @@ interface UserTypeConfig {
     CARE_WORKER: { label: string };
   }
 
-const FeedComment: React.FC<FeedCommentProps> = ({ writerType, writer, createdAt, content }) => {
+const FeedComment: React.FC<FeedCommentProps> = ({ writerType, writer, createdAt, content, writerId }) => {
     const userTypeConfig: UserTypeConfig = {
         CAREGIVER: {
           label: '간병인',
@@ -30,7 +32,7 @@ const FeedComment: React.FC<FeedCommentProps> = ({ writerType, writer, createdAt
     return (
         <div className='feed_comment'>
             <div className="top_div">
-                <img src={profile} alt="" className='profile' />
+                <img src={getUserImage(writerId, writerType)} alt="" className='profile' />
                 <div className="text">
                     <p className="name">{`${config.label} ${writer}`}</p>
                     <p className="when">{new Date(createdAt).toLocaleString()}</p>

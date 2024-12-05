@@ -46,6 +46,7 @@ const GroupNeighbor = () => {
                     {neighbors.map((neighbor) => (
                         <NeighborList
                             key={neighbor.userId}
+                            userId={neighbor.userId}
                             username={neighbor.username}
                             userType={neighbor.userType}
                         />
