@@ -46,7 +46,7 @@ const TermsAndConditions = ({ onAccept }: { onAccept: () => void }) => {
       <div
         ref={contentRef}
         onScroll={handleScroll}
-        className="flex-grow overflow-y-scroll py-6 px-4 w-full max-w-[440px] min-w-[320px]"
+        className="flex-grow overflow-y-scroll pb-6 w-full max-w-[440px] min-w-[320px]"
       >
         <h2 className="text-[#2a2e37] text-xl font-semibold mb-6">
           약관에 먼저 동의해 주세요
@@ -102,7 +102,7 @@ const TermsAndConditions = ({ onAccept }: { onAccept: () => void }) => {
         <button
           onClick={!isScrolledToEnd ? handleScrollDown : handleAccept}
           className={`w-full h-[52px] rounded-lg ${
-            !isScrolledToEnd ? "bg-[#ff6b6b]" : "bg-[#0cd380]"
+            !isScrolledToEnd ? "bg-[#ff6b6b]" : "bg-[#ff6b6b]"
           } text-white font-semibold text-base font-['Pretendard'] leading-snug`}
         >
           {!isScrolledToEnd ? "아래로 스크롤하기" : "약관 동의하기"}
