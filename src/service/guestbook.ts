@@ -15,11 +15,11 @@ export const fetchGuestbook = async (): Promise<GuestbookEntry[]> => {
 };
 
 export const useGuestbookQuery = () => {
-  return useQuery({
+  return useQuery<GuestbookEntry[]>({
     queryKey: ['guestbook'],
     queryFn: fetchGuestbook,
     staleTime: 5 * 60 * 1000,
-    retry: 2
+    retry: 2,
   });
 };
 

@@ -7,7 +7,9 @@ const Memories: React.FC = () => {
   const { data, isLoading, isError } = useGuestbookQuery();
   const navigate = useNavigate();
 
-  const validEntries = data?.filter((entry) => entry.content !== null).slice(0, 2);
+  const validEntries = data
+    ?.map((entry) => entry.otherType)
+    ?.slice(0, 2); 
 
   return (
     <div className="mt-6">
@@ -24,13 +26,13 @@ const Memories: React.FC = () => {
       </div>
       <div className="space-y-4">
         {isLoading ? (
-          <div></div>
+          <div>로딩 중...</div>
         ) : isError || !validEntries || validEntries.length === 0 ? (
           <div>함께 한 추억이 아직 없습니다!</div>
         ) : (
           validEntries.map((entry) => (
             <div
-              key={entry.userId || entry.sectionId}
+              key={entry.userId}
               className={`relative flex p-4 rounded-lg shadow-md ${getBackgroundColor(entry.userType)}`}
             >
               <img
@@ -52,7 +54,7 @@ const Memories: React.FC = () => {
                 }}
               >
                 <img
-                  src={imageMapping[entry.userType][entry.userId % 10 || entry.sectionId]}
+                  src={imageMapping[entry.userType][entry.userId % 10]}
                   alt="user"
                   className="w-full h-full rounded-full object-cover"
                 />
@@ -61,18 +63,20 @@ const Memories: React.FC = () => {
                 <div
                   className="text-[#575f70] text-base font-semibold font-['Pretendard'] leading-snug"
                 >
-                  {getUserTypeText(entry.userType)} {entry.profileName}님
+                  {getUserTypeText(entry.userType)} {entry.username}님
                 </div>
-                <div
-                  className="text-[#575f70] text-xs font-normal font-['Pretendard'] leading-none line-clamp-2 overflow-hidden z-[100]"
-                  style={{
-                    display: '-webkit-box',
-                    WebkitBoxOrient: 'vertical',
-                    WebkitLineClamp: 2,
-                  }}
-                >
-                  {entry.content}
-                </div>
+                {entry.content && (
+                  <div
+                    className="text-[#575f70] text-xs font-normal font-['Pretendard'] leading-none line-clamp-2 overflow-hidden z-[100]"
+                    style={{
+                      display: '-webkit-box',
+                      WebkitBoxOrient: 'vertical',
+                      WebkitLineClamp: 2,
+                    }}
+                  >
+                    {entry.content}
+                  </div>
+                )}
               </div>
             </div>
           ))

@@ -1,11 +1,14 @@
 export interface GuestbookEntry {
-    sectionId: number;
-    home: string; 
-    writer: string; 
-    profileName: string; 
-    userType: 'CAREGIVER' | 'VOLUNTEER' | 'CARE_WORKER'; 
-    durationHours: number;
-    careDate: string; 
-    content: string;
+  otherType: {
+    userType: 'CAREGIVER' | 'VOLUNTEER' | 'CARE_WORKER';
+    username: string;
+    content: string | null;
     userId: number;
-  }
+  };
+  caregiver: {
+    userType: 'CAREGIVER' | 'VOLUNTEER' | 'CARE_WORKER';
+    username: string;
+    content: string | null;
+    userId: number;
+  };
+}
