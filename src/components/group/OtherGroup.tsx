@@ -1,28 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import axiosInstance from 'utils/axiosInstance';
-import heart from '../../assets/img/group/group_heart_icon.svg'
-import GroupList from './GroupList'
+import React from 'react';
+import heart from '../../assets/img/group/group_heart_icon.svg';
+import GroupList from './GroupList';
+import { useGroupsQuery } from 'service/useGroupQueries';
 
-const OtherGroup = () => {
-  const [groups, setGroups] = useState<any[]>([]); // API로부터 받은 그룹 리스트
+const OtherGroup: React.FC = () => {
+  const { data: groups = [], isLoading, isError } = useGroupsQuery();
 
-  useEffect(() => {
-    // API 호출
-    const fetchGroups = async () => {
-      try {
-        const response = await axiosInstance.get('/group/list');
-        setGroups(response.data.data); // 데이터 상태에 저장
-      } catch (error) {
-        console.error('Failed to fetch group list', error);
-      }
-    };
+  if (isLoading) {
+    return null;
+  }
 
-    fetchGroups();
-  }, []);
+  if (isError) {
+    return null;
+  }
+
   return (
     <div className='other_group'>
       <div className="group_list">
-      {groups.length > 0 ? (
+        {groups.length > 0 ? (
           groups.map((group, index) => (
             <React.Fragment key={group.groupId}>
               <GroupList
@@ -33,7 +28,6 @@ const OtherGroup = () => {
                 lastNews={group.lastNews}
                 groupImage={group.groupImage}
               />
-              {/* 마지막 항목이 아니라면 <hr /> 렌더링 */}
               {index !== groups.length - 1 && <hr />}
             </React.Fragment>
           ))
@@ -51,7 +45,7 @@ const OtherGroup = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default OtherGroup
+export default OtherGroup;

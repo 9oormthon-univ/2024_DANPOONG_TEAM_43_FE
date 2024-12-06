@@ -25,14 +25,14 @@ export interface FeedPreviewProps {
     writerId:number;
   }
 
-export interface GroupListProps {
+  export interface GroupListProps {
     title: string;
     location: string;
     headCount: number;
-    lastNews: string;
-    groupImage:string;
-    groupId:number;
-}
+    lastNews: string | null; 
+    groupImage: string | null; 
+    groupId: number;
+  }
 
 export interface NeighborListProps {
   username: string;

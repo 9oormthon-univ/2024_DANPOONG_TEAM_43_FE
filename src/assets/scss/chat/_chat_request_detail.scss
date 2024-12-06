@@ -13,6 +13,7 @@
         img {
             width: 24px;
             height: 24px;
+            cursor: pointer;
         }
 
         .top_title {
@@ -121,6 +122,7 @@
         font-size: 16px;
         font-weight: 600;
         line-height: 140%;
+        cursor: pointer;
 
     }
 
@@ -162,6 +164,7 @@
             align-items: center;
             justify-content: center;
             width: 100%;
+            cursor: pointer;
 
             .payment_icon {
                 width: 45px;
