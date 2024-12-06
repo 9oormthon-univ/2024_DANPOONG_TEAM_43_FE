@@ -11,9 +11,9 @@ const Group = () => {
   return (
     <div className='container' id='group'>
       <div className="page_title_div">
-        <div className={`${activeTab === 'mygroup' ? 'active' : 'no'}`}
+        <div className={`${activeTab === 'mygroup' ? 'active' : 'no'} cursor-pointer`}
           onClick={() => setActiveTab('mygroup')}>내 모임</div>
-        <div className={`${activeTab === 'other' ? 'active' : 'no'}`}
+        <div className={`${activeTab === 'other' ? 'active' : 'no'} cursor-pointer`}
           onClick={() => setActiveTab('other')}>이웃 모임 둘러보기</div>
       </div>
       {/* 탭에 따라 다른 컴포넌트 렌더링 */}

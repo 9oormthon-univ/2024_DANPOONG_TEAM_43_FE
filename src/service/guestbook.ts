@@ -11,42 +11,30 @@ export const fetchGuestbook = async (): Promise<GuestbookEntry[]> => {
     throw new Error('Failed to fetch guestbook');
   }
 
-  return response.data.data;
+  return response.data.data.map((entry) => ({
+    ...entry,
+    volunteerSessionId: Number(entry.volunteerSessionId),
+  }));
+};
+
+export const postGuestbookEntry = async (
+  id: number,
+  content: string
+): Promise<{ status: number; data: any }> => {
+  const response = await axiosInstance.post(`/guestbook/${id}`, { content });
+
+  if (response.status === 201 || response.status === 200) {
+    return response;
+  }
+
+  throw new Error('Failed to create guestbook entry');
 };
 
 export const useGuestbookQuery = () => {
-  return useQuery({
+  return useQuery<GuestbookEntry[]>({
     queryKey: ['guestbook'],
     queryFn: fetchGuestbook,
     staleTime: 5 * 60 * 1000,
-    retry: 2
+    retry: 2,
   });
 };
-
-const fetchGuestbookByTab = async (tab: string): Promise<GuestbookEntry[]> => {
-    const apiUrl =
-      tab === '전체'
-        ? '/guestbook/all'
-        : tab === '내 집'
-        ? '/guestbook/myHome'
-        : '/guestbook/caregiverHome';
-  
-    const response = await axiosInstance.get<{ status: number; data: GuestbookEntry[] }>(apiUrl);
-  
-    if (response.status !== 200) {
-      throw new Error('Failed to fetch guestbook data');
-    }
-  
-    return response.data.data;
-  };
-  
-  export const useGuestbookByTabQuery = (tab: string) =>
-    useQuery({
-      queryKey: ['guestbookByTab', tab], 
-      queryFn: () => fetchGuestbookByTab(tab), 
-      staleTime: 5 * 60 * 1000, 
-    });
-
-    export const postGuestbookEntry = async (id: number, content: string): Promise<void> => {
-    await axiosInstance.post(`/guestbook/${id}`, { content });
-    }

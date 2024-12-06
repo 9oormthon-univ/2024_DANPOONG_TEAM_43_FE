@@ -19,6 +19,14 @@ export interface UserData {
   story: string;
 }
 
+export interface GuestbookDTO {
+  partnerUsername: string;
+  partnerUserId: number;
+  partnerUserType: string; 
+  content: string | null; 
+  date: string; 
+}
+
 export interface UserDetailResponse {
   userId: number;
   username: string;
@@ -40,4 +48,5 @@ export interface UserDetailResponse {
   story: string;
   togetherTime: number;
   certificateImage: string;
+  guestbookDTOS: GuestbookDTO[];
 }

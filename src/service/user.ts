@@ -32,6 +32,8 @@ export const useUserDetailQuery = (userId: number) => {
   return useQuery<UserDetailResponse, Error>({
     queryKey: ['userDetail', userId], 
     queryFn: () => fetchUserDetail(userId),
-    enabled: !!userId,
+    enabled: !!userId, 
+    staleTime: 5 * 60 * 1000,
+    retry: 2, 
   });
 };

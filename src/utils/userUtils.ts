@@ -44,9 +44,12 @@ import eatIcon3 from '../assets/img/map/eat3.svg';
 import toiletIcon3 from '../assets/img/map/toilet3.svg';
 import bathIcon3 from '../assets/img/map/bath3.svg';
 import walkIcon3 from '../assets/img/map/walk3.svg';
-import certificatedBackImage1 from '../assets/img/mypage/certificatedBackImage1.svg';
-import certificatedBackImage2 from '../assets/img/mypage/certificatedBackImage2.svg';
-import certificatedBackImage3 from '../assets/img/sign/certificate-back.svg';
+import backImage1 from '../assets/img/home/back_type1.svg';
+import backImage2 from '../assets/img/home/back_type2.svg';
+import backImage3 from '../assets/img/home/back_type3.svg';
+import backImage1_1 from '../assets/img/mypage/back_type1_1.svg';
+import backImage2_1 from '../assets/img/mypage/back_type2_1.svg';
+import backImage3_1 from '../assets/img/mypage/back_type3_1.svg';
 import bg_img_giver from '../assets/img/group/neighbor_list_giver_bg.svg'
 import bg_img_volunteer from '../assets/img/group/neighbor_list_volunteer_bg.svg'
 import bg_img_worker from '../assets/img/group/neighbor_list_worker_bg.svg'
@@ -141,13 +144,13 @@ export const getUserTypeText = (userType: string): string => {
 export const getCertificatedBackImage = (userType: string) => {
   switch (userType) {
     case 'CAREGIVER':
-      return certificatedBackImage1;
+      return backImage1;
     case 'VOLUNTEER':
-      return certificatedBackImage2;
+      return backImage2;
     case 'CARE_WORKER':
-      return certificatedBackImage3;
+      return backImage3;
     default:
-      return certificatedBackImage1;
+      return backImage1;
   }
 };
 
@@ -242,4 +245,18 @@ export const getBirthInfoAndAge = (identity: string, age:number) => {
   const year = currentYear - age + 1;
 
   return { year, month, day };
+};
+
+// 내 방명록 배경 디자인
+export const getCertificatedBackImage2 = (userType: string) => {
+  switch (userType) {
+    case 'CAREGIVER':
+      return backImage1_1;
+    case 'VOLUNTEER':
+      return backImage2_1;
+    case 'CARE_WORKER':
+      return backImage3_1;
+    default:
+      return backImage1_1;
+  }
 };
