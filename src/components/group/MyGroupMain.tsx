@@ -55,21 +55,29 @@ const MyGroupMain: React.FC<MyGroupMainProps> = ({ pagegroupId }) => {
             <p className="more" onClick={GoToFeedList}>더보기</p>
           </div>
           <div className="feed_div">
-            {feedData.map((feed, index) => (
-              <React.Fragment key={feed.newsId}>
-                <FeedPreview {...feed} />
-                {index < feedData.length - 1 && <hr />}
-              </React.Fragment>
-            ))}
+            {feedData && feedData.length > 0 ? (
+              feedData.map((feed, index) => (
+                <React.Fragment key={feed.newsId}>
+                  <FeedPreview {...feed} />
+                  {index < feedData.length - 1 && <hr />}
+                </React.Fragment>
+              ))
+            ) : (
+              <p>이웃 소식이 없습니다.</p> 
+            )}
           </div>
           <div className="middle_title_div">
             <p className="title">함께한 추억</p>
             <p className="more" onClick={GoToMemory}>더보기</p>
           </div>
           <div className="memory_div" style={{ marginBottom: !groupData.isJoined ? '105px' : '0px' }}>
-            {memories.map((memory, index) => (
-              <WithMemory key={index} memory={memory} />
-            ))}
+            {memories && memories.length > 0 ? (
+              memories.map((memory, index) => (
+                <WithMemory key={index} memory={memory} />
+              ))
+            ) : (
+              <p>함께한 추억이 없습니다.</p> 
+            )}
           </div>
           {groupData.isJoined && (
             <div className="out_div">
