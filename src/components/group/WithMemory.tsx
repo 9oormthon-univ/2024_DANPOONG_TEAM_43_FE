@@ -6,6 +6,12 @@ import { getBackgroundColor2, getUserImage } from 'utils/userUtils';
 import { WithMemoryProps } from 'type/group';
 
 const WithMemory: React.FC<WithMemoryProps> = ({ memory }) => {
+  const getBackgroundColor = () => {
+    if(memory.otherType.userType == 'VOLUNTEER')
+      return "#EFF9FF";
+    else if(memory.otherType.userType == 'CARE_WORKER')
+      return "#EBFEF4";
+  };
   const getBackgroundImage = () => {
     if(memory.otherType.userType == 'VOLUNTEER')
       return volunteer_bg;
@@ -25,7 +31,7 @@ const WithMemory: React.FC<WithMemoryProps> = ({ memory }) => {
 
   return (
     <div className="with_memory_div">
-      <div className="other_type">
+      <div className="other_type" style={{background: getBackgroundColor()}}>
         <img src={getBackgroundImage()} alt="" className='back_img' />
         <img src={getUserImage(memory.otherType.userId,memory.otherType.userType)} alt="" className="profile" 
         style={{
