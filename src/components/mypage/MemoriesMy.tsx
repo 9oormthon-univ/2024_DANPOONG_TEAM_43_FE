@@ -3,12 +3,12 @@
 // import { getBackgroundColor, getBackgroundColor2, getCertificatedBackImage, getUserTypeText, imageMapping } from 'utils/userUtils';
 
 // interface MemoriesProps {
-//   entry: GuestbookEntry;
+//   entry: GuestbookEntry; // 전체 GuestbookEntry 타입 사용
 // }
 
 // const MemoriesMy: React.FC<MemoriesProps> = ({ entry }) => {
 //   return (
-//     <div 
+//     <div
 //       className={`relative flex p-4 rounded-lg shadow-md ${getBackgroundColor(entry.userType)} items-start`}
 //     >
 //       <img
@@ -31,7 +31,7 @@
 //         }}
 //       >
 //         <img
-//           src={imageMapping[entry.userType][entry.userId % 10 || entry.sectionId % 10]}
+//           src={imageMapping[entry.userType][entry.userId % 10]}
 //           alt="user"
 //           className="w-full h-full rounded-full object-cover"
 //         />
@@ -39,10 +39,10 @@
 
 //       <div className="flex flex-col flex-1 space-y-2 text-left">
 //         <div className="text-[#575f70] text-base font-semibold font-['Pretendard'] leading-snug">
-//           {getUserTypeText(entry.userType)} {entry.profileName}님
+//           {getUserTypeText(entry.userType)} {entry.username}님
 //         </div>
 //         <div className="text-[#575f70] text-xs font-normal font-['Pretendard'] leading-normal break-words z-[50]">
-//           {entry.content}
+//           {entry.content || '내용이 없습니다.'}
 //         </div>
 //       </div>
 //     </div>

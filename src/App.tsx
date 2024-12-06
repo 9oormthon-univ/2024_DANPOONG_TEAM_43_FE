@@ -19,7 +19,7 @@ import RequestSure from 'page/RequestSure';
 import RequestDetail from 'page/RequestDetail';
 import RequestPay from 'page/RequestPay';
 import PayDone from 'page/PayDone';
-// import Memory from 'page/Memory';
+import Memory from 'page/Memory';
 import AIContents from 'page/AIContents';
 import CertificatePersonPage from 'page/CertificatePersonPage';
 import CertificatePage from 'page/CertificatePage';
@@ -73,7 +73,7 @@ const App: React.FC = () => {
         <Route path="/request-detail" element={<RequestDetail />} />
         <Route path="/request-pay" element={<RequestPay />} />
         <Route path="/pay-done" element={<PayDone />} />
-        {/* <Route path="/Memory" element={<Memory />} /> */}
+        <Route path="/Memory" element={<Memory />} />
         <Route path="/group-memory" element={<GroupMemory />} />
         <Route path="/group-neighbor" element={<GroupNeighbor />} />
         <Route path="/group-feed-list" element={<GroupFeedList />} />

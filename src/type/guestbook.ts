@@ -1,4 +1,5 @@
 export interface GuestbookEntry {
+  volunteerSessionId: number; 
   otherType: {
     userType: 'CAREGIVER' | 'VOLUNTEER' | 'CARE_WORKER';
     username: string;
