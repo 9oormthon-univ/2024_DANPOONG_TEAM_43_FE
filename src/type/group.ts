@@ -30,6 +30,8 @@ export interface GroupListProps {
     location: string;
     headCount: number;
     lastNews: string;
+    groupImage:string;
+    groupId:number;
 }
 
 export interface NeighborListProps {
@@ -52,4 +54,8 @@ export interface WithMemoryPropsInfo {
   userType: string;
   content: string;
   userId: number;
+}
+
+export interface GroupDetailId {
+  pagegroupId: number;
 }

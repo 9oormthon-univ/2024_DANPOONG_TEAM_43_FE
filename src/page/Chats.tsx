@@ -5,7 +5,7 @@ import PersonChat from 'components/chat/PersonChat';
 import axiosInstance from 'utils/axiosInstance';
 import { useQuery } from '@tanstack/react-query';
 import ConnectAI from 'components/home/ConnectAI';
-import chat_empty_back from '../assets/img/chat/chat_main_empty_back.svg'
+import empty_back_img from '../assets/img/group/empty_back_img.svg'
 
 const fetchChatRooms = async () => {
   const response = await axiosInstance.get('/chat/rooms');
@@ -31,7 +31,8 @@ const Chats: React.FC = () => {
       {isChatRoomsEmpty ? (
         // chatRooms가 비어 있을 때 빈 화면 이미지 보여주기
         <div className="empty_chat">
-          <img src={chat_empty_back} alt="No chats available" />
+          <img src={empty_back_img} alt="No chats available" />
+          <p className="empty_text">아직 채팅방이 없어요.<br />이웃과 함께 따뜻한 대화를 시작해보세요!</p>
         </div>
       ) : (
         // chatRooms에 데이터가 있을 때 기존 UI

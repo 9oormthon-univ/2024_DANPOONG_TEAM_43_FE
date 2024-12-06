@@ -26,10 +26,12 @@ const OtherGroup = () => {
           groups.map((group, index) => (
             <React.Fragment key={group.groupId}>
               <GroupList
+                groupId={group.groupId}
                 title={group.groupName}
                 location={group.city}
                 headCount={group.headCount}
                 lastNews={group.lastNews}
+                groupImage={group.groupImage}
               />
               {/* 마지막 항목이 아니라면 <hr /> 렌더링 */}
               {index !== groups.length - 1 && <hr />}

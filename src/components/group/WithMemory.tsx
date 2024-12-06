@@ -13,8 +13,8 @@ const WithMemory: React.FC<WithMemoryProps> = ({ memory }) => {
       return worker_bg;
   };
   const getBackType = () => {
-    switch (memory.caregiver.userType) {
-      case 'CARE_WORKER':
+    switch (memory.otherType.userType) {
+      case "CARE_WORKER":
         return '요양보호사';
       case 'VOLUNTEER':
         return '자원봉사자';

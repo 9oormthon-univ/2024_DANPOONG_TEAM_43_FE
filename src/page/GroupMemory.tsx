@@ -36,14 +36,13 @@ const GroupMemory = () => {
                 <p className='top_title'>함께한 추억</p>
             </div>
             <div className="contents">
-                <p className="contents_title">모임에서 만든 추억 {memories.length}개</p>
+                <p className="contents_title">모임에서 만든 추억 {memories?.length || 0}개</p>
                 <div className="memory_div">
-                {memories.map((memory, index) => (
-                        <WithMemory
-                            key={index}
-                            memory={memory}
-                        />
-                    ))}
+                {memories && memories.length > 0 &&
+                        memories.map((memory, index) => (
+                            <WithMemory key={index} memory={memory} />
+                        ))
+                    }
                 </div>
             </div>
 

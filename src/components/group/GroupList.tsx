@@ -1,17 +1,23 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom';
 import post_icon from '../../assets/img/group/group_post_icon.svg'
 import post_icon_gray from '../../assets/img/group/group_post_icon_gray.svg'
 import people from '../../assets/img/group/group_people_icon.svg'
 import { GroupListProps } from 'type/group';
 import { calculateTimeDifference } from 'utils/dateUtils';
 
-const GroupList: React.FC<GroupListProps> = ({ title, location, headCount, lastNews }) => {
+const GroupList: React.FC<GroupListProps> = ({ title, location, headCount, lastNews, groupImage,groupId }) => {
+    const navigate = useNavigate();
     const hoursAgo = calculateTimeDifference(lastNews);
     const isStaleNews = hoursAgo > 24; 
+    // 클릭 핸들러
+    const handleNavigation = () => {
+        navigate('/other-group-detail', { state: { groupId } });
+    };
     return (
-        <div className='group_list_div'>
+        <div className='group_list_div' onClick={handleNavigation} >
             <div className="left">
-                <div className="img"></div>
+                <div className="img" style={{ backgroundImage: `url(${groupImage})` }}></div>
                 <div className="info">
                     <p className="title">{title}</p>
                     <p className="where">{location}</p>
