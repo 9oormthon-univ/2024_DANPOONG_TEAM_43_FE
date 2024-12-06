@@ -19,7 +19,7 @@ const GroupList: React.FC<GroupListProps> = ({ title, location, headCount, lastN
             <div className="left">
                 <div className="img" style={{ backgroundImage: `url(${groupImage})` }}></div>
                 <div className="info">
-                    <p className="title">{title}</p>
+                    <p className="title">{title.replace(/^그룹\s*/, '')}</p>
                     <p className="where">{location}</p>
                     <div className="post_div">
                         <img src={isStaleNews ? post_icon_gray : post_icon} alt="" className="post_icon" />

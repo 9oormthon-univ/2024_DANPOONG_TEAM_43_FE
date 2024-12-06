@@ -172,25 +172,25 @@ const ChatVolunteer: React.FC = () => {
                 <p className="volunteer_title">요청할 일</p>
                 <div className="work_div">
                     <p className="title">날짜</p>
-                    <div className="drop_down">
+                    <div className="drop_down" onClick={openDateModal}>
                         <p className="text" style={{
                             color: selectedDate ? 'var(--gray-800-txtp, #2A2E37)' : 'color: var(--Gray-300, #A6ACBA);',
                         }}>{selectedDate
                             ? `${selectedDate.toLocaleDateString()}`
                             : '봉사 날짜를 알려주세요'}</p>
-                        <img src={down} alt="" className="down" onClick={openDateModal} />
+                        <img src={down} alt="" className="down"  />
                     </div>
                 </div>
                 <div className="work_div">
                     <p className="title">시간</p>
-                    <div className="drop_down">
+                    <div className="drop_down" onClick={openStartModal}>
                         <p className="text"
                             style={{
                                 color: startTime && stopTime ? 'var(--gray-800-txtp, #2A2E37)' : 'color: var(--Gray-300, #A6ACBA);',
                             }}>{startTime && stopTime
                                 ? `${startTime} ~ ${stopTime}`
                                 : '시작 및 종료 시간을 알려주세요'}</p>
-                        <img src={down} alt="" className="down" onClick={openStartModal} />
+                        <img src={down} alt="" className="down"  />
                     </div>
                 </div>
                 <div className="work_div">
@@ -261,6 +261,17 @@ const ChatVolunteer: React.FC = () => {
                             location={address}
                             time={`${startTime} ~ ${stopTime}`}
                             work={workDetails}
+                            durationHours={(() => {
+                                // startTime, stopTime, selectedDate가 모두 존재할 때만 계산
+                                if (startTime && stopTime && selectedDate) {
+                                    const start = convertTo24HourTime(startTime, selectedDate);
+                                    const end = convertTo24HourTime(stopTime, selectedDate);
+                                    if (start && end) {
+                                        return calculateDurationHours(start, end);
+                                    }
+                                }
+                                return 0; // 하나라도 없으면 null 반환
+                            })()}
                             onClose={closeRequestModal}
                             onSubmit={handleRequestSubmit}
                             onEdit={closeRequestModal}

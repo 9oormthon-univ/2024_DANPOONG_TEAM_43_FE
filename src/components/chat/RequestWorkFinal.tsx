@@ -1,7 +1,7 @@
 import React from 'react';
 import { RequestWorkFinalProps } from 'type/chat';
 
-const RequestWorkFinal: React.FC<RequestWorkFinalProps> = ({ location, time, work, payment, onClose, onSubmit, onEdit }) => {
+const RequestWorkFinal: React.FC<RequestWorkFinalProps> = ({ location, time, work, payment,durationHours, onClose, onSubmit, onEdit }) => {
     return (
         <div className="popup_request_final">
             <div className="popup_content">
@@ -13,7 +13,7 @@ const RequestWorkFinal: React.FC<RequestWorkFinalProps> = ({ location, time, wor
                     </p>
                     <p className="detail_item">
                         <span className="detail_label">함께하는 시간</span>
-                        <span className="detail_value">{time}</span>
+                        <span className="detail_value">{durationHours}시간 동안 / {time}</span>
                     </p>
                     <p className="detail_item">
                         <span className="detail_label">주된 일</span>

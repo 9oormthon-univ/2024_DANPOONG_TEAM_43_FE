@@ -11,6 +11,7 @@ export interface RequestFinalProps {
     location: string;
     time: string;
     work: string;
+    durationHours:number;
     onClose: () => void;
     onSubmit: () => void;
     onEdit: () => void;
@@ -21,6 +22,7 @@ export interface RequestWorkFinalProps {
     time: string;
     work: string;
     payment: string;
+    durationHours:number;
     onClose: () => void;
     onSubmit: () => void;
     onEdit: () => void;

@@ -4,6 +4,7 @@ import caregiverProfile from '../assets/img/mypage/profile-caregiver.svg';
 import volunteerProfile from '../assets/img/mypage/profile-volunteer.svg';
 import careWorkerProfile from '../assets/img/mypage/profile-careworker.svg';
 import send from '../assets/img/chat/send.svg'
+import send_fill from '../assets/img/chat/send_fill.svg'
 import back from '../assets/img/chat/chat-back.svg'
 import calendar_check from '../assets/img/chat/calendar-check.svg'
 import background_img_giver from '../assets/img/chat/chat_background_giver.svg'
@@ -273,7 +274,7 @@ const ChatRoomMain: React.FC = () => {
                         : ''
                         }`}
                 >
-                    {receiverName}
+                    {config.label} {receiverName}
                 </p>
 
                 {
@@ -447,8 +448,14 @@ const ChatRoomMain: React.FC = () => {
                         placeholder='메시지를 입력해 주세요.'
                         value={newMessage} // newMessage 상태와 연결
                         onChange={(e) => setNewMessage(e.target.value)} // 입력 시 상태 업데이트
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter' && newMessage.trim()) {
+                                e.preventDefault(); // Enter 기본 동작 방지 (필요한 경우)
+                                sendMessage(); // Enter 키 누를 때 sendMessage 호출
+                            }
+                        }}
                     />
-                    <img src={send} alt="" className="send" onClick={sendMessage} />
+                    <img src={newMessage.trim() ? send_fill : send} alt="" className="send" onClick={newMessage.trim() ? sendMessage : undefined} />
                 </div>
             </div>
         </div>
