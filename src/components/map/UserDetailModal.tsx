@@ -93,7 +93,9 @@ const UserDetailModal: React.FC<UserDetailModalProps> = ({ userId, onClose }) =>
               {['talk', 'eat', 'toilet', 'bath', 'walk'].map((icon) => (
                 <div className="flex flex-col items-center" key={icon}>
                   <img src={getIconPath(icon, user.userType)} alt={icon} className="w-[64px] h-[64px]" />
-                  <span className="text-sm mt-2">{user[icon as keyof typeof user] || '정보 없음'}</span>
+                  <span className="text-sm mt-2">
+                    {String(user[icon as keyof typeof user]) || '정보 없음'}
+                  </span>
                 </div>
               ))}
             </div>

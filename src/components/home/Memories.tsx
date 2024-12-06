@@ -1,15 +1,16 @@
 import React from 'react';
-import { useGuestbookQuery } from 'service/guestbook';
+import { useUserDetailQuery } from 'service/user';
 import { useNavigate } from 'react-router-dom';
-import { getUserTypeText, getCertificatedBackImage, getBackgroundColor, getBackgroundColor2, imageMapping } from 'utils/userUtils';
+import { getUserTypeText, getCertificatedBackImage, getBackgroundColor, getBackgroundColor2, imageMapping } from 'utils/userUtils'
+import { useUserStore } from 'stores/useUserStore';
 
 const Memories: React.FC = () => {
-  const { data, isLoading, isError } = useGuestbookQuery();
+  const { userInfo } = useUserStore(); 
+  const userId = userInfo?.userId;
+  const { data, isLoading, isError } = useUserDetailQuery(userId); 
   const navigate = useNavigate();
 
-  const validEntries = data
-    ?.map((entry) => entry.otherType)
-    ?.slice(0, 2); 
+  const validEntries = data?.guestbookDTOS?.slice(0, 2);
 
   return (
     <div className="mt-6">
@@ -32,11 +33,11 @@ const Memories: React.FC = () => {
         ) : (
           validEntries.map((entry) => (
             <div
-              key={entry.userId}
-              className={`relative flex p-4 rounded-lg shadow-md ${getBackgroundColor(entry.userType)}`}
+              key={entry.partnerUserId}
+              className={`relative flex p-4 rounded-lg shadow-md ${getBackgroundColor(entry.partnerUserType)}`}
             >
               <img
-                src={getCertificatedBackImage(entry.userType)}
+                src={getCertificatedBackImage(entry.partnerUserType)}
                 alt="backImage"
                 className="absolute bottom-0 right-0 h-auto z-[50]"
                 style={{
@@ -48,13 +49,13 @@ const Memories: React.FC = () => {
               <div
                 className="items-center rounded-full justify-center inline-flex mr-3 flex-shrink-0"
                 style={{
-                  border: `2px solid ${getBackgroundColor2(entry.userType)}`,
+                  border: `2px solid ${getBackgroundColor2(entry.partnerUserType)}`,
                   width: '60px',
                   height: '60px',
                 }}
               >
                 <img
-                  src={imageMapping[entry.userType][entry.userId % 10]}
+                  src={imageMapping[entry.partnerUserType][entry.partnerUserId % 10]}
                   alt="user"
                   className="w-full h-full rounded-full object-cover"
                 />
@@ -63,7 +64,7 @@ const Memories: React.FC = () => {
                 <div
                   className="text-[#575f70] text-base font-semibold font-['Pretendard'] leading-snug"
                 >
-                  {getUserTypeText(entry.userType)} {entry.username}님
+                  {getUserTypeText(entry.partnerUserType)} {entry.partnerUsername}님
                 </div>
                 {entry.content && (
                   <div
