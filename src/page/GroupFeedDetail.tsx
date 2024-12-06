@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import back from '../assets/img/chat/chat-back.svg'
 import profile from '../assets/img/user/type1-1.svg'
 import send from '../assets/img/chat/send.svg'
+import send_fill from '../assets/img/chat/send_fill.svg'
 import FeedComment from 'components/group/FeedComment';
 import axiosInstance from 'utils/axiosInstance';
 import { UserType } from 'type/user';
@@ -145,13 +146,18 @@ const GroupFeedDetail = () => {
                             <input
                                 type="text"
                                 className="text"
-
+                                onKeyDown={(e) => {
+                                    if (e.key === 'Enter' && newComment.trim()) {
+                                        e.preventDefault(); // Enter 기본 동작 방지 (필요한 경우)
+                                        handleSendComment(); // Enter 키 누를 때 sendMessage 호출
+                                    }
+                                }}
                                 value={newComment}
                                 onChange={(e) => setNewComment(e.target.value)}
                                 placeholder="댓글을 남겨주세요."
                                 disabled={isPosting}
                             />
-                            <img src={send} alt="send" className="send" onClick={handleSendComment} />
+                            <img src={newComment.trim() ? send_fill : send} alt="send" className="send" onClick={newComment.trim() ? handleSendComment : undefined} />
                         </div>
                     </div>
                 </>
