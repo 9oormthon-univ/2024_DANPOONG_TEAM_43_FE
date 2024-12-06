@@ -64,6 +64,11 @@ export const fetchMemories = async (groupId: number): Promise<MemoryData[]> => {
   return response.data.data.slice(0, 2);
 };
 
+export const fetchMemoriesGroup = async (groupId: number) => {
+    const response = await axiosInstance.get(`/guestbook/group/${groupId}`);
+    return response.data.data; 
+  };
+
 export const leaveGroup = async (groupId: number): Promise<void> => {
   await axiosInstance.post(`/group/leave/${groupId}`);
 };

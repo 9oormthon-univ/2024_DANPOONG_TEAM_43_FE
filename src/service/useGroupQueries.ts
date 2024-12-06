@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { FeedData, Group, GroupData, MemoryData, fetchFeedData, fetchGroupData, fetchGroups, fetchMemories } from './group';
+import { FeedData, Group, GroupData, MemoryData, fetchFeedData, fetchGroupData, fetchGroups, fetchMemories, fetchMemoriesGroup } from './group';
 
 export const useGroupDataQuery = (groupId?: number) => {
   return useQuery<GroupData>({
@@ -34,4 +34,13 @@ export const useGroupsQuery = () => {
       queryFn: fetchGroups,
       staleTime: 1000 * 60 * 5,
     });
+  };
+
+export const useMemoriesGroupQuery = (groupId: number) => {
+    return useQuery<MemoryData[]>({
+        queryKey: ['memories', groupId],
+        queryFn: () => fetchMemoriesGroup(groupId),
+        enabled: !!groupId,
+        staleTime: 1000 * 60 * 5,
+      });
   };
