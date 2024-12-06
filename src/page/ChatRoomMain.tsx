@@ -274,7 +274,7 @@ const ChatRoomMain: React.FC = () => {
                         : ''
                         }`}
                 >
-                    {receiverName}
+                    {config.label} {receiverName}
                 </p>
 
                 {

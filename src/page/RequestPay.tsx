@@ -9,6 +9,7 @@ interface RequestDetails {
     phoneNum: string;
     address: string;
     location: string;
+    date:string;
     startTime: string;
     endTime: string;
     durationHours: number;
@@ -41,7 +42,8 @@ const RequestPay = () => {
                     phoneNum: data.phoneNum,
                     address: data.address,
                     location: data.location,
-                    startTime: new Date(data.startTime).toLocaleDateString(), // 날짜만 표시
+                    date: new Date(data.startTime).toLocaleDateString(), // 날짜만 표시
+                    startTime: new Date(data.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
                     endTime: new Date(data.endTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
                     durationHours: data.durationHours,
                     mainTask: data.mainTask,
@@ -126,11 +128,11 @@ const RequestPay = () => {
                             </div>
                             <div className="contents">
                                 <p className="type">날짜</p>
-                                <p className="text">{details.startTime}</p>
+                                <p className="text">{details.date}</p>
                             </div>
                             <div className="contents">
                                 <p className="type">시간</p>
-                                <p className="text">{details.durationHours}시간 동안</p>
+                                <p className="text">{details.durationHours}시간 동안 / {details.startTime} ~ {details.endTime}</p>
                             </div>
                             <div className="contents">
                                 <p className="type">주된 일</p>

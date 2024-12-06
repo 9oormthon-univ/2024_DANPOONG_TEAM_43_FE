@@ -4,6 +4,8 @@ import { useMutation } from '@tanstack/react-query';
 import axiosInstance from 'utils/axiosInstance';
 import { imageMapping,getBackgroundColor2 } from 'utils/userUtils';
 import { PersonChatProps } from 'type/chat';
+import { FeedCommentProps, UserTypeConfig } from 'type/group';
+
 
 const getProfileImage = (userId: number, userType: string): string => {
   const images = imageMapping[userType];
@@ -16,6 +18,18 @@ const PersonChat: React.FC<PersonChatProps> = ({ roomId, receiverName, lastMessa
   const navigate = useNavigate();
 
   const profileImage = getProfileImage(receiverId, receiverUserType);
+  const userTypeConfig: UserTypeConfig = {
+    CAREGIVER: {
+      label: '간병인',
+    },
+    VOLUNTEER: {
+      label: '자원봉사자',
+    },
+    CARE_WORKER: {
+      label: '요양보호사',
+    },
+  };
+  const config = userTypeConfig[receiverUserType as keyof UserTypeConfig] || {};
 
   const openChatRoomMutation = useMutation({
     mutationFn: async () => {
@@ -50,7 +64,7 @@ const PersonChat: React.FC<PersonChatProps> = ({ roomId, receiverName, lastMessa
           }}/>
       <div className="text">
         <div className="top">
-          <p className="name">{receiverName}</p>
+          <p className="name">{config.label} {receiverName}</p>
           <p className="when">{new Date(lastUpdated).toLocaleTimeString()}</p>
         </div>
         <p className="contents">{lastMessage}</p>

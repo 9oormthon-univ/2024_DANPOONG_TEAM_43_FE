@@ -17,7 +17,7 @@ const Certificate: React.FC<CertificateProps> = ({type, certificateData}) => {
           <hr />
           <div className="_div">
             <p className="info_title">주민등록번호</p>
-            <p className="info_txt">{certificateData.myIdentity}</p>
+            <p className="info_txt">{certificateData.myIdentity.toString().slice(0, 6) + '-' + certificateData.myIdentity.toString().slice(6)}</p>
           </div>
           <hr />
           <div className="_div">
