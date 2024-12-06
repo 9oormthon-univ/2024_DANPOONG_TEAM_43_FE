@@ -29,6 +29,7 @@ import GroupNeighbor from 'page/GroupNeighbor';
 import GroupFeedDetail from 'page/GroupFeedDetail';
 import GroupFeedAdd from 'page/GroupFeedAdd';
 import CareCertificatePage from 'page/CareCertificatePage';
+import OtherGroupDetail from 'page/OtherGroupDetail';
 
 const queryClient = new QueryClient();
 
@@ -50,7 +51,7 @@ const App: React.FC = () => {
     }
   }, [location, navigate]);
 
-  const showHeaderAndNav = !['/login', '/kakao-login', '/signup', '/chat-room','/chat-volunteer','/chat-volunteer','/chat-worker','/request-detail','/request-sure','/request-pay','/pay-done', '/Memory','/ai-contents','/certificate-person-page','/certificate-page','/group-feed-list','/group-memory','/group-neighbor','/group-feed-detail','/group-feed-add','/care-certificate-page'].includes(location.pathname);
+  const showHeaderAndNav = !['/login', '/kakao-login', '/signup', '/chat-room','/chat-volunteer','/chat-volunteer','/chat-worker','/request-detail','/request-sure','/request-pay','/pay-done', '/Memory','/ai-contents','/certificate-person-page','/certificate-page','/group-feed-list','/group-memory','/group-neighbor','/group-feed-detail','/group-feed-add','/care-certificate-page','/other-group-detail'].includes(location.pathname);
 
 
   return (
@@ -79,6 +80,7 @@ const App: React.FC = () => {
         <Route path="/group-feed-list" element={<GroupFeedList />} />
         <Route path="/group-feed-detail" element={<GroupFeedDetail />} />
         <Route path="/group-feed-add" element={<GroupFeedAdd />} />
+        <Route path="/other-group-detail" element={<OtherGroupDetail />} />
         <Route path="/ai-contents" element={<AIContents />} />
         <Route path="/certificate-person-page" element={<CertificatePersonPage />} />
         <Route path="/certificate-page" element={<CertificatePage />} />

@@ -1,5 +1,5 @@
 #chat {
-    
+
     .page_title {
         color: var(--gray-800-txtp, #2A2E37);
         text-align: center;
@@ -16,16 +16,28 @@
         margin-left: 1px;
         margin-bottom: 17px;
     }
+
     .empty_chat {
         width: 100%;
         display: flex;
         justify-content: center;
         align-items: center;
         margin-top: 50%;
+        flex-direction: column;
+        gap: 16px;
+
         img {
-          width: 248.4px;
+            width: 248.4px;
         }
-      }
+
+        p {
+            color: var(--Gray-300, #A6ACBA);
+            text-align: center;
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 140%;
+        }
+    }
 
     .person_chat {
         width: 100%;
@@ -103,7 +115,7 @@
                 height: 48px;
                 margin-right: 14px;
                 border-radius: 50px;
-                
+
             }
 
             .text {

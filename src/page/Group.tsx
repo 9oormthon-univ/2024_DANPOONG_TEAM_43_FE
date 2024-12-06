@@ -7,6 +7,7 @@ import OtherGroup from 'components/group/OtherGroup';
 const Group = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<'mygroup' | 'other'>('mygroup');
+  const [groupId, setGroupId] = useState<number>(0); // groupId 저장
 
   return (
     <div className='container' id='group'>
@@ -17,7 +18,7 @@ const Group = () => {
           onClick={() => setActiveTab('other')}>이웃 모임 둘러보기</div>
       </div>
       {/* 탭에 따라 다른 컴포넌트 렌더링 */}
-      {activeTab === 'mygroup' && <MyGroupMain />}
+      {activeTab === 'mygroup' && <MyGroupMain pagegroupId={groupId} />}
       {activeTab === 'other' && <OtherGroup />}
       
     </div>
