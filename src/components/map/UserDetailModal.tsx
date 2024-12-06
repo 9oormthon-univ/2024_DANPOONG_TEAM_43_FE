@@ -129,26 +129,51 @@ const UserDetailModal: React.FC<UserDetailModalProps> = ({ userId, onClose }) =>
             )}
           </div>
           <div className="mt-6">
-            <h3 className="text-[#2a2e36] text-xl font-semibold font-['Pretendard'] leading-7 mb-6">
-              함께한 사람
-            </h3>
-            <div className="flex overflow-x-auto space-x-4 pb-4">
-              {user.guestbookDTOS?.map((guestbook, index) => (
-                <div
-                  key={index}
-                  className="flex-shrink-0 w-[200px] h-[160px] p-4 bg-[#ffeef0] rounded-lg shadow-md"
-                >
-                  <div className="text-sm font-semibold text-[#2a2e36] mb-2">
-                    {guestbook.partnerUsername}
-                  </div>
-                  <div className="text-xs text-[#575f70] mb-4">{guestbook.date}</div>
-                  <div className="text-sm text-[#2a2e36] line-clamp-3 overflow-hidden">
-                    {guestbook.content || '내용 없음'}
-                  </div>
-                </div>
-              ))}
+              <h3 className="text-[#2a2e36] text-xl font-semibold font-['Pretendard'] leading-7 mb-6">
+                함께한 사람
+              </h3>
+              <div className="flex overflow-x-auto space-x-4 pb-4">
+                {user.guestbookDTOS?.map((guestbook, index) => {
+                  const backgroundColor =
+                    guestbook.partnerUserType === 'CAREGIVER'
+                      ? '#fff1f1'
+                      : guestbook.partnerUserType === 'VOLUNTEER'
+                      ? '#eff9ff'
+                      : '#ebfef4';
+                  const maskedName =
+                    guestbook.partnerUsername.length > 1
+                      ? guestbook.partnerUsername[0] + '*'.repeat(guestbook.partnerUsername.length - 1)
+                      : guestbook.partnerUsername;
+
+                  return (
+                    <div
+                      key={index}
+                      className="flex-shrink-0 w-[150px] h-[130px] p-4 rounded-lg shadow-md"
+                      style={{
+                        backgroundColor: backgroundColor,
+                      }}
+                    >
+                      <div className="text-sm font-semibold text-[#2a2e36] mb-2">
+                        {maskedName}
+                      </div>
+                      <div className="text-xs text-[#656a74] mb-2">{guestbook.date}</div>
+                      <div
+                        className="text-sm text-[#2a2e36] overflow-hidden"
+                        style={{
+                          display: '-webkit-box',
+                          WebkitLineClamp: 2, 
+                          WebkitBoxOrient: 'vertical',
+                          textOverflow: 'ellipsis',
+                          lineHeight: '1.5',
+                        }}
+                      >
+                        {guestbook.content || '내용 없음'}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
-          </div>
           {user.userType === 'CARE_WORKER' && user.certificateImage && (
             <div className="mt-6 mb-4">
               <h3 className="text-[#2a2e36] text-xl font-semibold font-['Pretendard'] leading-7 mb-4">
