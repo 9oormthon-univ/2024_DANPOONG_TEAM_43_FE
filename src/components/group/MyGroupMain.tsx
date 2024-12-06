@@ -81,7 +81,7 @@ const MyGroupMain: React.FC<MyGroupMainProps> = ({ pagegroupId }) => {
           </div>
           {groupData.isJoined && (
             <div className="out_div">
-              <div className="out_button" onClick={() => setIsModalOpen(true)}>모임 탈퇴</div>
+              <div className="out_button cursor-pointer" onClick={() => setIsModalOpen(true)}>모임 탈퇴</div>
             </div>
           )}
           {isModalOpen && (

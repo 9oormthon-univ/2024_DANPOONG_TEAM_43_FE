@@ -32,6 +32,7 @@
         .back {
             width: 24px;
             height: 24px;
+            cursor: pointer;
         }
         .title{
             width: 100%;
@@ -45,6 +46,7 @@
         .booking {
             width: 24px;
             height: 24px;
+            cursor: pointer;
         }
     }
 
@@ -135,6 +137,7 @@
                 border-radius: 12px;
                 background: var(--Chat_Sub);
                 color: var(--Chat_Main);
+                cursor: pointer;
             }
         }
     }
@@ -203,6 +206,7 @@
                 border-radius: 12px;
                 background: var(--Chat_Sub);
                 color: var(--Chat_Main);
+                cursor: pointer;
             }
         }
         }
