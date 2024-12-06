@@ -156,7 +156,7 @@ const GroupFeedDetail = () => {
                     </div>
                 </>
             ) : (
-                <p>로딩 중...</p>
+                null
             )}
 
         </div>

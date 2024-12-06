@@ -65,7 +65,7 @@ const CareCertificatePage = () => {
           <CareCertificate certificateData={certificateData} />
         </div>
       ) : (
-        <p>로딩 중...</p>
+        null
       )}
             <p className="certificate_info_text">
                 본 증명서는 인터넷으로 발급되었으며, 자원봉사 포탈 시스템(www.1365.go.kr)의 확인서 조회 메뉴를 통해 문서발급 번호 입력으로 내용의 위변조를 확인해 주세요

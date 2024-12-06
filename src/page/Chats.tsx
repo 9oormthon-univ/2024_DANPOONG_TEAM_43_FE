@@ -20,8 +20,8 @@ const Chats: React.FC = () => {
     queryFn: fetchChatRooms,
   });
   
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Failed to fetch chat rooms.</div>;
+  if (isLoading) return  null;
+  if (error) return null;
 
   const isChatRoomsEmpty = !chatRooms || chatRooms.length === 0;
 
