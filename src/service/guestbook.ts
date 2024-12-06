@@ -26,7 +26,7 @@ export const useGuestbookQuery = () => {
 const fetchGuestbookByTab = async (tab: string): Promise<GuestbookEntry[]> => {
     const apiUrl =
       tab === '전체'
-        ? '/guestbook/all'
+        ? '/guestbook/myPage'
         : tab === '내 집'
         ? '/guestbook/myHome'
         : '/guestbook/caregiverHome';
