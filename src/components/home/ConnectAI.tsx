@@ -3,15 +3,18 @@ import next from '../../assets/img/home/Ai_next.svg';
 import AI_icon from '../../assets/img/home/AI_icon.svg';
 import { useNavigate } from 'react-router-dom';
 import { useVolunteerDataQuery } from 'service/memos';
-import { useUserStore } from 'stores/useUserStore';
 import { getBackgroundColor2, getUserImage } from 'utils/userUtils';
 import { formatDate } from 'utils/dateUtils';
 import MockData from './MockData';
 
-const ConnectAI = () => {
+interface ConnectAIProps {
+  username: string;
+  userType: string;
+}
+
+const ConnectAI: React.FC<ConnectAIProps> = ({ username, userType }) => {
   const navigate = useNavigate();
   const { data: volunteerData, isLoading: volunteerLoading } = useVolunteerDataQuery();
-  const userInfo = useUserStore((state) => state.userInfo);
   const [forceLoading, setForceLoading] = useState(true);
 
   useEffect(() => {
@@ -22,16 +25,25 @@ const ConnectAI = () => {
   }, []);
 
   if (volunteerLoading || !volunteerData || volunteerData.length === 0) {
-    return null;
+    return (
+      <div className="mt-[36px] mb-[24px]">
+        <div className="text-[#2a2e36] text-xl font-semibold font-['Pretendard'] leading-7 whitespace-pre-wrap">
+          안녕하세요 {username}님,
+          {userType === 'CAREGIVER' && '\n내 주변 도움을 받아보세요!'}
+          {userType === 'VOLUNTEER' && '\n내 주변 도움이 필요하신 분을 찾아보세요!'}
+          {userType === 'CARE_WORKER' && '\n내 주변 간병 이웃을 찾아보세요!'}
+        </div>
+      </div>
+    );
   }
 
   const GoToAI = (caregiverId: string | number, id: string | number, caregiverName: string) => {
     if (volunteerData && volunteerData.length > 0) {
       navigate('/ai-contents', {
         state: {
-          caregiverId: caregiverId, 
+          caregiverId: caregiverId,
           id: id,
-          caregiverName: caregiverName, 
+          caregiverName: caregiverName,
         },
       });
     }
@@ -43,7 +55,7 @@ const ConnectAI = () => {
       <div className="Connect_AI">
         <div className="mt-[36px] mb-[24px]">
           <div className="text-[#2a2e36] text-xl font-semibold font-['Pretendard'] leading-7">
-            안녕하세요 {firstVolunteer?.volunteerName}님,<br />
+            안녕하세요 {username}님,<br />
             {firstVolunteer?.caregiverName}님과의 인연이 기다리고 있어요
           </div>
         </div>
@@ -92,7 +104,11 @@ const ConnectAI = () => {
     );
   };
 
-  return forceLoading || volunteerLoading ? <MockData username={userInfo.username} /> : renderRealData();
+  return forceLoading || volunteerLoading ? (
+    <MockData username={username} />
+  ) : (
+    renderRealData()
+  );
 };
 
 export default ConnectAI;

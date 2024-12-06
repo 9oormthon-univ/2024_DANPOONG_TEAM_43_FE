@@ -31,11 +31,14 @@ const Home: React.FC = () => {
     fetchLocationAuthentication();
   }, []);
 
-  const backgroundSettings = useMemo(() => ({
-    CAREGIVER: { color: 'bg-[#ffe5e5]', image: caregiverBg },
-    VOLUNTEER: { color: 'bg-[#eef7ff]', image: volunteerBg },
-    CARE_WORKER: { color: 'bg-[#d8fbed]', image: careWorkerBg },
-  }), []);
+  const backgroundSettings = useMemo(
+    () => ({
+      CAREGIVER: { color: 'bg-[#ffe5e5]', image: caregiverBg },
+      VOLUNTEER: { color: 'bg-[#eef7ff]', image: volunteerBg },
+      CARE_WORKER: { color: 'bg-[#d8fbed]', image: careWorkerBg },
+    }),
+    []
+  );
 
   const background = userData?.userType
     ? backgroundSettings[userData.userType] || backgroundSettings['CAREGIVER']
@@ -43,7 +46,12 @@ const Home: React.FC = () => {
 
   const renderGreetingOrConnectAI = () => {
     if (isLocationAuthenticated && userInfo.userType !== 'CAREGIVER') {
-      return <ConnectAI />;
+      return (
+        <ConnectAI
+          username={userData?.username || ''}
+          userType={userData?.userType || 'CAREGIVER'}
+        />
+      );
     }
     return (
       <UserGreeting
