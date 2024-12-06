@@ -26,7 +26,7 @@ const Login = () => {
 
   const handleKakaoLogin = () => {
     const clientId = '45aa82bd53369b05e84cece7117f5c06';
-    const redirectUri = 'http://localhost:3000/kakao-login';
+    const redirectUri = 'https://carely-seven.vercel.app/kakao-login';
     const scope = 'profile_nickname,name,birthyear,birthday,gender,phone_number';
     window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=${scope}`;
   };
