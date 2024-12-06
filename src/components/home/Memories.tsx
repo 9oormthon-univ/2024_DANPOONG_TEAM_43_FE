@@ -39,7 +39,7 @@ const Memories: React.FC = () => {
               <img
                 src={getCertificatedBackImage(entry.partnerUserType)}
                 alt="backImage"
-                className="absolute bottom-0 right-0 h-auto z-[50]"
+                className="absolute bottom-0 right-[20px] h-[70px] z-[50]"
                 style={{
                   width: 'auto',
                   objectFit: 'cover',

@@ -47,6 +47,9 @@ import walkIcon3 from '../assets/img/map/walk3.svg';
 import certificatedBackImage1 from '../assets/img/mypage/certificatedBackImage1.svg';
 import certificatedBackImage2 from '../assets/img/mypage/certificatedBackImage2.svg';
 import certificatedBackImage3 from '../assets/img/sign/certificate-back.svg';
+import backImage1 from '../assets/img/home/back_type1.svg';
+import backImage2 from '../assets/img/home/back_type2.svg';
+import backImage3 from '../assets/img/home/back_type3.svg';
 import bg_img_giver from '../assets/img/group/neighbor_list_giver_bg.svg'
 import bg_img_volunteer from '../assets/img/group/neighbor_list_volunteer_bg.svg'
 import bg_img_worker from '../assets/img/group/neighbor_list_worker_bg.svg'
@@ -141,13 +144,13 @@ export const getUserTypeText = (userType: string): string => {
 export const getCertificatedBackImage = (userType: string) => {
   switch (userType) {
     case 'CAREGIVER':
-      return certificatedBackImage1;
+      return backImage1;
     case 'VOLUNTEER':
-      return certificatedBackImage2;
+      return backImage2;
     case 'CARE_WORKER':
-      return certificatedBackImage3;
+      return backImage3;
     default:
-      return certificatedBackImage1;
+      return backImage1;
   }
 };
 
