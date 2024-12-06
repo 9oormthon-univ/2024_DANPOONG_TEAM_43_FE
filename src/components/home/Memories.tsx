@@ -27,7 +27,7 @@ const Memories: React.FC = () => {
       </div>
       <div className="space-y-4">
         {isLoading ? (
-          <div>로딩 중...</div>
+          null
         ) : isError || !validEntries || validEntries.length === 0 ? (
           <div>함께 한 추억이 아직 없습니다!</div>
         ) : (
