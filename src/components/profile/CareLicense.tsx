@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import MenuItem from './MenuItem';
 import axiosInstance from 'utils/axiosInstance';
 
 const CareLicense: React.FC = () => {
   const navigate = useNavigate();
+  const [no, setno] = useState(false);
 
   const handleNavigation = async () => {
     try {
@@ -19,6 +20,7 @@ const CareLicense: React.FC = () => {
         navigate('/care-certificate-page');
       } else {
         console.error('Failed to issue care license:', error);
+        setno(true);
         alert('이수 시간이 부족해 아직 자격증을 발급할 수 없습니다.');
       }
     }
@@ -27,6 +29,7 @@ const CareLicense: React.FC = () => {
   return (
     <div className='cursor-pointer' onClick={handleNavigation}>
       <MenuItem label="요양 보호 자격증 발급" />
+      {no && <p className="no">아직 발급이 어려워요!</p>}
     </div>
   );
 };

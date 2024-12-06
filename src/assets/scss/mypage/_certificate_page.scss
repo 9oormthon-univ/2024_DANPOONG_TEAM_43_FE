@@ -255,11 +255,13 @@
             .info_title {
                 letter-spacing: 2.069px;
             }
-            .info_txt{
+
+            .info_txt {
                 width: 120px;
             }
         }
-        .num_div{
+
+        .num_div {
             align-items: stretch;
         }
     }
@@ -272,10 +274,20 @@
         font-weight: 400;
         line-height: 140%;
     }
-    .sign{
+
+    .sign {
         height: 15px;
         width: 140px;
         margin-top: 22px;
         margin-bottom: 61px;
     }
+}
+
+.no {
+    color: var(--Main-300, #FFA0A0);
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 140%;
+    text-align: left;
+    margin-top: -8px;
 }

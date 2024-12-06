@@ -98,7 +98,7 @@ const MyGroupMain: React.FC<GroupDetailId> = ({ pagegroupId }) => {
         <>
           <div className="top_info_img" style={{backgroundImage:`url(${groupData.groupImage})`}}>
             <div className="background">
-              <p className="title">{groupData.groupName}</p>
+              <p className="title">{groupData.groupName.replace(/^그룹\s*/, '')}</p>
               <div className="info">
                 <p className="info_txt">{groupData.city}</p>
                 <div className="people" onClick={GoToNeighbor}>
