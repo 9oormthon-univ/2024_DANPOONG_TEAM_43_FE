@@ -48,6 +48,7 @@ const ChatRoomMain: React.FC = () => {
     const [newMessage, setNewMessage] = useState('');
     const [stompClient, setStompClient] = useState<any>(null); // 실제로 stompClient 초기화 필요
     const sc = useRef<any>(null)
+    
     const openChatRoomMutation = useMutation({
         mutationFn: async () => {
             const response = await axiosInstance.post(`/chat/rooms/${roomId}/close`);
@@ -55,7 +56,7 @@ const ChatRoomMain: React.FC = () => {
         },
         onSuccess: () => {
             // 성공적으로 채팅방을 열었을 때 페이지 이동
-            navigate(-1);
+            
         },
         onError: (error) => {
             console.error('Error opening chat room:', error);
@@ -166,9 +167,10 @@ const ChatRoomMain: React.FC = () => {
     const config = userTypeConfig[receiverUserType as UserType];
 
     const handleBackClick = () => {
-        if (roomId) {
-            openChatRoomMutation.mutate(); // 채팅방 열기 API 호출
-        }
+        navigate(-1)
+        // if (roomId) {
+        //     openChatRoomMutation.mutate(); // 채팅방 열기 API 호출
+        // }
     };
 
 
