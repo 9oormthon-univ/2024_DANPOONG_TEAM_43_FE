@@ -48,7 +48,7 @@ const UserDetailModal: React.FC<UserDetailModalProps> = ({ userId, onClose }) =>
   if (isError || !user) return null;
 
   return (
-    <div className="fixed inset-0 bg-white z-[99999] overflow-y-auto  mx-auto max-w-[440px] min-w-[320px]">
+    <div className="fixed inset-0 bg-white z-[99999] overflow-y-auto mx-auto max-w-[440px] min-w-[320px]">
       <div className="flex items-center justify-center h-11 w-[90%] mx-auto my-[10px]">
         <img
           src={leftButtonIcon}
@@ -56,35 +56,39 @@ const UserDetailModal: React.FC<UserDetailModalProps> = ({ userId, onClose }) =>
           className="absolute left-4 w-6 h-6 cursor-pointer"
           onClick={onClose}
         />
-        <div className="text-center text-[#2a2e36] text-base font-medium">{getUserTypeText(user.userType)} {user.username}</div>
+        <div className="text-center text-[#2a2e36] text-base font-medium">
+          {getUserTypeText(user.userType)} {user.username}
+        </div>
         <img
           src={friendIcon}
           alt="Add Friend"
           className="absolute right-4 w-6 h-6 cursor-pointer"
         />
       </div>
-
-      <div className={`h-[calc(100dvh-140px)] w-full overflow-y-auto ${getBackgroundColor(user.userType)} `}>
-        <div className='mx-auto max-w-[440px] min-w-[320px] w-[90%]'>
+      <div className={`h-[calc(100dvh-140px)] w-full overflow-y-auto ${getBackgroundColor(user.userType)}`}>
+        <div className="mx-auto max-w-[440px] min-w-[320px] w-[90%]">
           <div className="flex items-center py-6">
             <img
               src={getUserImage(user.userId, user.userType)}
               alt="User Profile"
               className="w-[124px] h-[124px] mr-4"
             />
-            <div className='flex flex-col justify-between h-full space-y-2'>
-              <div className="text-lg font-semibold">
-                {user.username}
+            <div className="flex flex-col justify-between h-full space-y-2">
+              <div className="text-lg font-semibold">{user.username}</div>
+              <div className="text-[#2a2e36] text-base font-normal font-['Pretendard'] leading-snug">
+                나이 {user.age}세
               </div>
-              <div className="text-[#2a2e36] text-base font-normal font-['Pretendard'] leading-snug">나이 {user.age}세</div>
-              <div className="text-[#2a2e36] text-base font-normal font-['Pretendard'] leading-snug"> {user.city}</div>
-              <div className="flex items-center mt-2 px-1.5 py-1 bg-white rounded-lg shadow  justify-start items-start gap-2.5 inline-flex">
+              <div className="text-[#2a2e36] text-base font-normal font-['Pretendard'] leading-snug">
+                {user.city}
+              </div>
+              <div className="flex items-center mt-2 px-1.5 py-1 bg-white rounded-lg shadow justify-start items-start gap-2.5 inline-flex">
                 <img src={basketIcon} alt="basket" className="w-4 h-4" />
-                <span className="text-[#ff4d6c] text-xs font-medium font-['Pretendard'] leading-[18px]">Carely와 함께한 시간 {user.togetherTime}시간</span>
+                <span className="text-[#ff4d6c] text-xs font-medium font-['Pretendard'] leading-[18px]">
+                  Carely와 함께한 시간 {user.togetherTime}시간
+                </span>
               </div>
             </div>
           </div>
-
           <div className="">
             <h3 className="text-[#2a2e36] text-xl font-semibold font-['Pretendard'] leading-7 mb-6">
               {user.userType === 'CAREGIVER' ? '제가 모시는 분은,' : '제가 할 수 있는 일은,'}
@@ -100,7 +104,6 @@ const UserDetailModal: React.FC<UserDetailModalProps> = ({ userId, onClose }) =>
               ))}
             </div>
           </div>
-
           <div className="mt-6">
             <h3 className="text-[#2a2e36] text-xl font-semibold font-['Pretendard'] leading-7 mb-6">나의 이야기</h3>
             <p
@@ -125,32 +128,27 @@ const UserDetailModal: React.FC<UserDetailModalProps> = ({ userId, onClose }) =>
               </div>
             )}
           </div>
-
           <div className="mt-6">
-            <h3 className="text-[#2a2e36] text-xl font-semibold font-['Pretendard'] leading-7 mb-6">함께한 사람</h3>
-            <p
-              ref={storyRef}
-              className={`text-sm text-gray-700 ${!isExpanded ? 'line-clamp-3' : ''
-                }`}
-              style={{
-                display: '-webkit-box',
-                WebkitLineClamp: !isExpanded ? 3 : 'unset',
-                WebkitBoxOrient: 'vertical',
-                overflow: !isExpanded ? 'hidden' : 'visible',
-              }}
-            >
-              {user.story || '등록된 이야기가 없습니다.'}
-            </p>
-            {isClamped && (
-              <div
-                onClick={toggleExpanded}
-                className="text-center text-[#a6acba] text-sm font-medium font-['Pretendard'] underline leading-tight mt-4 cursor-pointer"
-              >
-                {isExpanded ? '접기' : '펼치기'}
-              </div>
-            )}
+            <h3 className="text-[#2a2e36] text-xl font-semibold font-['Pretendard'] leading-7 mb-6">
+              함께한 사람
+            </h3>
+            <div className="flex overflow-x-auto space-x-4 pb-4">
+              {user.guestbookDTOS?.map((guestbook, index) => (
+                <div
+                  key={index}
+                  className="flex-shrink-0 w-[200px] h-[160px] p-4 bg-[#ffeef0] rounded-lg shadow-md"
+                >
+                  <div className="text-sm font-semibold text-[#2a2e36] mb-2">
+                    {guestbook.partnerUsername}
+                  </div>
+                  <div className="text-xs text-[#575f70] mb-4">{guestbook.date}</div>
+                  <div className="text-sm text-[#2a2e36] line-clamp-3 overflow-hidden">
+                    {guestbook.content || '내용 없음'}
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
-          <div className="mt-6">
           {user.userType === 'CARE_WORKER' && user.certificateImage && (
             <div className="mt-6 mb-4">
               <h3 className="text-[#2a2e36] text-xl font-semibold font-['Pretendard'] leading-7 mb-4">
@@ -164,13 +162,18 @@ const UserDetailModal: React.FC<UserDetailModalProps> = ({ userId, onClose }) =>
             </div>
           )}
         </div>
-        </div>
       </div>
-      <div className='w-full'>
-        <div className='mx-auto max-w-[440px] min-w-[320px] w-full h-[76px] px-5 py-3 bg-white justify-center items-center inline-flex'>
-          <div className={`grow shrink basis-0 self-stretch px-6 py-[15px] rounded-lg justify-center items-center gap-2.5 inline-flex ${getBtnColor(user.userType)} `}
-          onClick={handleStartChat}>
-            <div className="text-center text-white text-base font-semibold font-['Pretendard'] leading-snug">{isLoading ? '생성 중...' : '대화 시작하기'}</div>
+      <div className="w-full">
+        <div className="mx-auto max-w-[440px] min-w-[320px] w-full h-[76px] px-5 py-3 bg-white justify-center items-center inline-flex">
+          <div
+            className={`grow shrink basis-0 self-stretch px-6 py-[15px] rounded-lg justify-center items-center gap-2.5 inline-flex ${getBtnColor(
+              user.userType
+            )}`}
+            onClick={handleStartChat}
+          >
+            <div className="text-center text-white text-base font-semibold font-['Pretendard'] leading-snug">
+              {isLoading ? '생성 중...' : '대화 시작하기'}
+            </div>
           </div>
         </div>
       </div>
