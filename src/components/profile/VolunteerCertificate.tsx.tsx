@@ -11,7 +11,7 @@ const VolunteerCertificate: React.FC = () => {
   };
   return(
   <div className='cursor-pointer'  onClick={handleNavigation}> 
-     <MenuItem label="봉사 활동 확인증" />;
+     <MenuItem label="봉사 활동 확인증" />
   </div>
   )
 };
