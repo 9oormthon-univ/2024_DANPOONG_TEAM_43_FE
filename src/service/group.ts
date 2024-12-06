@@ -37,6 +37,15 @@ export interface MemoryData {
     };
   }
   
+  export interface Group {
+    groupId: number;
+    groupName: string;
+    city: string;
+    headCount: number;
+    lastNews: string | null;
+    groupImage: string | null;
+  }
+  
 
 export const fetchGroupData = async (groupId?: number): Promise<GroupData> => {
   const response = groupId
@@ -58,3 +67,8 @@ export const fetchMemories = async (groupId: number): Promise<MemoryData[]> => {
 export const leaveGroup = async (groupId: number): Promise<void> => {
   await axiosInstance.post(`/group/leave/${groupId}`);
 };
+
+export const fetchGroups = async (): Promise<Group[]> => {
+    const response = await axiosInstance.get('/group/list');
+    return response.data.data;
+  };
