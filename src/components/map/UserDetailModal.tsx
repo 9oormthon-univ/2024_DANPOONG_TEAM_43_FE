@@ -84,7 +84,7 @@ const UserDetailModal: React.FC<UserDetailModalProps> = ({ userId, onClose }) =>
               <div className="flex items-center mt-2 px-1.5 py-1 bg-white rounded-lg shadow justify-start items-start gap-2.5 inline-flex">
                 <img src={basketIcon} alt="basket" className="w-4 h-4" />
                 <span className="text-[#ff4d6c] text-xs font-medium font-['Pretendard'] leading-[18px]">
-                  Carely와 함께한 시간 {user.timeTogether}시간
+                  Carely와 함께한 시간 {user.togetherTime}시간
                 </span>
               </div>
             </div>
