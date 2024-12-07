@@ -11,11 +11,13 @@ const Group = () => {
   const initialTab = sessionStorage.getItem('activeTab') as 'mygroup' | 'other' || 'mygroup';
   const [activeTab, setActiveTab] = useState<'mygroup' | 'other'>(initialTab);
   const [groupId, setGroupId] = useState<number>(0); 
-  const [refreshKey, setRefreshKey] = useState<number>(0); // 리렌더링 트리거
+  const [refreshKey, setRefreshKey] = useState(0); // 리렌더링 트리거
 
   useEffect(() => {
-    setRefreshKey((prev) => prev + 1); // location 변경 시 리렌더링
-  }, [location]);
+    if (location.state?.refresh) {
+        setRefreshKey((prev) => prev + 1); // 강제 리렌더링
+    }
+}, [location.state]);
 
   const handleTabChange = (tab: 'mygroup' | 'other') => {
     setActiveTab(tab);
