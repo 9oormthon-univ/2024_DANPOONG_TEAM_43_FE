@@ -11,6 +11,11 @@ const Group = () => {
   const initialTab = sessionStorage.getItem('activeTab') as 'mygroup' | 'other' || 'mygroup';
   const [activeTab, setActiveTab] = useState<'mygroup' | 'other'>(initialTab);
   const [groupId, setGroupId] = useState<number>(0); 
+  const [refreshKey, setRefreshKey] = useState<number>(0); // 리렌더링 트리거
+
+  useEffect(() => {
+    setRefreshKey((prev) => prev + 1); // location 변경 시 리렌더링
+  }, [location]);
 
   const handleTabChange = (tab: 'mygroup' | 'other') => {
     setActiveTab(tab);
@@ -34,7 +39,7 @@ const Group = () => {
         </div>
       </div>
       {/* 탭에 따라 다른 컴포넌트 렌더링 */}
-      {activeTab === 'mygroup' && <MyGroupMain key={location.key} pagegroupId={groupId} />}
+      {activeTab === 'mygroup' && <MyGroupMain key={refreshKey} pagegroupId={groupId} />}
       {activeTab === 'other' && <OtherGroup />}
     </div>
   );
