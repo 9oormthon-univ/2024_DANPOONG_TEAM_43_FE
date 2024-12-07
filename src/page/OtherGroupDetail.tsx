@@ -16,33 +16,39 @@ const OtherGroupDetail = () => {
     };
 
     const handleJoinGroup = async () => {
-        const response = await axiosInstance.get('/group');
-        const data = response.data.data[0];
-        if (data.groupId) {
-            alert('이미 가입되어있는 모임이 있습니다.');
+        if (!groupId) {
+            console.error('groupId가 없습니다.');
+            return;
         }
-        else {
-            if (!groupId) {
-                console.error('groupId가 없습니다.');
-                return;
-            }
 
-            setIsJoining(true); // 로딩 상태 시작
-            try {
-                const response = await axiosInstance.post(`/group/join/${groupId}`);
-                console.log('모임 가입 성공:', response.data);
-                alert('모임에 성공적으로 가입했습니다!');
+        setIsJoining(true); // 로딩 상태 시작
+        try {
+            const response = await axiosInstance.post(`/group/join/${groupId}`);
+            console.log('모임 가입 성공:', response.data);
+            alert('모임에 성공적으로 가입했습니다!');
 
-                // 세션 스토리지에 탭 값을 'mygroup'으로 변경
-                sessionStorage.setItem('activeTab', 'mygroup');
+            // 세션 스토리지에 탭 값을 'mygroup'으로 변경
+            sessionStorage.setItem('activeTab', 'mygroup');
 
-                navigate(-1); // 이전 페이지로 이동
-            } catch (error) {
-                console.error('모임 가입 실패:', error);
+            navigate(-1); // 이전 페이지로 이동
+        } catch (error: any) {
+            if (error.response) {
+                const { status, data } = error.response;
+
+                if (status === 409) {
+                    alert('이미 가입되어있는 모임이 있습니다.');
+                }
+                else{
+                    alert('모임 가입에 실패했습니다. 다시 시도해주세요.')
+                }
+
+
+            } else {
+                console.error('예상치 못한 오류:', error);
                 alert('모임 가입에 실패했습니다. 다시 시도해주세요.');
-            } finally {
-                setIsJoining(false); // 로딩 상태 종료
             }
+        } finally {
+            setIsJoining(false); // 로딩 상태 종료
         }
 
     };
