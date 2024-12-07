@@ -62,8 +62,12 @@ const GroupFeedDetail = () => {
 
 
     const handleBackClick = () => {
-        navigate('/group');
+        navigate(-1); // 뒤로 이동
+    setTimeout(() => {
+        window.location.reload(); // 강제 새로고침
+    }, 0);
     };
+
     const handleSendComment = async () => {
         if (!newComment.trim() || isPosting) return;
 
