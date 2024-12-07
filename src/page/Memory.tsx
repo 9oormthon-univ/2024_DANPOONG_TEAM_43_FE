@@ -158,16 +158,17 @@ const Memory: React.FC = () => {
                   ) : (
                     <div className="flex flex-1 items-center justify-between relative z-[9999]">
                       <textarea
-                        className="flex-1 resize-none border border-gray-300 rounded-lg p-2 text-sm text-[#2a2e37] focus:outline-none focus:ring-2 focus:ring-[#ff6b6b] mr-4"
-                        placeholder="아직 방명록을 작성하지 않았어요.\n소중한 후기를 남겨보세요!"
-                        value={textInputs[Number(entry.volunteerSessionId)] || ''}
-                        onChange={(e) =>
-                          handleInputChange(Number(entry.volunteerSessionId), e.target.value)
-                        }
-                        style={{
-                          whiteSpace: 'pre-wrap',
-                        }}
-                      />
+                          className="flex-1 resize-none border border-gray-300 rounded-lg p-2 text-sm text-[#2a2e37] focus:outline-none focus:ring-2 focus:ring-[#ff6b6b] mr-4"
+                          placeholder={`아직 방명록을 작성하지 않았어요.
+                        소중한 후기를 남겨보세요!`} 
+                          value={textInputs[Number(entry.volunteerSessionId)] || ''}
+                          onChange={(e) =>
+                            handleInputChange(Number(entry.volunteerSessionId), e.target.value)
+                          }
+                          style={{
+                            whiteSpace: 'pre-wrap', 
+                          }}
+                        />
                       <button
                         className={`w-16 px-4 py-2 rounded-lg text-sm font-medium ${
                           textInputs[Number(entry.volunteerSessionId)]

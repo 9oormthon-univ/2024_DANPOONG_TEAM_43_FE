@@ -5,6 +5,7 @@
     display: flex;
     align-items: center;
     gap: 16px;
+    cursor: pointer;
 
     .feed_profile {
         width: 68px;
@@ -149,6 +150,7 @@
     padding: 0 20px;
     height: 68px;
     width: 100%;
+    cursor: pointer;
     align-items: center;
 
     .left {

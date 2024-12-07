@@ -130,7 +130,7 @@ const RequestSure = () => {
     };
 
     if (loading) {
-        return <div>로딩 중...</div>;
+        return  null;
     }
 
     if (error) {
