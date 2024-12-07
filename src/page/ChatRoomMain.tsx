@@ -24,7 +24,7 @@ import { Message as StompMessage } from '@stomp/stompjs';
 const userTypeConfig = {
     CAREGIVER: { label: '간병인', color: '#ff6b6b', bgColor: '#FFF1F1', profileImg: caregiverProfile, chalendar_fill: calendar_check_fill_giver, bgImg: background_img_giver },
     VOLUNTEER: { label: '자원봉사자', color: '#00AEFF', bgColor: '#EFF9FF', profileImg: volunteerProfile, chalendar_fill: calendar_check_fill_volunteer, bgImg: background_img_volunteer },
-    CARE_WORKER: { label: '예비요양보호사', color: '#20CE86', bgColor: '#EBFEF4', profileImg: careWorkerProfile, chalendar_fill: calendar_check_fill_worker, bgImg: background_img_worker },
+    CARE_WORKER: { label: '요양보호사', color: '#20CE86', bgColor: '#EBFEF4', profileImg: careWorkerProfile, chalendar_fill: calendar_check_fill_worker, bgImg: background_img_worker },
 };
 
 interface Message {
