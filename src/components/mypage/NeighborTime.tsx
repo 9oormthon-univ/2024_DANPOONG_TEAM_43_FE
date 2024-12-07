@@ -35,7 +35,7 @@ const NeighborTime: React.FC = () => {
           {isVolunteerHoursLoading ? '시간' : `${volunteerHours}시간`}
         </p>
       </div>
-      {volunteerHours !== undefined && volunteerHours !== null && volunteerHours >= 80 && (
+      {volunteerHours !== undefined && volunteerHours !== null && volunteerHours >= 80 && userType != "CAREGIVER" && (
         <div className="option">요양보호사 자격을 위한 80시간을 모두 이수했어요</div>
       )}
     </div>
