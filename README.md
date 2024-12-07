@@ -5,7 +5,7 @@
 ![2152321228](https://github.com/user-attachments/assets/80c723aa-cedb-4c89-bf72-0e389353e805)
 ![42314231](https://github.com/user-attachments/assets/714aaba7-9d43-4325-9211-d9d03be2d54d)
 ![2152323110](https://github.com/user-attachments/assets/321c49b6-ece8-4828-9710-ba9591b3bc8e)
-## 🍁 Developers
+## ❤️ Developers
 
 | PM | PD | FE | FE | BE | BE |
 | --- | --- | --- | --- | --- | --- |
