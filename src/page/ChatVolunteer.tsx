@@ -116,7 +116,7 @@ const ChatVolunteer: React.FC = () => {
                 location: address,
                 startTime: start.toISOString(), // ISO 형식으로 변환
                 endTime: end.toISOString(),
-                durationHours: calculateDurationHours(start, end),
+                durationHours: parseFloat(calculateDurationHours(start, end).toFixed(1)),
                 salary: 0,
                 mainTask: workDetails,
                 volunteerType: 'VOLUNTEER_REQUEST', // 고정된 타입
@@ -267,7 +267,8 @@ const ChatVolunteer: React.FC = () => {
                                     const start = convertTo24HourTime(startTime, selectedDate);
                                     const end = convertTo24HourTime(stopTime, selectedDate);
                                     if (start && end) {
-                                        return calculateDurationHours(start, end);
+                                        const duration = calculateDurationHours(start, end);
+                                        return parseFloat(duration.toFixed(1));
                                     }
                                 }
                                 return 0; // 하나라도 없으면 null 반환
