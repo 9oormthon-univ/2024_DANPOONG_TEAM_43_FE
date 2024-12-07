@@ -20,7 +20,7 @@ interface RequestDetails {
 const RequestDetail = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const { bgColor, color, mainColor, roomId, requestId, messageId } = location.state || {};
+    const { bgColor,  mainColor,  requestId, messageId } = location.state || {};
     const [details, setDetails] = useState<RequestDetails | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);

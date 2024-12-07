@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, {  useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import axiosInstance from '../utils/axiosInstance';
 import back from '../assets/img/chat/chat-back.svg'
 import pay_background from '../assets/img/chat/pay_background.svg'
 

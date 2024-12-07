@@ -1,9 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import back from '../assets/img/chat/chat-back.svg'
-import Certificate from 'components/mypage/Certificate';
 import { useUserDataQuery } from 'service/user';
 import CareCertificate from 'components/mypage/CareCertificate';
 import axiosInstance from 'utils/axiosInstance';
@@ -12,7 +11,7 @@ import axiosInstance from 'utils/axiosInstance';
 const CareCertificatePage = () => {
     const navigate = useNavigate();
     const certificateRef = useRef<HTMLDivElement>(null);
-    const { data: userData, isLoading, error } = useUserDataQuery();
+    const { data: userData, error } = useUserDataQuery();
     const [certificateData, setCertificateData] = useState<any>(null);
     useEffect(() => {
         const fetchCertificateData = async () => {
@@ -32,7 +31,7 @@ const CareCertificatePage = () => {
     if (error || !userData) {
         return null;
     }
-    const { userType, userId } = userData;
+    const { userId } = userData;
 
     const handleBackClick = () => {
         navigate(-1);

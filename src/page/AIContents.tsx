@@ -15,7 +15,6 @@ import ai_eat from '../assets/img/home/AI_eat.svg';
 import ai_active from '../assets/img/home/AI_active.svg';
 import ai_tem from '../assets/img/home/AI_tem.svg';
 import ai_toilet from '../assets/img/home/AI_toilet.svg';
-import UserDetailModal from 'components/map/UserDetailModal';
 import AIProfile from 'components/home/AIProfile';
 import { useUserDataQuery } from 'service/user';
 import axiosInstance from '../utils/axiosInstance';
@@ -24,7 +23,7 @@ const AIContents: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { caregiverId, id, caregiverName } = location.state || {};
-  const { data: userData, isLoading, error } = useUserDataQuery();
+  const { data: userData } = useUserDataQuery();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);

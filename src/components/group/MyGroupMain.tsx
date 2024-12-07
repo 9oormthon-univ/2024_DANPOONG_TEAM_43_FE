@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axiosInstance from 'utils/axiosInstance';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import people_icon from '../../assets/img/group/group_people_icon.svg'
 import FeedPreview from './FeedPreview'
 import WithMemory from './WithMemory'
 import { GroupDetailId } from 'type/group';
 import empty_back_img from '../../assets/img/group/empty_back_img.svg'
-import { url } from 'inspector';
 
 const MyGroupMain: React.FC<GroupDetailId> = ({ pagegroupId }) => {
   const navigate = useNavigate();

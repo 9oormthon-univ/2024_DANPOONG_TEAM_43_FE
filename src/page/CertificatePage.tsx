@@ -10,7 +10,7 @@ import { useUserDataQuery } from 'service/user';
 const CertificatePage = () => {
     const navigate = useNavigate();
     const location = useLocation();
-  const { label, certificateData } = location.state || {};
+    const { label, certificateData } = location.state || {};
     const certificateRef = useRef<HTMLDivElement>(null);
     const { data: userData, isLoading, error } = useUserDataQuery();
     if (error || !userData) {
