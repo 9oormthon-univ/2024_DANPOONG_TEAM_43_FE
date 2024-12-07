@@ -63,7 +63,7 @@ const GroupFeedDetail = () => {
 
     const handleBackClick = () => {
         navigate(-1);
-        
+        window.location.reload();
     };
     const handleSendComment = async () => {
         if (!newComment.trim() || isPosting) return;
