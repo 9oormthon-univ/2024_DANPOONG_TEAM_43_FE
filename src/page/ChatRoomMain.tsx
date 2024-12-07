@@ -168,9 +168,6 @@ const ChatRoomMain: React.FC = () => {
 
     const handleBackClick = () => {
         navigate(-1)
-        // if (roomId) {
-        //     openChatRoomMutation.mutate(); // 채팅방 열기 API 호출
-        // }
     };
 
 

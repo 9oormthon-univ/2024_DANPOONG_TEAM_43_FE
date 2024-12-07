@@ -11,7 +11,7 @@ import { useUserDataQuery } from 'service/user';
 const CertificatePersonPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { data: userData, isLoading, error } = useUserDataQuery();
+  const { data: userData } = useUserDataQuery();
   const { label } = location.state || {};
   const [data, setData] = useState<any[]>([]); // API 데이터 저장
   useEffect(() => {
@@ -26,12 +26,6 @@ const CertificatePersonPage = () => {
 
     fetchData();
   }, [userData?.userId]);
-
-  if (error || !userData) {
-    return null;
-  }
-  const { userType, userId } = userData;
-
   
   const handleBackClick = () => {
     navigate(-1);

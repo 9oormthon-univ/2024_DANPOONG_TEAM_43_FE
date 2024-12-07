@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import back from '../assets/img/chat/chat-back.svg'
-import profile from '../assets/img/user/type1-1.svg'
 import send from '../assets/img/chat/send.svg'
 import send_fill from '../assets/img/chat/send_fill.svg'
 import FeedComment from 'components/group/FeedComment';
 import axiosInstance from 'utils/axiosInstance';
-import { UserType } from 'type/user';
 import { useUserDataQuery } from 'service/user';
-import { getBackgroundColor2, getUserImage } from 'utils/userUtils';
+import { getUserImage } from 'utils/userUtils';
 
 
 interface UserTypeConfig {
@@ -20,7 +18,7 @@ interface UserTypeConfig {
 const GroupFeedDetail = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const { data: userData, isLoading, error } = useUserDataQuery();
+    const { data: userData, error } = useUserDataQuery();
 
     const { newsId } = location.state || {};
     const [feedData, setFeedData] = useState<any>(null); // 피드 데이터 저장

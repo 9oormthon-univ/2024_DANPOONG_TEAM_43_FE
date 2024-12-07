@@ -1,10 +1,7 @@
 import React from 'react'
-import profile_group from '../assets/img/chat/profile-group.svg'
-import { useNavigate } from "react-router-dom";
 import PersonChat from 'components/chat/PersonChat';
 import axiosInstance from 'utils/axiosInstance';
 import { useQuery } from '@tanstack/react-query';
-import ConnectAI from 'components/home/ConnectAI';
 import empty_back_img from '../assets/img/group/empty_back_img.svg'
 
 const fetchChatRooms = async () => {
@@ -13,7 +10,6 @@ const fetchChatRooms = async () => {
 };
 
 const Chats: React.FC = () => {
-  const navigate = useNavigate();
   // react-query로 API 호출
   const { data: chatRooms, isLoading, error } = useQuery({
     queryKey: ['chatRooms'],

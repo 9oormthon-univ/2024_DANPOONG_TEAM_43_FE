@@ -4,7 +4,7 @@ import { useMutation } from '@tanstack/react-query';
 import axiosInstance from 'utils/axiosInstance';
 import { imageMapping,getBackgroundColor2 } from 'utils/userUtils';
 import { PersonChatProps } from 'type/chat';
-import { FeedCommentProps, UserTypeConfig } from 'type/group';
+import { UserTypeConfig } from 'type/group';
 
 
 const getProfileImage = (userId: number, userType: string): string => {

@@ -24,7 +24,7 @@ const ChatCareWorker: React.FC = () => {
     const [stopTime, setStopTime] = useState<string | null>(null);
     const [workDetails, setWorkDetails] = useState('');
     const [payment, setPayment] = useState('');
-    const { data: userData, isLoading, error } = useUserDataQuery();
+    const { data: userData, error } = useUserDataQuery();
 
     if (error || !userData) {
         return null;

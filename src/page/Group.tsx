@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
-import group_icon from '../assets/img/group/group_popup_icon.svg'
 import MyGroupMain from 'components/group/MyGroupMain';
 import OtherGroup from 'components/group/OtherGroup';
 
 const Group = () => {
   const location = useLocation(); // 현재 위치 가져오기
-  const navigate = useNavigate();
   const initialTab = sessionStorage.getItem('activeTab') as 'mygroup' | 'other' || 'mygroup';
   const [activeTab, setActiveTab] = useState<'mygroup' | 'other'>(initialTab);
   const [groupId, setGroupId] = useState<number>(0); 
