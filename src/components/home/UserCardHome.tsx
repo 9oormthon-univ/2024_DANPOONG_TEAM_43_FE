@@ -87,7 +87,7 @@ const UserCardHome: React.FC<UserCardProps> = ({ user, onClose }) => {
                   <div className="max-w-[110px] flex items-center mt-1 bg-white rounded-lg p-1">
                     <img src={timeIcon} alt="Time" className="w-[16px] h-[16px]" />
                     <div className="text-[#ff6b6b] text-xs ml-2 font-semibold">
-                      함께한 {user.togetherTime} 시간
+                      함께한 {user.timeTogether} 시간
                     </div>
                   </div>
                 </div>
