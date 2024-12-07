@@ -17,7 +17,7 @@ const CareCertificatePage = () => {
     useEffect(() => {
         const fetchCertificateData = async () => {
           try {
-            const response = await axiosInstance.get(`/api/certificates/certificate/userId/${userId}`);
+            const response = await axiosInstance.get(`/api/certificates/certificate/userId`);
             setCertificateData(response.data.data);
           } catch (error) {
             console.error('Failed to fetch certificate data:', error);

@@ -73,6 +73,7 @@ const Memories: React.FC = () => {
                       display: '-webkit-box',
                       WebkitBoxOrient: 'vertical',
                       WebkitLineClamp: 2,
+                      lineHeight: '140%'
                     }}
                   >
                     {entry.content}

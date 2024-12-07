@@ -51,7 +51,7 @@ const MyPage: React.FC = () => {
         <ManageNeighbors />
         {userType === 'VOLUNTEER' && <VolunteerCertificate />}
         {userType === 'CARE_WORKER' && <CareWorkerCertificate />}
-        <CareLicense/>
+        {userType != 'CAREGIVER' && <CareLicense/>}
         <MemoriesSetting />
         <CustomerService />
       </div>

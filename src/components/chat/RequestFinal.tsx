@@ -13,7 +13,7 @@ const RequestFinal: React.FC<RequestFinalProps> = ({ location, time, work, durat
                     </p>
                     <p className="detail_item">
                         <span className="detail_label">함께하는 시간</span>
-                        <span className="detail_value">{durationHours}시간 동안 / {time}</span>
+                        <span className="detail_value">약 {durationHours}시간 동안 / {time}</span>
                     </p>
                     <p className="detail_item">
                         <span className="detail_label">주된 일</span>

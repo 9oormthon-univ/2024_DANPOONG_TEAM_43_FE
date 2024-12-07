@@ -111,7 +111,7 @@ const RequestDetail = () => {
                             </div>
                             <div className="contents">
                                 <p className="type">시간</p>
-                                <p className="text">{details.durationHours}시간 동안 / {details.startTime} ~ {details.endTime}</p>
+                                <p className="text">약 {details.durationHours}시간 동안 / {details.startTime} ~ {details.endTime}</p>
                             </div>
                             <div className="contents">
                                 <p className="type">주된 일</p>

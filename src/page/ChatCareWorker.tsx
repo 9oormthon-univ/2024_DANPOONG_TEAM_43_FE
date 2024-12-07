@@ -58,7 +58,7 @@ const ChatCareWorker: React.FC = () => {
             alert('모든 필드를 입력해주세요.');
             return;
         }
-        openRequestModal(); 
+        openRequestModal();
     };
 
     const handleRequestSubmit = async () => {
@@ -82,15 +82,15 @@ const ChatCareWorker: React.FC = () => {
 
         try {
             const requestData = {
-                volunteerId: userId, 
+                volunteerId: userId,
                 caregiverId,
                 location: address,
                 startTime: start.toISOString(),
                 endTime: end.toISOString(),
-                durationHours: calculateDurationHours(start, end),
+                durationHours: parseFloat(calculateDurationHours(start, end).toFixed(1)),
                 salary: parseInt(payment.replace(/,/g, '')) || 0,
                 mainTask: workDetails,
-                volunteerType: 'CARE_WORKER_REQUEST', 
+                volunteerType: 'CARE_WORKER_REQUEST',
                 roomId,
             };
 
@@ -142,7 +142,7 @@ const ChatCareWorker: React.FC = () => {
                         }}>{selectedDate
                             ? `${selectedDate.toLocaleDateString()}`
                             : '봉사 날짜를 알려주세요'}</p>
-                        <img src={down} alt="" className="down"  />
+                        <img src={down} alt="" className="down" />
                     </div>
                 </div>
                 <div className="work_div">
@@ -154,7 +154,7 @@ const ChatCareWorker: React.FC = () => {
                             }}>{startTime && stopTime
                                 ? `${startTime} ~ ${stopTime}`
                                 : '시작 및 종료 시간을 알려주세요'}</p>
-                        <img src={down} alt="" className="down"  />
+                        <img src={down} alt="" className="down" />
                     </div>
                 </div>
                 <div className="work_div">
@@ -239,7 +239,8 @@ const ChatCareWorker: React.FC = () => {
                                     const start = convertTo24HourTime(startTime, selectedDate);
                                     const end = convertTo24HourTime(stopTime, selectedDate);
                                     if (start && end) {
-                                        return calculateDurationHours(start, end);
+                                        const duration = calculateDurationHours(start, end);
+                                        return parseFloat(duration.toFixed(1));
                                     }
                                 }
                                 return 0; // 하나라도 없으면 null 반환
