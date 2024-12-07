@@ -37,7 +37,7 @@ const OtherGroup: React.FC = () => {
       </div>
       <div className="no_group_div">
         <div className="no_group">
-          <p className="text">원한는 모임이 없나요?</p>
+          <p className="text">원하는 모임이 없나요?</p>
           <div className="new_group">
             <img src={heart} alt="" className="heart" />
             <p className="txt">모임 만들기</p>
