@@ -17,7 +17,7 @@ const CertificatePersonPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axiosInstance.get(`/document/volunteer`); // API 호출
+        const response = await axiosInstance.get(`/document/volunteer/userId`); // API 호출
         setData(response.data.data); // 응답 데이터 저장
       } catch (error) {
         console.error('Failed to fetch data', error);
