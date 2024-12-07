@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axiosInstance from '../utils/axiosInstance';
 import back from '../assets/img/chat/chat-back.svg'
+import { useUserDataQuery } from 'service/user';
 
 interface RequestDetails {
     volunteerName: string;
@@ -9,7 +10,7 @@ interface RequestDetails {
     phoneNum: string;
     address: string;
     location: string;
-    date:string;
+    date: string;
     startTime: string;
     endTime: string;
     durationHours: number;
@@ -20,7 +21,8 @@ interface RequestDetails {
 const RequestSure = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const { bgColor, color, mainColor, roomId, requestId, messageId,receiverUserType,receiverName,receiverId } = location.state || {};
+    const { data: userData } = useUserDataQuery();
+    const { bgColor, color, mainColor, roomId, requestId, messageId, receiverUserType, receiverName, receiverId } = location.state || {};
 
     const [details, setDetails] = useState<RequestDetails | null>(null);
     const [loading, setLoading] = useState(true);
@@ -28,6 +30,8 @@ const RequestSure = () => {
 
     const [showConfirmationPopup, setShowConfirmationPopup] = useState(false); // 첫 번째 팝업 제어
     const [showPaymentPopup, setShowPaymentPopup] = useState(false); // 결제 팝업 제어
+
+    const userType = userData?.userType;
 
     const handleBackClick = () => {
         navigate(-1);
@@ -76,7 +80,7 @@ const RequestSure = () => {
                 messageId: messageId,
                 roomId: roomId,
             };
-    
+
             console.log(requestData)
             // 서버로 PATCH 요청 보내기
             const response = await axiosInstance.patch(`/volunteer/approval/${requestId}`, requestData, {
@@ -84,7 +88,7 @@ const RequestSure = () => {
                     'Content-Type': 'application/json', // JSON 형식임을 명시
                 },
             });
-    
+
             if (response.status === 200) {
                 alert('요청을 성공적으로 수락했습니다.');
                 navigate(-1); // 이전 페이지로 이동
@@ -114,23 +118,23 @@ const RequestSure = () => {
 
     const handleConfirmPayment = () => {
         setShowPaymentPopup(false); // 결제 팝업 닫기
-        navigate('/request-pay', { 
-        state: { 
-            bgColor, 
-            color, 
-            mainColor, 
-            roomId, 
-            requestId, 
-            messageId ,
-            receiverUserType,
-            receiverName,
-            receiverId
-        } 
-    }); // RequestPay 페이지로 이동
+        navigate('/request-pay', {
+            state: {
+                bgColor,
+                color,
+                mainColor,
+                roomId,
+                requestId,
+                messageId,
+                receiverUserType,
+                receiverName,
+                receiverId
+            }
+        }); // RequestPay 페이지로 이동
     };
 
     if (loading) {
-        return  null;
+        return null;
     }
 
     if (error) {
@@ -251,9 +255,12 @@ const RequestSure = () => {
             )}
 
             <div className="bottom" style={{ background: bgColor, '--Chat_Main': mainColor } as React.CSSProperties}>
-                <div className="volunteer_button" onClick={handleOpenConfirmationPopup}>
-                    수락하기
-                </div>
+                {userType === 'CAREGIVER' &&
+                    <div className="volunteer_button" onClick={handleOpenConfirmationPopup}>
+                        수락하기
+                    </div>
+                }
+
             </div>
         </div>
     )
