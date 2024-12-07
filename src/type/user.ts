@@ -46,7 +46,7 @@ export interface UserDetailResponse {
   bath: string;
   walk: string;
   story: string;
-  togetherTime: number;
+  timeTogether: number;
   certificateImage: string;
   guestbookDTOS: GuestbookDTO[];
 }
